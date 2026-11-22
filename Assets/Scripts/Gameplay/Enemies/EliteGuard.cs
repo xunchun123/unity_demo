@@ -204,6 +204,7 @@ namespace StarVortex.Enemies
         {
             _state = State.ChargeWindup;
             _stateTimer = chargeWindup;
+            Juice.PunchScale(transform, 0.16f, 0.35f); // 冲锋前摇挤压 telegraph（冲锋期间 Scale 无其他写入者，安全）
             // 后退半步：与冲锋方向相反的一次小冲量（摩擦自然收住，读起来就是"蓄力后撤"）
             float toward = Mathf.Sign(_hero.position.x - transform.position.x);
             _rb.velocity = new Vector2(-toward * 3.5f, _rb.velocity.y);

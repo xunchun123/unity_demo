@@ -287,6 +287,8 @@ namespace StarVortex.Enemies
             _windupTotal = _phase == Phase.Three ? baseWindup * enragedTelegraphMul : baseWindup;
             _windupTimer = _windupTotal;
             _state = State.Windup;
+            // 出招前摇起手挤压 telegraph（PunchScale 与前摇的变色闪烁叠加，可读性翻倍）
+            Juice.PunchScale(transform, 0.18f, Mathf.Min(0.4f, _windupTotal));
         }
 
         /// <summary>前摇视觉：三连砍红光闪烁 3 次，其余渐变到技能主题色。</summary>

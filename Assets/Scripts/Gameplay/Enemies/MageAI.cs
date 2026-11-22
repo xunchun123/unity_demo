@@ -91,6 +91,7 @@ namespace StarVortex.Enemies
                     {
                         _state = State.Windup;
                         _stateTimer = castWindup;
+                        Juice.PunchScale(transform, 0.14f, 0.3f); // 前摇起手挤压 telegraph：看得清"要挨打了"
                     }
                     break;
                 }

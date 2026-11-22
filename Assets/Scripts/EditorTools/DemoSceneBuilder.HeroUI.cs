@@ -142,7 +142,7 @@ namespace StarVortex.EditorTools
             // 三张卡横排
             var cards = new GameObject("Cards", typeof(RectTransform), typeof(HorizontalLayoutGroup));
             cards.transform.SetParent(panel.transform, false);
-            Rect(cards, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-760f, -250f), new Vector2(760f, 330f));
+            Rect(cards, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-820f, -460f), new Vector2(820f, 320f));
             var layout = cards.GetComponent<HorizontalLayoutGroup>();
             layout.spacing = 40f;
             layout.childControlWidth = true;
@@ -169,22 +169,22 @@ namespace StarVortex.EditorTools
                 colors.pressedColor = new Color(0.75f, 0.75f, 0.8f);
                 btn.colors = colors;
 
-                // 边框：底层放大 4px 的描边
-                var border = AddImage(card, "Border", Palette.Cyan);
-                Rect(border.gameObject, Vector2.zero, Vector2.one, new Vector2(-4f, -4f), new Vector2(4f, 4f));
-                border.transform.SetAsFirstSibling();
+                // 顶部强调条：UGUI 子图永远盖住父图——想用"放大底层"做描边只会把深色卡底整个盖成亮青，
+                // 改成顶部一条 4% 高的青色强调线（卡片主体保持深海军蓝，白字对比度足）
+                var border = AddImage(card, "Accent", Palette.Cyan);
+                Rect(border.gameObject, new Vector2(0f, 0.955f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
 
                 var name = AddText(card, "Name", "武器名", 44f, Palette.TextPrimary);
                 Rect(name.gameObject, new Vector2(0f, 0.78f), new Vector2(1f, 0.94f), Vector2.zero, Vector2.zero);
                 var stat = AddText(card, "Stat", "近战连击 · 攻速 0.35s", 24f, Palette.CyanHdr);
                 Rect(stat.gameObject, new Vector2(0f, 0.66f), new Vector2(1f, 0.76f), Vector2.zero, Vector2.zero);
-                var desc = AddText(card, "Desc", "描述", 24f, Palette.TextDim, TextAlignmentOptions.Top);
+                var desc = AddText(card, "Desc", "描述", 22f, Palette.TextDim, TextAlignmentOptions.Top);
                 Rect(desc.gameObject, new Vector2(0.06f, 0.34f), new Vector2(0.94f, 0.64f), Vector2.zero, Vector2.zero);
                 var divider = AddImage(card, "Divider", new Color(1f, 1f, 1f, 0.12f));
                 Rect(divider.gameObject, new Vector2(0f, 0.315f), new Vector2(1f, 0.325f), Vector2.zero, Vector2.zero);
-                var poolCaption = AddText(card, "PoolCaption", "专属爽点池", 22f, Palette.TextHdrGold, TextAlignmentOptions.Left);
+                var poolCaption = AddText(card, "PoolCaption", "专属爽点池", 20f, Palette.TextHdrGold, TextAlignmentOptions.Left);
                 Rect(poolCaption.gameObject, new Vector2(0.06f, 0.255f), new Vector2(0.94f, 0.31f), Vector2.zero, Vector2.zero);
-                var pool = AddText(card, "Pool", "· 爽点", 22f, Palette.TextDim, TextAlignmentOptions.TopLeft);
+                var pool = AddText(card, "Pool", "· 爽点", 17f, Palette.TextDim, TextAlignmentOptions.TopLeft);
                 Rect(pool.gameObject, new Vector2(0.06f, 0.02f), new Vector2(0.94f, 0.25f), Vector2.zero, Vector2.zero);
 
                 // 快捷键角标（右上角）

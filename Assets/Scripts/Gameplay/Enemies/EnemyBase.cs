@@ -61,6 +61,13 @@ namespace StarVortex.Enemies
             _hp -= damage.Amount;
 
             Juice.Flash(_sr, Color.white);
+            // 命中爆点：白核+金晕在武器接触点（攻受双方连线中点）炸开——近战/弹丸/灼烧统一吃到
+            Vector2 fromSource = (Vector2)transform.position - damage.SourcePosition;
+            Vector3 hitPos = fromSource.sqrMagnitude > 0.0001f
+                ? (transform.position + new Vector3(damage.SourcePosition.x, damage.SourcePosition.y, transform.position.z)) * 0.5f
+                  + Vector3.up * 0.35f
+                : transform.position + Vector3.up * 0.4f;
+            Juice.ImpactSpark(hitPos);
             DamagePop.Spawn(transform.position + Vector3.up * 0.5f, Mathf.RoundToInt(damage.Amount), damage.IsCrit);
             Vector2 away = ((Vector2)transform.position - damage.SourcePosition).normalized;
             ApplyKnockback(away, damage.IsCrit ? 5f : 3f);
@@ -74,6 +81,8 @@ namespace StarVortex.Enemies
         /// <summary>冻结（冰霜新星爽点）：冻结期间跳过 AI 行为、velocity 清零。子类在其运动逻辑里检查 _frozenTimer。</summary>
         public virtual void SetFrozen(float seconds) { }
 
+        private static readonly Color XpOrbGold = new Color(1.6f, 1.35f, 0.4f, 1f); // 经验珠金光（HDR 喂 Bloom）
+
         protected virtual void Die()
         {
             if (IsDead) return;
@@ -81,7 +90,10 @@ namespace StarVortex.Enemies
             int xp = xpValue;
             GameEvents.PublishEnemyDied(xp, transform.position);
             GameManager.Instance.AddKill();
-            Juice.DeathBurst(transform.position, _sr != null ? _sr.color : Color.white, 14, 0.5f);
+            // 死亡视觉加大：碎片 14→26、半径 0.5→0.85（DeathBurst 的初速/尺寸都随半径放大）
+            Juice.DeathBurst(transform.position, _sr != null ? _sr.color : Color.white, 26, 0.85f);
+            // 经验珠视觉：金光珠缩放弹入+上飘淡出（经验数值链路不动，只补"进账"的视觉）
+            Juice.XpOrbPop(transform.position + Vector3.up * 0.5f, XpOrbGold);
             AudioService.Instance?.Play(SfxId.Kill);
             OnDeath();
         }

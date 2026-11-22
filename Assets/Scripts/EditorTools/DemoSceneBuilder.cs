@@ -163,6 +163,9 @@ namespace StarVortex.EditorTools
             // 横版占位美术：勇者/怪物/平台/陷阱/弹丸
             NeonArtGenerator.GenerateFantasy();
 
+            // 环境美术套件：三关地形瓦片/装饰物/漩涡传送门/金属尖刺/雾带/暗角（同一导入管线，PPU 100）
+            NeonArtGenerator.GenerateTileArt();
+
             EditorUtility.DisplayProgressBar("勇者远征", "合成音效...", 0.3f);
             SfxSynth.GenerateAll();
 

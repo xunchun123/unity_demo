@@ -68,7 +68,7 @@ namespace StarVortex.EditorTools
 
             var renderer = go.GetComponent<ParticleSystemRenderer>();
             renderer.material = NeonMaterial(new Color(1.4f, 1.4f, 1.4f, 1f), additive: true);
-            renderer.sortingOrder = 5;          // 粒子永远在实体之上
+            renderer.sortingOrder = 24;         // 粒子在实体之上（勇者 20/怪 15/弧光 30 之下）
 
             return ps;
         }

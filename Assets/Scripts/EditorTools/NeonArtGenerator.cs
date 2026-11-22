@@ -144,6 +144,14 @@ namespace StarVortex.EditorTools
                     px[y * W + x] = c;
             }
 
+            // 读像素（越界返回全透明）——供分部生成器做逐像素后处理（噪点/AO 渐变/暗斑）
+            public Color Get(int x, int y)
+            {
+                if ((uint)x >= (uint)W || (uint)y >= (uint)H)
+                    return new Color(0f, 0f, 0f, 0f);
+                return px[y * W + x];
+            }
+
             // straight-alpha "over" 混合（越界忽略）
             public void Blend(int x, int y, Color c)
             {

@@ -22,6 +22,10 @@ namespace StarVortex.Enemies
         [SerializeField] private float diveSpeed = 9f;        // 俯冲速度
         [SerializeField] private float maxDiveDist = 12f;     // 俯冲最长距离（冲过目标即止的保险丝）
 
+        [Header("扑扇帧动画")]
+        [SerializeField] private Sprite _frameB;              // 第二帧（构建器注入 bat_1；缺图时跳过切换）
+        [SerializeField] private float flapInterval = 0.12f;  // 扑扇切换间隔
+
         /// <summary>行为状态机：巡航 → 瞄准 → 俯冲 → 拉高。</summary>
         private enum State { Cruise, Aim, Dive, Recover }
         private State _state = State.Cruise;
@@ -33,6 +37,9 @@ namespace StarVortex.Enemies
         private float _diveDist;
         private Vector3 _baseScale = Vector3.one;
         private float _frozenTimer;     // 冻结契约（SetFrozen）：>0 时跳过行为、velocity 清零
+        private Sprite _frameA;         // 第一帧（Init 时从当前 sprite 捕获）
+        private float _flapTimer;
+        private bool _flapAlt;
 
         public override void Init(Transform hero)
         {
@@ -47,6 +54,12 @@ namespace StarVortex.Enemies
             _baseScale = transform.localScale;
             if (_sr != null) _sr.flipX = false;
             if (_rb != null) _rb.velocity = Vector2.zero;
+            // 扑扇循环复位：首次 Init 捕获第一帧（prefab 出图 bat_0），
+            // 之后每次 Init 先切回第一帧再清计时（池化复用可能停在第二帧，不能把 bat_1 误当 frameA）
+            if (_frameA == null) _frameA = _sr != null ? _sr.sprite : null;
+            else if (_sr != null && _frameA != null) _sr.sprite = _frameA;
+            _flapTimer = 0f;
+            _flapAlt = false;
         }
 
         /// <summary>冻结：冻结期间悬停原地（gravityScale=0 不会坠落），解冻回巡航。</summary>
@@ -73,6 +86,19 @@ namespace StarVortex.Enemies
         {
             if (_rb == null) return;
             if (_sr != null) _sr.flipX = !_facingRight;
+
+            // 两帧扑扇循环（frameA↔frameB 每 0.12s 切换）——"怪物贴纸平移"的主要修因：
+            // 此前只有一张 bat_0 静图，飞起来像贴纸。缺第二帧图时静默跳过。
+            if (_sr != null && _frameB != null)
+            {
+                _flapTimer -= Time.deltaTime;
+                if (_flapTimer <= 0f)
+                {
+                    _flapTimer = flapInterval;
+                    _flapAlt = !_flapAlt;
+                    _sr.sprite = _flapAlt ? _frameB : (_frameA != null ? _frameA : _frameB);
+                }
+            }
 
             switch (_state)
             {

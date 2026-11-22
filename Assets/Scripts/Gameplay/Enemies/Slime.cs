@@ -26,7 +26,8 @@ namespace StarVortex.Enemies
         private float _airTime;         // 滞空计时：地面探测失灵时的兜底，绝不卡在空中
         private float _frozenTimer;     // 冻结契约（SetFrozen）：>0 时跳过行为、velocity 清零
 
-        private static readonly Vector3 SquashScale = new Vector3(1.25f, 0.6f, 1f); // 压扁姿态
+        private static readonly Vector3 SquashScale = new Vector3(1.25f, 0.6f, 1f);   // 压扁姿态（蓄力前摇 & 落地共用）
+        private static readonly Vector3 StretchScale = new Vector3(0.78f, 1.3f, 1f);  // 起跳瞬间拉伸姿态
         private static readonly Vector3 BaseScale = Vector3.one;
 
         public override void Init(Transform hero)
@@ -90,10 +91,10 @@ namespace StarVortex.Enemies
                     transform.localScale = Vector3.Lerp(BaseScale, SquashScale, k);
                     if (_stateTimer <= 0f)
                     {
-                        transform.localScale = BaseScale;
                         // 跳跃方向以出手瞬间为准——蓄力期间走位可以骗它跳反方向
                         var dir = new Vector2(_facingRight ? 1f : -1f, 0f);
                         _rb.velocity = dir * jumpForward + Vector2.up * jumpUp;
+                        transform.localScale = StretchScale; // 蓄力压扁→起跳拉伸：一鼓一收，弹感翻倍
                         _state = State.Airborne;
                         _airTime = 0f;
                     }
@@ -104,11 +105,15 @@ namespace StarVortex.Enemies
                 {
                     // 滞空：击退叠加在抛物线上（空中不影响弹跳逻辑），落地时统一起点
                     _airTime += Time.deltaTime;
+                    // 拉伸姿态缓缓回正：落点处几乎恢复，落地瞬间再压扁
+                    transform.localScale = Vector3.MoveTowards(
+                        transform.localScale, BaseScale, Time.deltaTime * 2.5f);
                     bool landed = _rb.velocity.y <= 0.1f && IsGrounded()
                                   || _airTime > 1.2f; // 兜底：groundMask 配错也不会永久滞空
                     if (landed)
                     {
                         _rb.velocity = Vector2.zero;    // 落地清零：弹跳余速与击退一并抹掉
+                        transform.localScale = SquashScale; // 落地压扁（跟蓄力同一姿态，语言统一）
                         _state = State.LandRest;
                         _stateTimer = landRest;
                     }
@@ -119,7 +124,14 @@ namespace StarVortex.Enemies
                     _rb.velocity = new Vector2(
                         Mathf.MoveTowards(_rb.velocity.x, 0f, 8f * Time.deltaTime), _rb.velocity.y);
                     _stateTimer -= Time.deltaTime;
-                    if (_stateTimer <= 0f) _state = State.Idle;
+                    // 压扁姿态在缓冲期内缓缓弹回（落地重量感的后半拍）
+                    float recover = Mathf.Clamp01(1f - _stateTimer / Mathf.Max(0.01f, landRest));
+                    transform.localScale = Vector3.Lerp(SquashScale, BaseScale, recover);
+                    if (_stateTimer <= 0f)
+                    {
+                        transform.localScale = BaseScale;
+                        _state = State.Idle;
+                    }
                     break;
             }
         }

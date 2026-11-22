@@ -72,6 +72,9 @@ namespace StarVortex.Gameplay
         private float _comboWindowTimer;   // 连击链保持窗口
         private int _comboStage;           // 0=未在连击中，1/2/3
         private float _bowChargeTimer;
+        private bool _wasGrounded = true;  // 落地检测：上一帧的接地状态（空中→接地翻转瞬间触发压扁/尘土）
+        private ProceduralAnim _pa;        // 程序化动画（跳跃拉伸/落地压扁/攻击 punch）
+        private DustPuff _dust;            // 灰尘（起跳/落地/奔跑/冲刺）
         private static readonly Color NormalColor = Color.white;
 
         // 连击判定参数（调研惯例：段间递增明显，finisher 最痛）
@@ -89,6 +92,8 @@ namespace StarVortex.Gameplay
             _rb.gravityScale = 3.4f;          // 比真实重力更"游戏感"的下坠
             _rb.freezeRotation = true;
             _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            _pa = GetComponent<ProceduralAnim>();
+            _dust = GetComponent<DustPuff>();
             CurrentHp = Stats.MaxHp;
             CurrentMana = Stats.MaxMana;
         }
@@ -186,7 +191,7 @@ namespace StarVortex.Gameplay
                 GameEvents.PublishPlayerManaChanged(CurrentMana, manaMax);
             }
 
-            // 动画状态：Idle/Run（Moving）+ Airborne（跳跃/下落空中态），四态状态机见构建器
+            // 动画状态：Idle/Run（Moving）+ Jump/Fall（Airborne+Falling），五态真帧动画，状态机见构建器
             if (_animator != null)
             {
                 bool moving = IsGrounded() && Mathf.Abs(_rb.velocity.x) > 0.3f;
@@ -195,7 +200,15 @@ namespace StarVortex.Gameplay
                 bool airborne = !IsGrounded();
                 if (_animator.GetBool("Airborne") != airborne)
                     _animator.SetBool("Airborne", airborne);
+                // 上升/下落分开驱动：起跳收腿帧与下落展腿帧切换（帧图来自用户 AI 生图批次二）
+                bool falling = airborne && _rb.velocity.y < -0.5f;
+                if (_animator.GetBool("Falling") != falling)
+                    _animator.SetBool("Falling", falling);
             }
+
+            // 灰尘：接地移动时跑动扬尘（DustPuff 内部 0.15s 节流）
+            if (_dust != null)
+                _dust.SetRunning(IsGrounded() && Mathf.Abs(_rb.velocity.x) > 0.5f);
 
             // 跳跃缓冲 + 土狼时间（平台手感三件套之二）
             _jumpBufferTimer -= Time.deltaTime;
@@ -251,17 +264,30 @@ namespace StarVortex.Gameplay
                     _jumpsLeft = 1; // 剩一次空中跳
                     _jumpBufferTimer = 0f;
                     _coyoteTimer = 0f;
+                    _pa?.NotifyJump();  // 起跳拉伸
+                    _dust?.EmitJump();  // 起跳扬尘
                 }
                 else if (_jumpsLeft > 0)
                 {
                     _rb.velocity = new Vector2(_rb.velocity.x, jumpVelocity * 0.92f);
                     _jumpsLeft--;
                     _jumpBufferTimer = 0f;
+                    _pa?.NotifyJump();  // 二段跳同样拉伸反馈
+                    _dust?.EmitJump();
                 }
             }
 
             // 落地复位二段跳
-            if (IsGrounded() && _rb.velocity.y <= 0.1f) _jumpsLeft = 1;
+            bool groundedNow = IsGrounded();
+            if (groundedNow && _rb.velocity.y <= 0.1f) _jumpsLeft = 1;
+
+            // 落地瞬间（空中→接地翻转）：压扁 + 尘土，"重量感"的核心反馈
+            if (groundedNow && !_wasGrounded && _rb.velocity.y <= 0.1f)
+            {
+                _pa?.NotifyLand();
+                _dust?.EmitLand();
+            }
+            _wasGrounded = groundedNow;
 
             // 可变跳跃高度 + apex 悬停（只在空中生效；冲刺激活时 y≈0 会被 apex 误触，无碍）
             if (!IsGrounded())
@@ -287,6 +313,7 @@ namespace StarVortex.Gameplay
             _dashCdTimer = Boons.Has(BoonIds.UniversalDashMaster) ? dashCooldown * 0.6f : dashCooldown;
             _dashTimer = dashDuration;
             _invulnTimer = Mathf.Max(_invulnTimer, dashInvuln);
+            _dust?.DashTrail(dashDuration); // 冲刺沿途尾尘（每 0.03s 一粒）
             BoonEffects.OnDash(this); // 火焰冲刺等爽点钩子
             AudioService.Instance?.PlayWithPitch(SfxId.Shoot, 0.6f);
         }
@@ -295,7 +322,8 @@ namespace StarVortex.Gameplay
         {
             var ghost = new GameObject("HeroGhost");
             ghost.transform.position = transform.position;
-            ghost.transform.localScale = transform.localScale;
+            // 残影继承当前视觉姿态（含程序化动画的压扁/拉伸），冲刺更像"从身体里抽出来的影子"
+            ghost.transform.localScale = _sr != null ? _sr.transform.lossyScale : transform.localScale;
             var gsr = ghost.AddComponent<SpriteRenderer>();
             gsr.sprite = _sr.sprite;
             gsr.flipX = _sr.flipX;
@@ -334,6 +362,14 @@ namespace StarVortex.Gameplay
             else _comboStage = 1;
             _comboWindowTimer = 0.9f;
 
+            // 攻击要"带身体"：接地时向前小冲量（惯性滑步），挥砍有踩进去的力道
+            if (IsGrounded())
+            {
+                _rb.velocity += new Vector2((FacingRight ? 1f : -1f) * 2.5f, 0f);
+                _dust?.Emit(1); // 蹬地滑步扬起一粒尘
+            }
+            _pa?.NotifyAttack(); // 攻击 punch（横向扩+纵向收的弹性反馈）
+
             float dmg = Stats.Attack * ComboDamageMul[_comboStage - 1];
             float reach = 1.35f * (Boons.Has(BoonIds.SwordLong) ? 1.4f : 1f);
             var box = new Vector2(reach, 1.3f);
@@ -350,7 +386,9 @@ namespace StarVortex.Gameplay
                 hitAny = true;
             }
 
-            Juice.SlashArc(_attackOrigin.position, FacingRight, _comboStage, 1f + Level * 0.05f);
+            // 弧光：尺寸 = 等级成长 × SwordLong 强化（1.4 倍），颜色/角度/加色/层级都在 Juice 内处理
+            float arcScale = (1f + Level * 0.05f) * (Boons.Has(BoonIds.SwordLong) ? 1.4f : 1f);
+            Juice.SlashArc(_attackOrigin.position, FacingRight, _comboStage, arcScale);
             _animator?.SetTrigger("Attack");
             AudioService.Instance?.PlayWithPitch(SfxId.Hit, 0.9f + _comboStage * 0.08f);
             if (_comboStage == 3)
@@ -359,7 +397,7 @@ namespace StarVortex.Gameplay
                 BoonEffects.OnComboFinisher(this, center);
                 if (Boons.Has(BoonIds.SwordShockwave)) FireSwordWave();
             }
-            if (hitAny) Juice.HitStop(_comboStage == 3 ? 0.06f : 0.03f);
+            if (hitAny) Juice.HitStop(_comboStage == 3 ? 0.06f : 0.03f); // 近战命中停帧确认有效（0.15s 冷却节流）
         }
 
         private void FireSwordWave()
@@ -374,6 +412,7 @@ namespace StarVortex.Gameplay
             // 设计修正（用户反馈）：普攻免费——蓝只作为"K 特殊技"的资源，
             // 否则没蓝时法杖会彻底哑火（普攻不能被资源锁死）
             _attackTimer = _weaponKit != null ? _weaponKit.attackInterval : 0.4f;
+            _pa?.NotifyAttack(); // 施法 punch：轻一顿的后坐反馈
             LaunchFireball(1f);
             if (Boons.Has(BoonIds.StaffTwinBolt)) LaunchFireball(0.75f);
             AudioService.Instance?.PlayWithPitch(SfxId.Shoot, 1.25f);
@@ -392,6 +431,7 @@ namespace StarVortex.Gameplay
             if (_attackTimer > 0f) return;
             _attackTimer = _weaponKit != null ? _weaponKit.attackInterval : 0.45f;
             _bowChargeTimer = 0f;
+            _pa?.NotifyAttack(); // 开弓 punch：撒放瞬间的身体反馈
 
             float dmg = Stats.Attack * (charged ? 2.5f : 1f) * (_weaponKit != null ? _weaponKit.attackDamageMul : 1f);
             int pierce = 1 + (Boons.Has(BoonIds.BowPiercePlus) ? 1 : 0);

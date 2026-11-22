@@ -62,6 +62,8 @@ namespace StarVortex.Gameplay
             }
 
             Juice.DeathBurst(center, new Color(1.6f, 0.9f, 0.4f), 10, 0.5f);
+            Juice.HitStop(0.03f);                 // 弹体命中也吃一拍轻停帧（与近战手感统一，0.15s 冷却自动节流）
+            CameraRig.Instance?.AddTrauma(0.1f);  // 爆炸轻震屏
             AudioService.Instance?.PlayWithPitch(SfxId.CritHit, 0.85f);
             BoonEffectsHookFireball(center);
 
