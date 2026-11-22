@@ -34,6 +34,12 @@ namespace StarVortex.UI
         private void OnEnable()
         {
             GameEvents.LevelUp += OnLevelUp;
+            // 引导器在 LevelUp 状态激活本面板时（事件可能先于激活发布），直接开抽
+            if (GameManager.Instance != null && GameManager.Instance.State == GameState.LevelUp)
+            {
+                var player = FindFirstObjectByType<Gameplay.PlayerController>();
+                OnLevelUp(player != null ? player.Stats.Level : 1);
+            }
         }
 
         private void OnDisable()
@@ -89,7 +95,6 @@ namespace StarVortex.UI
             if (picked.kind == UpgradeKind.MaxHpAdd) _player.Heal(picked.value);
             AudioService.Instance?.PlayUiClick();
 
-            _player.Stats.ConsumePendingLevelUp();
             Close();
         }
 

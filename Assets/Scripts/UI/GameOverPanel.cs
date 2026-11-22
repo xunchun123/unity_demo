@@ -20,9 +20,10 @@ namespace StarVortex.UI
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _menuButton;
 
+        private bool _showing; // 防止"激活时补触发"和事件推送双重进入结算
+
         private void Awake()
         {
-            gameObject.SetActive(false);
             _restartButton.onClick.AddListener(() =>
             {
                 AudioService.Instance?.PlayUiClick();
@@ -35,11 +36,20 @@ namespace StarVortex.UI
             });
         }
 
-        private void OnEnable() => GameEvents.PlayerDied += OnPlayerDied;
+        private void OnEnable()
+        {
+            GameEvents.PlayerDied += OnPlayerDied;
+            // 引导器在 GameOver 状态激活本面板时（死亡事件可能先于激活发布），直接进入结算
+            if (GameManager.Instance != null && GameManager.Instance.State == GameState.GameOver)
+                OnPlayerDied();
+        }
+
         private void OnDisable() => GameEvents.PlayerDied -= OnPlayerDied;
 
         private void OnPlayerDied()
         {
+            if (_showing) return;
+            _showing = true;
             StartCoroutine(ShowRoutine());
         }
 
@@ -49,9 +59,7 @@ namespace StarVortex.UI
             yield return new WaitForSecondsRealtime(0.9f);
 
             var gm = GameManager.Instance;
-            var best = SaveSystem.LoadBest();
-            bool isNewRecord = best != null && Mathf.Approximately(best.survivalSeconds, gm.RunTime)
-                && best.kills == gm.Kills;
+            bool isNewRecord = gm.LastRunWasNewRecord; // 存档系统直接给结论，不再反推
 
             _group.alpha = 1f;
             gameObject.SetActive(true);

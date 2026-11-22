@@ -7,9 +7,9 @@ namespace StarVortex.UI
     public static class LeanTweenLike
     {
         /// <summary>正弦浮动循环（unscaled）。</summary>
-        public static void FloatingLoop(MonoBehaviour host, Transform target, float amplitude, float period)
+        public static void FloatingLoop(MonoBehaviour host, RectTransform target, float amplitude, float period)
         {
-            Vector3 basePos = target.anchoredPosition;
+            Vector2 basePos = target.anchoredPosition;
             Tween.Start(host, float.MaxValue, k =>
             {
                 float t = (Time.unscaledTime % period) / period * Mathf.PI * 2f;
