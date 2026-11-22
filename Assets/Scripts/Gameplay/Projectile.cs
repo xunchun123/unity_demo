@@ -1,0 +1,71 @@
+using StarVortex.Core;
+using StarVortex.Data;
+using UnityEngine;
+
+namespace StarVortex.Gameplay
+{
+    /// <summary>
+    /// 玩家弹丸：触发器碰撞 + 匀速直线飞行 + 穿透计数。
+    /// 面试点：弹丸用 Trigger（不阻挡移动），敌人对玩家用 Collider 实体碰撞——
+    /// 两种物理形态各司其职，配合 Layer Collision Matrix 分层管理。
+    /// </summary>
+    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
+    public class Projectile : MonoBehaviour
+    {
+        [SerializeField] private Rigidbody2D _rb;
+        [SerializeField] private SpriteRenderer _sr;
+        [SerializeField] private TrailRenderer _trail;
+
+        private float _damage;
+        private bool _isCrit;
+        private int _pierceLeft;
+        private float _lifetime;
+
+        private void Reset()
+        {
+            _rb = GetComponent<Rigidbody2D>();
+            _sr = GetComponent<SpriteRenderer>();
+        }
+
+        private void Awake()
+        {
+            if (_rb == null) _rb = GetComponent<Rigidbody2D>();
+            _rb.gravityScale = 0f;
+        }
+
+        private void OnEnable() => _lifetime = 0f;
+
+        /// <summary>发射（由武器控制器调用，同时完成伤害暴击结算）。</summary>
+        public void Launch(Vector2 dir, float speed, float damage, bool isCrit, int pierce, float lifetime)
+        {
+            _rb.velocity = dir * speed;
+            transform.rotation = Quaternion.LookRotation(Vector3.forward, dir);
+            _damage = damage;
+            _isCrit = isCrit;
+            _pierceLeft = pierce;
+            _lifetime = lifetime;
+        }
+
+        private void Update()
+        {
+            _lifetime -= Time.deltaTime;
+            if (_lifetime <= 0f) ReturnToPool();
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            // 命中判定走 IDamageable 接口（见 Damage.cs），弹丸不关心具体是敌人还是别的可破坏物
+            var target = other.GetComponentInParent<IDamageable>();
+            if (target == null) return;
+
+            target.TakeDamage(new DamageInfo(_damage, transform.position, _isCrit));
+            Juice.HitSpark(transform.position, _sr.color);
+            AudioService.Instance?.Play(_isCrit ? SfxId.CritHit : SfxId.Hit);
+
+            _pierceLeft--;
+            if (_pierceLeft <= 0) ReturnToPool();
+        }
+
+        private void ReturnToPool() => PoolService.Instance.Despawn(gameObject);
+    }
+}
