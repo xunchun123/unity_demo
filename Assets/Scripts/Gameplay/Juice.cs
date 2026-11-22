@@ -314,14 +314,14 @@ namespace StarVortex.Gameplay
         public static void ImpactSpark(Vector3 pos)
         {
             if (Instance == null) return;
-            var glow = NewGlowSprite(pos, ImpactGold, 0.55f, 26);
-            var core = NewGlowSprite(pos, ImpactCore, 0.26f, 27);
+            var glow = NewGlowSprite(pos, ImpactGold, 0.85f, 26);
+            var core = NewGlowSprite(pos, ImpactCore, 0.42f, 27);
             Instance.StartCoroutine(Instance.ImpactSparkRoutine(glow, core));
         }
 
         private IEnumerator ImpactSparkRoutine(SpriteRenderer glow, SpriteRenderer core)
         {
-            const float life = 0.15f;
+            const float life = 0.2f;
             float t = 0f;
             while (t < life)
             {
@@ -329,15 +329,15 @@ namespace StarVortex.Gameplay
                 float k = Mathf.Clamp01(t / life);
                 if (glow != null)
                 {
-                    // 金晕弹出扩散（0.5→1.5 倍）同时淡出
-                    float s = Mathf.Lerp(0.5f, 1.5f, Tween.EaseOutCubic(k));
-                    glow.transform.localScale = Vector3.one * (0.55f * s);
+                    // 金晕弹出扩散（初始 0.85u → 2.2u）同时淡出（尺寸须与 ImpactSpark 初始值一致）
+                    float s = Mathf.Lerp(0.6f, 2.6f, Tween.EaseOutCubic(k));
+                    glow.transform.localScale = Vector3.one * (0.85f * s);
                     SetSpriteAlpha(glow, 1f - k);
                 }
                 if (core != null)
                 {
                     // 白核向内收爆 + 快速淡出（先亮后灭的一闪）
-                    core.transform.localScale = Vector3.one * (0.26f * Mathf.Lerp(1.2f, 0.5f, k));
+                    core.transform.localScale = Vector3.one * (0.42f * Mathf.Lerp(1.2f, 0.5f, k));
                     SetSpriteAlpha(core, 1f - k);
                 }
                 yield return null;

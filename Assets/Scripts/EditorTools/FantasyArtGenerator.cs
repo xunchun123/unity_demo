@@ -204,23 +204,44 @@ namespace StarVortex.EditorTools
             return c;
         }
 
-        // ---------- 剑气弧光（三段连击各一弧） ----------
+        // ---------- 剑气弧光（三段连击各一弧：新月刀光——逐像素高斯弧带，替代旧线段拼弧"空心D"） ----------
+        // 设计：凸面朝右（面右挥击；flipX 镜像朝左）；炽亮内锋线 + 柔光带 + 两端收尖；
+        // 亮度全由 alpha 承载（运行时 additive + 三段染色 白/金/橙红）。烘焙角与 Juice 代码角叠加后
+        // 三段实际倾角约 0°/40°/85°（平挥/斜撩/过顶劈）。
         private static Raster BuildSlash(int stage)
         {
-            var c = new Raster(96, 96);
-            int n = 16;
-            var arc = new Vector2[n];
-            float sweep = 2.2f + stage * 0.35f;
-            for (int i = 0; i < n; i++)
-            {
-                float a = -sweep / 2 + sweep * (i / (float)(n - 1));
-                float r = 30f + stage * 4f;
-                arc[i] = new Vector2(48 + Mathf.Cos(a) * r, 48 + Mathf.Sin(a) * r);
-            }
-            Color col = new Color(0.9f, 0.97f, 1f, 0.9f);
-            c.DrawLineSegment(arc[0].x, arc[0].y, arc[n - 1].x, arc[n - 1].y, 6f - stage, col);
-            for (int i = 0; i < n - 1; i++)
-                c.DrawLineSegment(arc[i].x, arc[i].y, arc[i + 1].x, arc[i + 1].y, 5f - stage * 0.8f, col);
+            var c = new Raster(256, 256);
+            float cx = 88f, cy = 128f;                       // 弧心偏左：右侧留出凸面空间
+            float radius = 96f;
+            float sweep = 2.3f + stage * 0.15f;              // 弧长（弧度）——细长比 ≥8:1 才读作"刀光"
+            float rot = stage == 0 ? 0f : stage == 1 ? -0.22f : -0.45f; // 烘焙部分倾斜（代码再转，叠加为三段递进倾角）
+            float band = stage == 2 ? 15f : 11f;             // 弧带半宽：细带才是"挥砍"，胖带是"饼"
+            float bandSigma = band * 0.55f;
+            float edgeSigma = 2.2f;
+
+            for (int y = 0; y < c.H; y++)
+                for (int x = 0; x < c.W; x++)
+                {
+                    float dx = x - cx, dy = y - cy;
+                    float ang = Mathf.Atan2(dy, dx) - rot;
+                    float r = Mathf.Sqrt(dx * dx + dy * dy);
+                    float t = Mathf.Abs(ang) / (sweep * 0.5f); // 0=弧中心，1=端点
+                    if (t > 1.05f) continue;
+                    float window = 1f - Mathf.SmoothStep(0.7f, 1.05f, t); // 角度软窗：两端自然淡出
+                    if (window <= 0f) continue;
+                    float taper = Mathf.Pow(1f - Mathf.Clamp01(t), 0.7f); // 中段最厚，向两端收尖
+                    // 半径沿角度内旋（起手半径大→收势小）：同心环段读作"饼"，内旋弧才读作"挥出来的刀光"
+                    float rCenter = radius + 4f - (22f + stage * 6f) * t;
+                    float dr = Mathf.Abs(r - rCenter);
+                    float bandA = Mathf.Exp(-(dr * dr) / (2f * bandSigma * bandSigma)) * taper * window;
+                    // 外缘炽亮刀锋线（切割前沿），内缘柔光带
+                    float de = Mathf.Abs(r - (rCenter + band * 0.35f));
+                    float edgeA = Mathf.Exp(-(de * de) / (2f * edgeSigma * edgeSigma)) * taper * window;
+                    float a = Mathf.Clamp01(bandA * 0.6f + edgeA * 1.0f);
+                    if (a <= 0.004f) continue;
+                    float core = Mathf.Clamp01(edgeA);
+                    c.Blend(x, y, new Color(0.98f + 0.02f * core, 0.96f + 0.03f * core, 0.9f + 0.08f * core, a));
+                }
             return c;
         }
 
