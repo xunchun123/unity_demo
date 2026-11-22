@@ -54,7 +54,11 @@ namespace StarVortex.Core
             var pool = new ObjectPool<GameObject>(
                 createFunc: () =>
                 {
-                    var go = Instantiate(prefab);
+                    if (_poolRoot == null) EnsureInitialized();
+                    // 必须挂到池根节点（PoolService 跨场景常驻）：
+                    // 若留在场景根，场景重载会销毁实例，而池的空闲列表仍持有已销毁引用，
+                    // 下次 Get() 直接 MissingReferenceException（冒烟测试抓出来的真 bug）。
+                    var go = Instantiate(prefab, _poolRoot);
                     go.name = prefab.name; // 去掉 "(Clone)"，Hierarchy 干净
                     return go;
                 },

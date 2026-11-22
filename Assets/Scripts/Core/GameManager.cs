@@ -21,6 +21,9 @@ namespace StarVortex.Core
         public float RunTime { get; private set; }
         public int Kills { get; private set; }
 
+        /// <summary>上一局是否刷新了最高纪录（结算界面直接读，不用反推）。</summary>
+        public bool LastRunWasNewRecord { get; private set; }
+
         /// <summary>事件节流计时器（RunClockTick 每 0.25 秒推送一次）。</summary>
         private float _clockAccumulator;
 
@@ -141,7 +144,7 @@ namespace StarVortex.Core
 
             // 等级直接从玩家组件读取（死亡时场景仍在，组件未销毁）
             var player = FindFirstObjectByType<Gameplay.PlayerController>();
-            SaveSystem.TryUpdateBestRecord(new BestRecord
+            LastRunWasNewRecord = SaveSystem.TryUpdateBestRecord(new BestRecord
             {
                 survivalSeconds = RunTime,
                 kills = Kills,

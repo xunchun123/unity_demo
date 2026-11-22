@@ -25,6 +25,8 @@ namespace StarVortex.Core
         private int _nextSource;
         private AudioClip[] _indexed;
 
+        [SerializeField] private bool _bound; // 序列化防重复绑定（编辑器期绑定过则运行时跳过）
+
         private void Awake()
         {
             if (Instance != null && Instance != this) { Destroy(gameObject); return; }
@@ -35,12 +37,13 @@ namespace StarVortex.Core
         private void OnDestroy() { if (Instance == this) Instance = null; }
 
         /// <summary>是否已绑定音效（Menu/Game 两个场景都调用，防重复绑定）。</summary>
-        public bool IsBound => _indexed != null && _indexed.Length > 0;
+        public bool IsBound => _bound && _indexed != null && _indexed.Length > 0;
 
         /// <summary>按 SfxId 顺序绑定的 Clip（构建脚本保证顺序与 SfxId 枚举一致）。</summary>
         public void BindClips(List<AudioClip> clips, AudioClip music, int sourceCount = 6)
         {
             if (IsBound) return;
+            _bound = true;
             _clips.AddRange(clips);
             _indexed = _clips.ToArray();
             _sfxSources.Clear();

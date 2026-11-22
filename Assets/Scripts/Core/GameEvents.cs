@@ -11,8 +11,6 @@ namespace StarVortex.Core
     {
         /// <summary>游戏状态切换（UI 面板显隐的单一事实来源）。</summary>
         public static event Action<GameState> GameStateChanged;
-        /// <summary>暂停面板请求切换显隐（active, 面板自身）。</summary>
-        public static event Action<bool> PausePanelVisibility;
         /// <summary>敌人死亡（参数：经验值、击杀来源位置）。</summary>
         public static event Action<int, UnityEngine.Vector3> EnemyDied;
         /// <summary>玩家经验变化（当前值 / 升级所需值）。</summary>
@@ -43,7 +41,7 @@ namespace StarVortex.Core
         /// <summary>场景卸载时清空所有订阅，防止跨场景引用残留对象（生命周期陷阱的经典来源）。</summary>
         public static void ClearAllSubscribers()
         {
-            GameStateChanged = null; PausePanelVisibility = null;
+            GameStateChanged = null;
             EnemyDied = null; XpChanged = null; LevelUp = null; PlayerHpChanged = null;
             PlayerDied = null; PlayerHurt = null; KillCountChanged = null; RunClockTick = null;
         }
