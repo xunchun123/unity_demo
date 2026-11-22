@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83895ecd28551104c9e2e205aa736245, type: 3}
+  m_Name: Weapon_PulseBlaster
+  m_EditorClassIdentifier: 
+  displayName: "\u8109\u51B2\u6B65\u67AA"
+  description: "\u81EA\u52A8\u9501\u5B9A\u6700\u8FD1\u7684\u654C\u4EBA\u5C04\u51FB"
+  fireInterval: 0.45
+  projectileCount: 1
+  spreadAngle: 12
+  projectileSpeed: 14
+  projectileDamage: 12
+  pierce: 1
+  projectileLifetime: 1.6
+  targetRadius: 9
+  projectileSprite: {fileID: 0}
+  projectileColor: {r: 1, g: 0.95, b: 0.6, a: 1}
+  projectileEmission: {r: 1.6, g: 1.5, b: 0.8, a: 1}
