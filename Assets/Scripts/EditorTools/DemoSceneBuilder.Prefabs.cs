@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using StarVortex.Data;
@@ -163,6 +164,11 @@ namespace StarVortex.EditorTools
             trail.alignment = LineAlignment.View;
             trail.textureMode = LineTextureMode.Stretch;
 
+            var proj = go.AddComponent<Projectile>();
+            SetField(proj, "_rb", rb);
+            SetField(proj, "_sr", sr);
+            SetField(proj, "_trail", trail); // AddComponent 不触发 Reset() 自动抓引用，必须显式接线
+
             return SavePrefab(go, "Projectile");
         }
 
@@ -218,11 +224,12 @@ namespace StarVortex.EditorTools
             haloSr.material = NeonMaterial(new Color(1.2f, 0.3f, 1f, 0.35f), additive: true);
             haloSr.sortingOrder = -1;
 
-            go.AddComponent<XPGem>();
+            var gem = go.AddComponent<XPGem>();
+            SetField(gem, "_sr", sr); // 精灵在子物体上，必须接线（漏了会 UnassignedReference）
             return SavePrefab(go, "XPGem");
         }
 
-        /// <summary>伤害飘字预制体：世界空间 TMP 文本。</summary>
+        /// <summary>伤害飘字预制体：世界空间 TMP 文本（显式中文字体，数字+暴击提示都能显示）。</summary>
         private static GameObject BuildPopPrefab()
         {
             var go = new GameObject("DamagePop");
@@ -231,14 +238,81 @@ namespace StarVortex.EditorTools
             tmp.fontSize = 3f;
             tmp.alignment = TextAlignmentOptions.Center;
             tmp.fontStyle = FontStyles.Bold;
+            if (_cjkFont != null) tmp.font = _cjkFont;
 
-            go.AddComponent<DamagePop>();
+            var pop = go.AddComponent<DamagePop>();
+            SetField(pop, "_label", tmp); // 不接线的话首次命中就 NRE，敌人永远死不了（冒烟测试抓出来的）
             return SavePrefab(go, "DamagePop");
         }
 
         // ---------- 材质助手 ----------
 
-        /// <summary>发光材质：Sprites/Default 改色 + 可选 Additive 混合（发光体专用）。</summary>
+        /// <summary>
+        /// 自写的 URP 加色混合 Unlit 着色器（发光体专用：拖尾/光晕/粒子）。
+        /// 内置管线的 Particles/Standard Unlit 在 URP 下不可用（会渲染成洋红），
+        /// 与其依赖 Graphics API 的兼容层，不如 30 行 HLSL 写明白——面试可讲。
+        /// </summary>
+        private const string AdditiveShaderSource = @"
+Shader ""StarVortex/UnlitAdditive""
+{
+    Properties
+    {
+        _MainTex (""Texture"", 2D) = ""white"" {}
+        _Color (""Tint"", Color) = (1,1,1,1)
+    }
+    SubShader
+    {
+        Tags { ""RenderType""=""Transparent"" ""Queue""=""Transparent"" ""RenderPipeline""=""UniversalPipeline"" ""IgnoreProjector""=""True"" }
+        Blend SrcAlpha One
+        ZWrite Off
+        Cull Off
+        Pass
+        {
+            HLSLPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include ""Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl""
+
+            TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex);
+            CBUFFER_START(UnityPerMaterial)
+                float4 _MainTex_ST;
+                half4 _Color;
+            CBUFFER_END
+
+            struct Attributes { float4 positionOS : POSITION; float2 uv : TEXCOORD0; half4 color : COLOR; };
+            struct Varyings  { float4 positionHCS : SV_POSITION; float2 uv : TEXCOORD0; half4 color : COLOR; };
+
+            Varyings vert(Attributes IN)
+            {
+                Varyings OUT;
+                OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
+                OUT.uv = TRANSFORM_TEX(IN.uv, _MainTex);
+                OUT.color = IN.color;
+                return OUT;
+            }
+
+            half4 frag(Varyings IN) : SV_Target
+            {
+                return SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv) * _Color * IN.color;
+            }
+            ENDHLSL
+        }
+    }
+}";
+
+        /// <summary>确保自写着色器已导入项目（幂等），返回其路径。</summary>
+        private const string AdditiveShaderPath = "Assets/Settings/UnlitAdditive.shader";
+
+        private static void EnsureAdditiveShader()
+        {
+            if (AssetDatabase.LoadAssetAtPath<Shader>(AdditiveShaderPath) != null) return;
+            EnsureDir("Assets/Settings");
+            File.WriteAllText(Path.Combine(Directory.GetParent(Application.dataPath).FullName,
+                AdditiveShaderPath.Replace('/', Path.DirectorySeparatorChar)), AdditiveShaderSource);
+            AssetDatabase.ImportAsset(AdditiveShaderPath);
+        }
+
+        /// <summary>发光材质：Sprite 默认着色器（普通）或自写加色着色器（发光体）。</summary>
         internal static Material NeonMaterial(Color color, bool additive)
         {
             EnsureDir("Assets/Materials/Generated");
@@ -246,18 +320,15 @@ namespace StarVortex.EditorTools
             var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (mat != null) return mat;
 
-            var shader = Shader.Find(additive ? "Particles/Standard Unlit" : "Sprites/Default");
-            mat = new Material(shader);
             if (additive)
             {
+                EnsureAdditiveShader();
+                mat = new Material(Shader.Find("StarVortex/UnlitAdditive"));
                 mat.SetColor("_Color", color);
-                mat.SetFloat("_Mode", 4f); // Additive
-                mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.One);
-                mat.SetInt("_ZWrite", 0);
             }
             else
             {
+                mat = new Material(Shader.Find("Sprites/Default"));
                 mat.SetColor("_Color", color);
             }
             AssetDatabase.CreateAsset(mat, path);
@@ -267,14 +338,18 @@ namespace StarVortex.EditorTools
         private static string ColorToHex(Color c) =>
             ColorUtility.ToHtmlStringRGBA(new Color(Mathf.Clamp01(c.r), Mathf.Clamp01(c.g), Mathf.Clamp01(c.b), Mathf.Clamp01(c.a)));
 
+        /// <summary>逐级创建目录（AssetDatabase.CreateFolder 不支持多级递归）。</summary>
         private static void EnsureDir(string path)
         {
-            if (!AssetDatabase.IsValidFolder(path))
-                AssetDatabase.CreateFolder(ParentOf(path), LastOf(path));
+            var parts = path.Split('/');
+            string current = parts[0]; // "Assets"
+            for (int i = 1; i < parts.Length; i++)
+            {
+                string next = current + "/" + parts[i];
+                if (!AssetDatabase.IsValidFolder(next)) AssetDatabase.CreateFolder(current, parts[i]);
+                current = next;
+            }
         }
-
-        private static string ParentOf(string path) => path.Substring(0, path.LastIndexOf('/'));
-        private static string LastOf(string path) => path.Substring(path.LastIndexOf('/') + 1);
 
         private static GameObject SavePrefab(GameObject go, string name)
         {

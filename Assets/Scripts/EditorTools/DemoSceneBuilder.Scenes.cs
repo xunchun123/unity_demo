@@ -3,6 +3,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using StarVortex.Core;
 using StarVortex.Data;
@@ -73,7 +74,7 @@ namespace StarVortex.EditorTools
             aura.transform.SetParent(player.transform, false);
             var auraLight = aura.AddComponent<Light2D>();
             auraLight.lightType = Light2D.LightType.Sprite;
-            auraLight.sprite = Art("glow_disc");
+            auraLight.lightCookieSprite = Art("glow_disc"); // URP14 中 Sprite 光源的贴图字段叫 lightCookieSprite
             auraLight.color = new Color(0.25f, 0.88f, 1f);
             auraLight.intensity = 1.5f;
             auraLight.overlapOperation = Light2D.OverlapOperation.Additive;
@@ -121,6 +122,8 @@ namespace StarVortex.EditorTools
             SetField(bootstrap, "_cameraRig", cameraGo.GetComponent<CameraRig>());
             SetField(bootstrap, "_player", player.GetComponent<PlayerController>());
             SetField(bootstrap, "_pausePanel", pausePanel.GetComponent<PausePanel>());
+            SetField(bootstrap, "_levelUpPanel", levelUpPanel.GetComponent<LevelUpPanel>());
+            SetField(bootstrap, "_gameOverPanel", gameOverPanel.GetComponent<GameOverPanel>());
             SetField(bootstrap, "_hudCanvas", (RectTransform)canvas.transform);
 
             // 音频绑定（从 GameScene 单独进 Play 时也生效）
@@ -152,6 +155,7 @@ namespace StarVortex.EditorTools
             var sr = go.AddComponent<SpriteRenderer>();
             sr.sprite = Art("player_idle_0");
             sr.color = new Color(0.6f, 1f, 1f); // 青色调精灵
+            sr.sortingOrder = 2;                // 玩家在敌人之上
 
             var animator = go.AddComponent<Animator>();
             animator.runtimeAnimatorController = _playerController;
@@ -163,9 +167,10 @@ namespace StarVortex.EditorTools
             weaponGo.transform.SetParent(go.transform, false);
             var weapon = weaponGo.AddComponent<WeaponController>();
 
-            // 拾取圈（触发器，半径随升级变化）
+            // 拾取圈（触发器，半径随升级变化；tag 供宝石判定归属）
             var pickupGo = new GameObject("PickupArea");
             pickupGo.transform.SetParent(go.transform, false);
+            pickupGo.tag = "Player";
             var pickup = pickupGo.AddComponent<CircleCollider2D>();
             pickup.isTrigger = true;
             pickup.radius = 2.2f;
@@ -175,6 +180,7 @@ namespace StarVortex.EditorTools
             SetField(controller, "_spriteRenderer", sr);
             SetField(controller, "_weapon", weapon);
             SetField(controller, "_pickupArea", pickup);
+            SetField(controller, "_animator", animator);
             SetField(controller, "_startingWeapon", _weapon);
             SetField(weapon, "_player", controller);
             SetField(weapon, "_projectilePrefab", _projectilePrefab.GetComponent<Projectile>());
@@ -187,12 +193,12 @@ namespace StarVortex.EditorTools
             var bg = new GameObject("Background");
             var parallax = bg.AddComponent<BackgroundParallax>();
 
-            var layers = new List<BackgroundParallax.Layer>();
             string[] sprites = { "star_bg_0", "star_bg_1", "star_bg_2" };
             float[] factors = { 0.08f, 0.2f, 0.42f };
             Vector2[] scales = { new Vector2(10f, 10f), new Vector2(7f, 7f), new Vector2(5f, 5f) };
             int[] orders = { -30, -20, -10 };
 
+            var renderers = new SpriteRenderer[3];
             for (int i = 0; i < 3; i++)
             {
                 var layerGo = new GameObject($"StarLayer_{i}");
@@ -201,9 +207,16 @@ namespace StarVortex.EditorTools
                 sr.sprite = Art(sprites[i]);
                 sr.sortingOrder = orders[i];
                 EnsureTextureRepeat(sprites[i]);
-                layers.Add(new BackgroundParallax.Layer { renderer = sr, followFactor = factors[i], scale = scales[i] });
+                renderers[i] = sr;
             }
-            SetField(parallax, "_layers", layers.ToArray());
+
+            // 结构体数组用逐子字段方式写入（视差系数/缩放不可序列化成 Object 引用）
+            SetStructArrayField(parallax, "_layers", (elem, i) =>
+            {
+                elem.FindPropertyRelative("renderer").objectReferenceValue = renderers[i];
+                elem.FindPropertyRelative("followFactor").floatValue = factors[i];
+                elem.FindPropertyRelative("scale").vector2Value = scales[i];
+            }, 3);
         }
 
         /// <summary>星空贴图设为 Repeat 包裹（UV 偏移平铺的前提）。</summary>
@@ -231,8 +244,7 @@ namespace StarVortex.EditorTools
             AssetDatabase.CreateAsset(profile, "Assets/Settings/PostVolume.asset");
 
             var bloom = profile.Add<Bloom>();
-            bloom.enabled.overrideState = true;
-            bloom.enabled.value = true;
+            bloom.active = true;
             bloom.intensity.overrideState = true;
             bloom.intensity.value = 1.6f;
             bloom.threshold.overrideState = true;
@@ -242,7 +254,7 @@ namespace StarVortex.EditorTools
 
             // 轻微暗角：霓虹风格聚焦画面中心
             var vignette = profile.Add<Vignette>();
-            vignette.enabled.overrideState = true;
+            vignette.active = true;
             vignette.intensity.overrideState = true;
             vignette.intensity.value = 0.32f;
             vignette.smoothness.overrideState = true;
@@ -250,7 +262,7 @@ namespace StarVortex.EditorTools
 
             // 轻微色偏：电影感（不夸张）
             var colorAdj = profile.Add<ColorAdjustments>();
-            colorAdj.enabled.overrideState = true;
+            colorAdj.active = true;
             colorAdj.postExposure.overrideState = true;
             colorAdj.postExposure.value = 0.1f;
             colorAdj.saturation.overrideState = true;

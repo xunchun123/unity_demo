@@ -27,11 +27,14 @@ namespace StarVortex.EditorTools
             {
                 var idle = MakeClip("Player_Idle", new[] { "player_idle_0", "player_idle_1", "player_idle_2", "player_idle_3" }, 6f);
                 var run = MakeClip("Player_Run", new[] { "player_idle_0", "player_idle_1", "player_idle_2", "player_idle_3" }, 12f);
-                clip.AddParameter("Moving", typeof(bool));
+                var param = new AnimatorControllerParameter { name = "Moving", type = AnimatorControllerParameterType.Bool };
+                clip.parameters = new[] { param };
 
                 var root = clip.layers[0].stateMachine;
-                var idleState = root.AddState("Idle", idle);
-                var runState = root.AddState("Run", run);
+                var idleState = root.AddState("Idle");
+                idleState.motion = idle;
+                var runState = root.AddState("Run");
+                runState.motion = run;
                 root.defaultState = idleState;
 
                 var toRun = idleState.AddTransition(runState);
@@ -53,7 +56,8 @@ namespace StarVortex.EditorTools
             _enemyControllers[name] = MakeController(name, sm =>
             {
                 var walk = MakeClip($"{name}_Walk", frames, fps);
-                sm.layers[0].stateMachine.AddState("Walk", walk);
+                var state = sm.layers[0].stateMachine.AddState("Walk");
+                state.motion = walk;
             });
         }
 

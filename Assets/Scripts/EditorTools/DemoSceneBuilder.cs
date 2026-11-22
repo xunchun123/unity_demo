@@ -1,6 +1,10 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
+using UnityEngine.TextCore.LowLevel;
 using TMPro;
 
 namespace StarVortex.EditorTools
@@ -13,6 +17,43 @@ namespace StarVortex.EditorTools
     public static partial class DemoSceneBuilder
     {
         private const string MarkerFile = "Library/StarVortex_Built.marker";
+
+        /// <summary>
+        /// 打包 Windows EXE（64 位 Mono）。
+        /// 面试点：会打包是"完整交付"的基本功——场景列表来自 BuildSettings，
+        /// 输出到 Builds/ 目录（已 gitignore）。
+        /// </summary>
+        [MenuItem("StarVortex/② 打包 Windows EXE", priority = 1)]
+        public static void BuildWindowsExe()
+        {
+            const string outputDir = "Builds/Windows";
+            string outputPath = outputDir + "/StarVortex.exe";
+            Directory.CreateDirectory(outputDir);
+
+            var sceneList = new List<EditorBuildSettingsScene>(EditorBuildSettings.scenes);
+            if (sceneList.Count == 0)
+            {
+                Debug.LogError("[Build] BuildSettings 为空，先运行一键搭建");
+                return;
+            }
+
+            var options = new BuildPlayerOptions
+            {
+                scenes = System.Array.ConvertAll(sceneList.ToArray(), s => s.path),
+                locationPathName = outputPath,
+                target = BuildTarget.StandaloneWindows64,
+                options = BuildOptions.None,
+            };
+            var report = BuildPipeline.BuildPlayer(options);
+            if (report.summary.result == BuildResult.Succeeded)
+            {
+                Debug.Log($"[Build] 打包成功：{outputPath}  大小 {report.summary.totalSize / 1048576}MB  用时 {report.summary.totalTime.TotalSeconds:F0}s");
+            }
+            else
+            {
+                Debug.LogError($"[Build] 打包失败：{report.summary.result}");
+            }
+        }
 
         [MenuItem("StarVortex/① 一键搭建 Demo", priority = 0)]
         public static void GenerateAll()
@@ -35,7 +76,8 @@ namespace StarVortex.EditorTools
             EditorUtility.DisplayProgressBar("星涡幸存者", "搭建场景与动画...", 0.8f);
             SetupProjectSettings();
             BuildScenes();
-            BuildSpriteAtlas();
+            // 注：精灵图集（SpriteAtlas）API 依赖被裁剪的编辑器模块，此环境不可用；
+            // 精灵总量 <50，URP 动态合批足够。图集作为"进一步优化"记录在 INTERVIEW.md。
 
             EditorUtility.ClearProgressBar();
             File.WriteAllText(Path.Combine(Directory.GetParent(Application.dataPath).FullName, MarkerFile),
@@ -51,6 +93,9 @@ namespace StarVortex.EditorTools
         [InitializeOnLoadMethod]
         private static void AutoSetupOnFirstOpen()
         {
+            // 批量模式（CI/自动化编译）不弹窗，显式用 -executeMethod 调 GenerateAll
+            if (Application.isBatchMode) return;
+
             EditorApplication.delayCall += () =>
             {
                 string projectRoot = Directory.GetParent(Application.dataPath).FullName;
@@ -67,85 +112,118 @@ namespace StarVortex.EditorTools
         }
 
         /// <summary>
-        /// 中文字体资产：从系统字体（微软雅黑）生成 TMP SDF 字体并烘焙游戏内全部汉字。
-        /// 面试点：TMP 默认字体不含 CJK——中文游戏的字体管线是个真实生产问题；
-        /// 编辑器期把用到的字符全部烘进静态图集，打包后不依赖目标机字体。
+        /// 中文字体资产：从项目内字体文件生成 TMP SDF 字体并烘焙游戏内全部汉字。
+        /// 面试点：① TMP 默认字体不含 CJK——中文游戏的字体管线是真实生产问题；
+        /// ② 编辑器期把用到的字符全部烘进静态图集，打包后自包含；
+        /// ③ 字体源文件不入库（.gitignore）——系统字体禁止随仓库再分发，构建期从系统目录
+        ///   自动复制（Assets/Fonts 里有任何字体文件则优先用）。
+        /// 注意：TMP Settings 资产未导入时 TMP_Settings.* 会 NRE，这里全程不碰它。
         /// </summary>
+        private const string CjkFontAssetPath = "Assets/Fonts/TMP_CJK.asset";
+
         private static void EnsureCjkFont()
         {
-            // 已配置过则跳过
-            if (TMP_Settings.defaultFontAsset != null &&
-                TMP_Settings.defaultFontAsset.name.Contains("CJK"))
-            {
-                _cjkFont = TMP_Settings.defaultFontAsset;
-                return;
-            }
+            // 幂等：资产已存在直接复用
+            _cjkFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(CjkFontAssetPath);
+            if (_cjkFont != null) return;
 
             EnsureDir("Assets/Fonts");
-            string[] candidates = { "Microsoft YaHei UI", "Microsoft YaHei", "微软雅黑", "SimHei" };
-            Font osFont = null;
-            var installed = Font.GetOSInstalledFontNames();
-            foreach (var name in candidates)
+
+            // 找字体源文件：项目内已有（任意 otf/ttf/ttc）→ 系统目录复制微软雅黑
+            string fontProjectPath = null;
+            foreach (var guid in AssetDatabase.FindAssets("t:Font", new[] { "Assets/Fonts" }))
             {
-                if (System.Array.IndexOf(installed, name) >= 0)
+                string p = AssetDatabase.GUIDToAssetPath(guid);
+                string ext = Path.GetExtension(p).ToLowerInvariant();
+                if (ext == ".otf" || ext == ".ttf" || ext == ".ttc") { fontProjectPath = p; break; }
+            }
+            if (fontProjectPath == null)
+            {
+                // 优先 simhei.ttf（单 face TTF，导入稳定）；msyh.ttc 多 face 集合在批量导入下会崩
+                string sysFont = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Windows), "Fonts", "simhei.ttf");
+                if (File.Exists(sysFont))
                 {
-                    osFont = Font.CreateDynamicFontFromOSFont(name, 90);
-                    break;
+                    string dest = "Assets/Fonts/simhei.ttf";
+                    File.Copy(sysFont, Path.Combine(Directory.GetParent(Application.dataPath).FullName,
+                        dest.Replace('/', Path.DirectorySeparatorChar)), overwrite: true);
+                    AssetDatabase.ImportAsset(dest);
+                    fontProjectPath = dest;
+                    Debug.Log("[Font] 已从系统复制黑体（字体文件不入库，许可更干净）");
                 }
             }
-            if (osFont == null)
+            if (fontProjectPath == null)
             {
-                Debug.LogWarning("[Font] 未找到系统中文字体，中文将显示为方块（英文正常）");
+                Debug.LogWarning("[Font] 找不到任何中文字体源文件，中文将显示为方块");
                 return;
             }
 
-            var fontAsset = TMP_FontAsset.CreateFontAsset(osFont, 72, 6, TMPro.GlyphRenderMode.SDFAA, 1024, 1024, true);
+            var sourceFont = AssetDatabase.LoadAssetAtPath<Font>(fontProjectPath);
+            if (sourceFont == null)
+            {
+                Debug.LogError($"[Font] 字体资产导入失败：{fontProjectPath}");
+                return;
+            }
+
+            // TMP 的字体图集材质依赖 TextMeshPro/Sprite 着色器，它随 Essential 资源包分发：
+            // 未导入 Essential 时 Shader.Find 返回 null，CreateFontAsset 内部直接 ArgumentNullException。
+            // 这里程序化导入等价于"Window → TextMeshPro → Import TMP Essential Resources"。
+            if (!AssetDatabase.IsValidFolder("Assets/TextMesh Pro"))
+            {
+                string pkgRoot = Path.Combine(Directory.GetParent(Application.dataPath).FullName, "Library", "PackageCache");
+                string essentials = Directory.GetFiles(pkgRoot, "TMP Essential Resources.unitypackage", SearchOption.AllDirectories)
+                    .FirstOrDefault();
+                if (essentials != null)
+                {
+                    AssetDatabase.ImportPackage(essentials, false); // 非交互模式：批量环境直接导入
+                    AssetDatabase.Refresh();
+                    Debug.Log("[Font] 已导入 TMP Essential Resources（含 Sprite 着色器与设置资产）");
+                }
+                else
+                {
+                    Debug.LogError("[Font] 找不到 TMP Essential Resources.unitypackage");
+                    return;
+                }
+            }
+
+            // 末参是 AtlasPopulationMode（不是 bool）：动态模式才能在编辑器期烘焙字符
+            var fontAsset = TMP_FontAsset.CreateFontAsset(sourceFont, 72, 6, GlyphRenderMode.SDFAA,
+                1024, 1024, AtlasPopulationMode.Dynamic);
+            if (fontAsset == null)
+            {
+                Debug.LogError($"[Font] CreateFontAsset 返回 null（字体面加载失败：{fontProjectPath}）");
+                return;
+            }
             fontAsset.name = "TMP_CJK_Dynamic";
-            AssetDatabase.CreateAsset(fontAsset, "Assets/Fonts/TMP_CJK.asset");
+            AssetDatabase.CreateAsset(fontAsset, CjkFontAssetPath);
 
             // 烘焙项目内全部用到的字符（含标点）
-            fontAsset.atlasPopulationMode = AtlasPopulationMode.Dynamic;
             fontAsset.TryAddCharacters(ChineseChars, out string missing);
             if (!string.IsNullOrEmpty(missing))
-                Debug.LogWarning($"[Font] 以下字符不在系统字体中：{missing}");
+                Debug.LogWarning($"[Font] 以下字符不在字体中：{missing}");
+
+            // 动态烘焙产生的图集纹理与材质都是内存对象，必须全部嵌入资产本体（子资产），
+            // 否则资产重载后引用变成悬空 guid（表现为中文全部显示方块）
+            if (fontAsset.atlasTextures != null)
+            {
+                foreach (var tex in fontAsset.atlasTextures)
+                {
+                    if (tex != null && string.IsNullOrEmpty(AssetDatabase.GetAssetPath(tex)))
+                        AssetDatabase.AddObjectToAsset(tex, fontAsset);
+                }
+            }
+            if (fontAsset.material != null && string.IsNullOrEmpty(AssetDatabase.GetAssetPath(fontAsset.material)))
+            {
+                AssetDatabase.AddObjectToAsset(fontAsset.material, fontAsset);
+            }
 
             fontAsset.atlasPopulationMode = AtlasPopulationMode.Static; // 烘完定格，打包自包含
             EditorUtility.SetDirty(fontAsset);
             _cjkFont = fontAsset;
 
-            // 设为 TMP 全局默认字体（此后所有 TMP 文本自动获得中文支持）
-            var settings = TMP_Settings.instance;
-            settings.defaultFontAsset = fontAsset;
-            EditorUtility.SetDirty(settings);
+            // 不依赖 TMP 全局设置（defaultFontAsset 只读、且 Settings 资产可能未导入）：
+            // 构建器给每个 TMP 文本显式赋字体（AddText / DamagePop 预制体统一走 _cjkFont）
             AssetDatabase.SaveAssets();
             Debug.Log("[Font] CJK 字体烘焙完成：Assets/Fonts/TMP_CJK.asset");
-        }
-
-        /// <summary>精灵图集：Generated 目录全部精灵打进一个 Atlas（合批渲染的前提）。</summary>
-        private static void BuildSpriteAtlas()
-        {
-            var atlas = AssetDatabase.LoadAssetAtPath<UnityEditor.U2D.SpriteAtlas>("Assets/Art/Generated/Atlas_Neon.spriteatlas");
-            if (atlas == null)
-            {
-                atlas = new UnityEditor.U2D.SpriteAtlas();
-                AssetDatabase.CreateAtlas(atlas, "Atlas_Neon", "spriteatlas", "Assets/Art/Generated");
-            }
-            var packables = atlas.GetPackables();
-            if (packables == null || packables.Length == 0)
-            {
-                atlas.Add(new Object[] { AssetDatabase.LoadAssetAtPath<Object>(ArtDir) });
-                var settings = atlas.GetPackingSettings();
-                settings.padding = 4;
-                var plat = new UnityEditor.U2D.SpriteAtlasTextureSettings
-                {
-                    format = TextureImporterFormat.Automatic,
-                    maxTextureSize = 2048,
-                    compression = UnityEditor.U2D.SpriteAtlasCompression.None, // 编辑器期无压缩，画质优先
-                };
-                atlas.SetPlatformSettings(plat);
-            }
-            AssetDatabase.SaveAssets();
-            Debug.Log("[Atlas] 精灵图集 Atlas_Neon 完成");
         }
 
         /// <summary>反射注入 serialized 字段（搭建脚本里大量接线用，比手写 SerializedObject 简洁）。</summary>
@@ -168,6 +246,37 @@ namespace StarVortex.EditorTools
             var prop = so.FindProperty(fieldName);
             if (prop == null) { Debug.LogError($"[Setup] {target.GetType().Name} 上找不到字段 {fieldName}"); return; }
             prop.intValue = value;
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        /// <summary>写入 Object 引用数组字段（SO 资产池等）。</summary>
+        internal static void SetObjectArrayField(Object target, string fieldName, Object[] values)
+        {
+            var so = new SerializedObject(target);
+            var prop = so.FindProperty(fieldName);
+            if (prop == null) { Debug.LogError($"[Setup] {target.GetType().Name} 上找不到字段 {fieldName}"); return; }
+            prop.ClearArray();
+            for (int i = 0; i < values.Length; i++)
+            {
+                prop.InsertArrayElementAtIndex(i);
+                prop.GetArrayElementAtIndex(i).objectReferenceValue = values[i];
+            }
+            so.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        /// <summary>写入自定义结构数组字段（如视差层），逐子字段填值。</summary>
+        internal static void SetStructArrayField(Object target, string fieldName,
+            System.Action<SerializedProperty, int> fill, int count)
+        {
+            var so = new SerializedObject(target);
+            var prop = so.FindProperty(fieldName);
+            if (prop == null) { Debug.LogError($"[Setup] {target.GetType().Name} 上找不到字段 {fieldName}"); return; }
+            prop.ClearArray();
+            for (int i = 0; i < count; i++)
+            {
+                prop.InsertArrayElementAtIndex(i);
+                fill(prop.GetArrayElementAtIndex(i), i);
+            }
             so.ApplyModifiedPropertiesWithoutUndo();
         }
     }

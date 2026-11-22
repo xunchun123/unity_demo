@@ -87,14 +87,12 @@ namespace StarVortex.EditorTools
         {
             if (AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(UrpAssetPath) != null) return;
 
-            // 2D 渲染器：支持 Light2D 动态光照
+            // 2D 渲染器：支持 Light2D 动态光照（深度/颜色贴图需求项在 URP14 里由管线自动管理）
             var rendererData = ScriptableObject.CreateInstance<Renderer2DData>();
             rendererData.name = "Renderer2D_Neon";
-            rendererData.requiresDepthOption = Renderer2DData.DepthTextureOption.Force;
-            rendererData.requiresColorOption = Renderer2DData.ColorTextureOption.Force;
             AssetDatabase.CreateAsset(rendererData, UrpRendererPath);
 
-            var urp = UniversalRenderPipelineAsset.Create(new[] { rendererData });
+            var urp = UniversalRenderPipelineAsset.Create(rendererData);
             urp.name = "URP_Neon";
             // 霓虹观感三件套：HDR（发光超1喂Bloom）、软阴影无所谓关掉、MSAA 4x
             urp.supportsHDR = true;
@@ -111,16 +109,25 @@ namespace StarVortex.EditorTools
             if (urp != null) GraphicsSettings.defaultRenderPipeline = urp;
             PlayerSettings.colorSpace = ColorSpace.Linear;
 
-            // 质量等级：关闭不需要的实时特性，保证低配机也稳 60
-            var qualityAsset = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/QualitySettings.asset")[0]);
+            // 质量等级：MSAA 4x + 垂直同步（属性名随版本可能变化，找不到就跳过，不做硬性依赖）
+            var qualityAssets = AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/QualitySettings.asset");
+            if (qualityAssets == null || qualityAssets.Length == 0) return;
+            var qualityAsset = new SerializedObject(qualityAssets[0]);
             var levels = qualityAsset.FindProperty("m_QualitySettings");
+            if (levels == null) return;
             for (int i = 0; i < levels.arraySize; i++)
             {
                 var level = levels.GetArrayElementAtIndex(i);
-                level.FindPropertyRelative("antiAliasing").intValue = 4;
-                level.FindPropertyRelative("vsyncCount").intValue = 1;
+                TrySetInt(level, "antiAliasing", 4);
+                TrySetInt(level, "vsyncCount", 1);
             }
             qualityAsset.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        private static void TrySetInt(SerializedProperty parent, string name, int value)
+        {
+            var prop = parent.FindPropertyRelative(name);
+            if (prop != null) prop.intValue = value;
         }
 
         /// <summary>玩家设置：产品名、默认分辨率、窗口模式（demo 演示友好）。</summary>
@@ -128,9 +135,17 @@ namespace StarVortex.EditorTools
         {
             PlayerSettings.companyName = "StarVortex";
             PlayerSettings.productName = "StarVortex Survivors";
-            PlayerSettings.defaultInterfaceOrientation = UIOrientation.Landscape;
+            PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
             PlayerSettings.fullScreenMode = FullScreenMode.Windowed;
             PlayerSettings.resizableWindow = true;
+
+            // 输入后端切换为"两者兼容"：新版 Input System 生效（Keyboard.current 等），
+            // 同时保留旧输入避免第三方包炸掉。这个设置在 ProjectSettings.asset 序列化字段里。
+            var settings = new SerializedObject(
+                AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/ProjectSettings.asset")[0]);
+            var handler = settings.FindProperty("activeInputHandler");
+            if (handler != null) handler.intValue = 2; // 0=旧 1=新 2=两者
+            settings.ApplyModifiedPropertiesWithoutUndo();
         }
 
         /// <summary>构建场景列表：MainMenu 在前（启动场景）。</summary>

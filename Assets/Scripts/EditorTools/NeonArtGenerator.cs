@@ -140,7 +140,11 @@ namespace StarVortex.EditorTools
             importer.isReadable = false;
             importer.alphaIsTransparency = true;
             importer.mipmapEnabled = false;
-            importer.spriteMeshType = SpriteMeshType.FullRect; // 光晕类精灵避免紧缩网格裁切
+            // 光晕类精灵避免紧缩网格裁切：spriteMeshType 要经 TextureImporterSettings 设置（2022.3 无直接属性）
+            var settings = new TextureImporterSettings();
+            importer.ReadTextureSettings(settings);
+            settings.spriteMeshType = SpriteMeshType.FullRect;
+            importer.SetTextureSettings(settings);
             importer.SaveAndReimport();
         }
 

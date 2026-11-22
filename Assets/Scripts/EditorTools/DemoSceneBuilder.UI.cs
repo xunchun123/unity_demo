@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering.Universal;
 using StarVortex.Core;
 using StarVortex.Gameplay;
 using StarVortex.UI;
@@ -67,6 +68,7 @@ namespace StarVortex.EditorTools
             tmp.alignment = alignment;
             tmp.fontStyle = FontStyles.Bold;
             tmp.raycastTarget = false;
+            if (_cjkFont != null) tmp.font = _cjkFont; // 显式中文字体（不依赖 TMP 全局设置）
             return tmp;
         }
 
@@ -192,7 +194,7 @@ namespace StarVortex.EditorTools
             SetField(levelPanel, "_cardsRoot", (RectTransform)cards.transform);
             SetField(levelPanel, "_cardPrefab", BuildLevelUpCardPrefab());
             SetField(levelPanel, "_headerLabel", header);
-            SetField(levelPanel, "_upgradePool", _upgrades);
+            SetObjectArrayField(levelPanel, "_upgradePool", System.Array.ConvertAll(_upgrades, u => (Object)u));
             return panel;
         }
 
