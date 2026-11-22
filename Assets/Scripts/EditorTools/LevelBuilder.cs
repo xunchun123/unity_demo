@@ -124,14 +124,17 @@ namespace StarVortex.EditorTools
             // 怪物：y 由地面高度自动对齐（地面怪贴地，飞行怪给悬停高度）
             spec.monsters.AddRange(new[]
             {
-                Ground(10, "Slime"), Ground(25, "Slime"), Ground(37, "Slime"),
+                // 首只史莱姆随出生点平移（10→13.5，落台阶 A 首级）：索敌半径 6u，留在 10 会开局直追出生点
+                Ground(13.5f, "Slime"), Ground(25, "Slime"), Ground(37, "Slime"),
                 Ground(50, "Slime"), Ground(60, "Slime"), Ground(74, "Slime"),
                 Fly(18, 4, "Bat"), Fly(32, 4, "Bat"), Fly(48, 6, "Bat"), Fly(66, 4, "Bat"),
                 Ground(76, "EliteGuard"), // 关底精英
             });
             spec.traps.AddRange(new[]
             {
-                Trap(8, "Spike"), Trap(26, "Spike"), Trap(38, "Spike"), Trap(58, "Spike"),
+                // 首根尖刺随出生点平移（8→11）：尖刺触发盒宽 2u，留在 8 时勇者（出生 6.5）
+                // 必须先踩刺才能走到第一块教学牌（8.5）前——新手流程改为先看教学再遇首个陷阱
+                Trap(11, "Spike"), Trap(26, "Spike"), Trap(38, "Spike"), Trap(58, "Spike"),
             });
             return spec;
         }
@@ -385,7 +388,12 @@ namespace StarVortex.EditorTools
                 return;
             }
             var hero = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
-            hero.transform.position = new Vector3(0f, spec.baseGroundY + 1f, 0f); // 关卡 1 出生点 (0,1)
+            // 出生点 x=6.5：正交 3.5 相机在关卡左端会被钳在 minX+半宽≈6.2（SideCamera 以 minX=0 钳制），
+            // 旧出生 x=0 时勇者贴屏幕左缘半个身子出画——挪到钳制线右侧一点，人物完整可见且前方留白。
+            // L3 例外：前置走廊 4-20 是混合怪长廊（Slime 索敌半径 6u），6.5 会直接生在史莱姆（x=6）窝里，
+            // 改在走廊口 x=2——虽然相机仍钳在 6.2，人物距左缘 2u 完整可见，也不会开局即接战。
+            float spawnX = spec.levelIndex == 3 ? 2f : 6.5f;
+            hero.transform.position = new Vector3(spawnX, spec.baseGroundY + 1f, 0f);
             // prefab 本体未设层（Default 层与碰撞矩阵互不相撞会掉出世界）——只改场景实例补挂 Player 层，
             // prefab 资产的层归属仍由勇者资产构建器负责（本类不改他人资产）
             hero.layer = LayerPlayer;
@@ -689,12 +697,17 @@ namespace StarVortex.EditorTools
 
         // ---------- 新手教学（只在 Level1） ----------
 
-        /// <summary>教学牌布点：Level1 起点沿线间隔 6-9u，避开断桥 [30,34) 与台阶拐点（x=35 紧接断桥落点）。</summary>
-        private static readonly float[] TutorialSignXs = { 4f, 11f, 18f, 26f, 35f };
+        /// <summary>
+        /// 教学牌布点（随出生点 6.5 平移）：8.5 起步，间隔 7.5-8u（断桥 [30,34) 前后强制拉开 12）。
+        /// 触发柱宽 2.6u（±1.3），逐点核对过尖刺触发盒（宽 2u，±1）与断桥：
+        /// 8.5 避尖刺@11 / 23.5 避尖刺@26 / 35.5 避断桥落点与尖刺@38 / 42.5 避台阶 B——
+        /// 16 压在台阶组 A 高台 y=2 上，头顶正对悬浮平台（17,4.5），学二段跳即有落脚目标。
+        /// </summary>
+        private static readonly float[] TutorialSignXs = { 8.5f, 16f, 23.5f, 35.5f, 42.5f };
 
         private static readonly string[] TutorialMessages =
         {
-            "A / D 或 ← → 移动",
+            "A / D 或 ← → 移动\n跑起来，勇者！", // 首牌两行式：第一行操作、第二行打气短句
             "空格 跳跃 · 空中再按一次 = 二段跳",
             "J 攻击 · 连按触发三段连击",
             "L 冲刺 · 冲刺瞬间无敌",
@@ -762,7 +775,7 @@ namespace StarVortex.EditorTools
 
             bool arrowMissing = missing != null && (missing.Contains("←") || missing.Contains("→"));
             if (arrowMissing)
-                messages[0] = "A / D 或 方向键 移动";
+                messages[0] = "A / D 或 方向键 移动\n跑起来，勇者！"; // 保底用字全部在初始集内，保留两行式
             return messages;
         }
 

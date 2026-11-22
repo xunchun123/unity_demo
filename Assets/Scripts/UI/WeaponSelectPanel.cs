@@ -33,6 +33,9 @@ namespace StarVortex.UI
 
         private bool _starting; // 防连点：一帧内双卡同选会注入两次
 
+        /// <summary>当前版本只开放长剑（用户要求：其余武器先标"未解锁"，爽点列表不上明面）。</summary>
+        private const int UnlockedCount = 1;
+
         private void Awake()
         {
             // 显隐统一由 HeroGameBootstrap 管理——这里不再自我隐藏：
@@ -74,14 +77,20 @@ namespace StarVortex.UI
         private void FillCard(int i, WeaponKit kit)
         {
             Debug.Log($"[WeaponSelect] FillCard {i}: kit={kit.displayName} nameLabel={(_nameLabels[i] != null)} cardRoot={(_cardRoots[i] != null)}");
+            bool locked = i >= UnlockedCount;
+
             if (_nameLabels[i] != null) _nameLabels[i].text = kit.displayName;
-            if (_descLabels[i] != null) _descLabels[i].text = kit.description;
-            if (_statLabels[i] != null) _statLabels[i].text = StatTag(kit);
-            if (_poolLabels[i] != null) _poolLabels[i].text = PoolList(kit);
+            if (_descLabels[i] != null) _descLabels[i].text = locked ? "后续版本开放" : kit.description;
+            if (_statLabels[i] != null) _statLabels[i].text = locked ? "未解锁" : StatTag(kit);
+            // 爽点池不上明面（用户要求）：未解锁卡一句话，解锁卡只留一句抽取说明
+            //（文案避开"敬/待"等不在 732 字烘焙集的汉字，防 TMP 缺字方框）
+            if (_poolLabels[i] != null)
+                _poolLabels[i].text = locked ? "· 后续版本开放" : "升级时三选一随机抽取\n（含本武器专属强化）";
             if (_hotkeyLabels[i] != null) _hotkeyLabels[i].text = (i + 1).ToString();
 
             if (_cardButtons[i] != null)
             {
+                _cardButtons[i].interactable = !locked; // 未解锁卡置灰且不可点
                 _cardButtons[i].onClick.RemoveAllListeners(); // 重入安全：清掉上局残留闭包
                 int index = i;                                // 闭包捕获局部变量，避免晚绑定踩 i
                 _cardButtons[i].onClick.AddListener(() => Select(index));
@@ -100,24 +109,17 @@ namespace StarVortex.UI
             }
         }
 
-        /// <summary>专属爽点池列表（每行一个，金点前缀；通用池不在此列、抽卡时自动混入）。</summary>
-        private static string PoolList(WeaponKit kit)
-        {
-            if (kit.boonPool == null || kit.boonPool.Length == 0) return "暂无专属爽点";
-            var sb = new System.Text.StringBuilder();
-            foreach (string id in kit.boonPool)
-            {
-                if (sb.Length > 0) sb.Append('\n');
-                sb.Append("· ").Append(BoonCatalog.Name(id));
-            }
-            return sb.ToString();
-        }
-
         /// <summary>点卡选中：注入 WeaponKit → 确认进入第一关（GameManager 切 Playing 并恢复时间流）。</summary>
         public void Select(int index)
         {
             if (_starting) return;
             if (_kits == null || index < 0 || index >= _kits.Length) return;
+            if (index >= UnlockedCount)
+            {
+                // 未锁定武器：低音"咚"提示，不进入游戏
+                AudioService.Instance?.PlayWithPitch(SfxId.UiClick, 0.5f);
+                return;
+            }
 
             _starting = true;
             AudioService.Instance?.PlayUiClick();

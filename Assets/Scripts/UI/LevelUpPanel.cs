@@ -52,8 +52,31 @@ namespace StarVortex.UI
 
         private void Awake()
         {
-            // 显隐统一由 HeroGameBootstrap 管理（同 WeaponSelectPanel：Awake 自我隐藏
-            // 会在运行时激活瞬间把自己关掉，OnEnable 不触发）
+            // 鼠标接线：构建器只注入了引用、从未挂过监听——此前鼠标点卡/点加号/点继续全部无效，
+            // 只有键盘 1/2/3 与 Enter 能用（用户实测"选择也无法真实点击"的根因）
+            if (_continueButton != null)
+            {
+                _continueButton.onClick.RemoveAllListeners();
+                _continueButton.onClick.AddListener(OnContinueClicked);
+            }
+            for (int i = 0; i < _talentButtons.Length && i < 5; i++)
+            {
+                var btn = _talentButtons[i];
+                if (btn == null) continue;
+                int kind = i; // 闭包捕获局部变量，避免晚绑定踩循环变量
+                btn.onClick.RemoveAllListeners();
+                btn.onClick.AddListener(() => OnTalentPlus(kind));
+            }
+            for (int i = 0; i < _boonRoots.Length; i++)
+            {
+                var root = _boonRoots[i];
+                if (root == null) continue;
+                var btn = root.GetComponent<Button>();
+                if (btn == null) continue;
+                int index = i;
+                btn.onClick.RemoveAllListeners();
+                btn.onClick.AddListener(() => OnBoonPicked(index));
+            }
         }
 
         private void OnEnable()

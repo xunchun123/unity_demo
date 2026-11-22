@@ -92,6 +92,19 @@ namespace StarVortex.EditorTools
             SetField(hero, "_animator", animator);
             SetField(hero, "_fireballPrefab", LoadPrefabComp<Fireball>("proj_fireball"));
 
+            // 真帧动画帧组（用户 AI 生图，代码驱动换帧——Animator PPtr 在 Player 端不生效的兜底，见 DriveFrameAnimation）
+            SetObjectArrayField(hero, "_idleFrames", new Object[] { Art("hero_idle_0") });
+            SetObjectArrayField(hero, "_runFrames", new Object[]
+            {
+                Art("hero_run_0"), Art("hero_run_1"), Art("hero_run_2"), Art("hero_run_1"),
+            });
+            SetObjectArrayField(hero, "_jumpFrames", new Object[] { Art("hero_jump_0") });
+            SetObjectArrayField(hero, "_fallFrames", new Object[] { Art("hero_jump_1") });
+            SetObjectArrayField(hero, "_attackFrames", new Object[]
+            {
+                Art("hero_attack_0"), Art("hero_attack_1"), Art("hero_attack_2"),
+            });
+
             SavePrefab(go, path);
         }
 

@@ -254,6 +254,21 @@ MonoBehaviour:
   _attackOrigin: {fileID: 3322587149866492557}
   _animator: {fileID: 4814268680049587382}
   _weaponKit: {fileID: 0}
+  _idleFrames:
+  - {fileID: 21300000, guid: 9a1781a54fcdc1f4ab46b95e6103f7c7, type: 3}
+  _runFrames:
+  - {fileID: 21300000, guid: 3992992da50a56e4d9c785415131e72d, type: 3}
+  - {fileID: 21300000, guid: d74cf4c83a670ed4399fde4fd20451a1, type: 3}
+  - {fileID: 21300000, guid: fb2ef488e59f8f8478e82dc849c53e3f, type: 3}
+  - {fileID: 21300000, guid: d74cf4c83a670ed4399fde4fd20451a1, type: 3}
+  _jumpFrames:
+  - {fileID: 21300000, guid: ca8e747803d2b4d42bcb210fa65b0c21, type: 3}
+  _fallFrames:
+  - {fileID: 21300000, guid: 862d12cf5b90a764baa640f75de7197d, type: 3}
+  _attackFrames:
+  - {fileID: 21300000, guid: 640499f9e75bbc8449ba894867d7bf76, type: 3}
+  - {fileID: 21300000, guid: c2c528211b0bc5941bad36aedd4db752, type: 3}
+  - {fileID: 21300000, guid: a1dcd3e3f1d5a444cbe328d11adb7348, type: 3}
   jumpVelocity: 11.5
   coyoteTime: 0.1
   jumpBufferTime: 0.12

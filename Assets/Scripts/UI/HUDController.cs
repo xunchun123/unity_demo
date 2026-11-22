@@ -8,7 +8,8 @@ namespace StarVortex.UI
 {
     /// <summary>
     /// HUD（横版闯关版）：血条+残影 / 蓝条 / 经验条 / 计时 / 击杀 / 等级
-    /// + 天赋点角标（可分配点数呼吸提示）/ BOSS 血条（上方大条）/ 操作提示条（开局 8s 后淡出）
+    /// + 天赋点角标（可分配点数呼吸提示）/ BOSS 血条（上方大条）/ 操作提示条（开局 14s 后淡出，
+    /// 第二行补成长引导：打败怪物得经验 → 升级选天赋/爽点）
     /// / 关卡目标文本（第 N 关 · 阶段）。
     /// 面试点：事件驱动刷新——HUD 订阅 GameEvents，只在数值变化时更新；
     /// 血条宽度用 SmoothDamp 缓动（掉血有"流动感"而不是瞬间跳变）；
@@ -40,7 +41,7 @@ namespace StarVortex.UI
         [SerializeField] private TMP_Text _killsLabel;
         [SerializeField] private TMP_Text _levelLabel;
 
-        [Header("操作提示条（开局显示，8 秒后淡出，unscaled）")]
+        [Header("操作提示条（开局显示，14 秒后淡出，unscaled）")]
         [SerializeField] private CanvasGroup _hintGroup;
         [SerializeField] private GameObject _hintRoot;
 
@@ -55,6 +56,7 @@ namespace StarVortex.UI
         private float _manaDisplay = 1f;
         private int _lastMinute = -1;
         private bool _hintShown;          // 操作提示只展示一次（重开局随场景重建重置）
+        private bool _hintExpanded;       // 提示条第二行（成长引导）只追加一次
         private int _lastLevel = 1;       // 关卡目标文本缓存（BOSS 阶段广播的 level=-1 时沿用）
         private Coroutine _hintRoutine;
 
@@ -155,7 +157,7 @@ namespace StarVortex.UI
 
         private void OnGameStateChanged(GameState state)
         {
-            // 开局（武器选完进入第一关）展示操作提示，8 秒后淡出——只展示一次
+            // 开局（武器选完进入第一关）展示操作提示，14 秒后淡出——只展示一次
             if (state == GameState.Playing && !_hintShown)
             {
                 _hintShown = true;
@@ -164,12 +166,30 @@ namespace StarVortex.UI
             }
         }
 
-        /// <summary>提示条：立即显示 → 停 8s（真实时间，暂停/升级冻结不影响）→ 1.2s 淡出收起。</summary>
+        /// <summary>
+        /// 提示条第二行：成长引导（打败怪物得经验 → 升级选天赋与爽点）。运行时追加而非改 UI 构建器，
+        /// 所有用字都核对过 ChineseChars 烘焙集（打败怪物得经验升级可选天赋与爽点·全部在集内），
+        /// 不需要补烘字形；字号缩到 70% + 灰蓝配色，作主操作行下的次级信息。
+        /// </summary>
+        private void EnsureHintSubtitle()
+        {
+            if (_hintExpanded) return;
+            _hintExpanded = true;
+            var text = _hintRoot != null ? _hintRoot.GetComponentInChildren<TMP_Text>(true) : null;
+            if (text == null) return;
+            text.text += "\n<size=70%><color=#8fa3c8>打败怪物得经验 · 升级可选天赋与爽点</color></size>";
+            // 单行条变两行：底边不动、顶边向上扩 34px 容两行（提示条悬在经验条上方，向下长会压条）
+            if (_hintRoot.transform is RectTransform rt)
+                rt.offsetMax = new Vector2(rt.offsetMax.x, rt.offsetMax.y + 34f);
+        }
+
+        /// <summary>提示条：立即显示 → 停 14s（真实时间，暂停/升级冻结不影响）→ 1.2s 淡出收起。</summary>
         private IEnumerator HintFadeRoutine()
         {
+            EnsureHintSubtitle(); // 首次显示前补成长引导行（HintBar 初始隐藏，inactive 下也可安全改文本）
             _hintRoot.SetActive(true);
             _hintGroup.alpha = 1f;
-            yield return new WaitForSecondsRealtime(8f);
+            yield return new WaitForSecondsRealtime(14f);
             yield return Tween.Start(this, 1.2f, k => _hintGroup.alpha = 1f - k, Tween.EaseInQuad);
             _hintRoot.SetActive(false);
         }

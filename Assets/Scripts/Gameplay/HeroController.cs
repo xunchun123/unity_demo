@@ -26,6 +26,15 @@ namespace StarVortex.Gameplay
         [SerializeField] private WeaponKit _weaponKit;
         public WeaponKind Kind => _weaponKit != null ? _weaponKit.kind : WeaponKind.Sword;
 
+        [Header("帧动画（用户 AI 生图帧，代码驱动换帧——Animator PPtr 曲线在 Player 端不生效的兜底）")]
+        [SerializeField] private Sprite[] _idleFrames;    // 站姿单帧
+        [SerializeField] private Sprite[] _runFrames;     // 迈步→收拢→迈步→收拢 四拍循环
+        [SerializeField] private Sprite[] _jumpFrames;    // 上升收腿
+        [SerializeField] private Sprite[] _fallFrames;    // 下落展腿
+        [SerializeField] private Sprite[] _attackFrames;  // 蓄力→突刺→收招
+        private float _runFrameTimer;
+        private int _runFrameIndex;
+
         [Header("平台参数")]
         [SerializeField] private float jumpVelocity = 11.5f;
         [SerializeField] private float coyoteTime = 0.1f;
@@ -63,6 +72,7 @@ namespace StarVortex.Gameplay
         public bool DashReady => _dashCdTimer <= 0f;
 
         private int _jumpsLeft;
+        private Collider2D _col;
         private float _coyoteTimer;
         private float _jumpBufferTimer;
         private float _invulnTimer;
@@ -168,6 +178,8 @@ namespace StarVortex.Gameplay
         {
             if (GameManager.Instance.State != GameState.Playing) return;
             var kb = Keyboard.current;
+
+            DriveFrameAnimation();
 
             // 无敌帧闪烁
             if (_invulnTimer > 0f)
@@ -301,11 +313,67 @@ namespace StarVortex.Gameplay
             }
         }
 
+        /// <summary>
+        /// 代码驱动换帧（真帧动画的最终执行者）：按 攻击动作 > 空中升降 > 跑步循环 > 站姿
+        /// 的优先级选帧组写入 _sr。为何不用 Animator：程序化创建的 PPtr 换帧曲线在编辑器里
+        /// 数据完好、状态机接线正确，但 Player 端实测（TEMP-PROBE 强制 Play("Run") + 冻结布尔）
+        /// 帧图纹丝不动——代码驱动让"走路不再是贴纸"成为确定性事实，Animator 组件保留不碍事。
+        /// 朝向翻转仍由 FacingRight 写 _sr.flipX，与换帧互不干扰。
+        /// </summary>
+        private void DriveFrameAnimation()
+        {
+            if (_sr == null || _runFrames == null || _runFrames.Length == 0) return; // 帧未注入（旧预制体）→ 不干预
+
+            // 攻击动作（0.3s 内按攻击进度播 蓄力→突刺→收招；法杖/弓箭锁定中无需分武器）
+            float atkInterval = _weaponKit != null ? _weaponKit.attackInterval : 0.4f;
+            if (_attackFrames != null && _attackFrames.Length > 0 && _attackTimer > atkInterval - 0.3f)
+            {
+                float p = Mathf.Clamp01((atkInterval - _attackTimer) / 0.3f);
+                _sr.sprite = _attackFrames[Mathf.Min((int)(p * _attackFrames.Length), _attackFrames.Length - 1)];
+                _runFrameIndex = 0;
+                return;
+            }
+
+            if (!IsGrounded())
+            {
+                var air = Pick(_rb.velocity.y < -0.5f ? _fallFrames : _jumpFrames);
+                if (air != null) _sr.sprite = air;
+                _runFrameIndex = 0;
+                return;
+            }
+
+            if (Mathf.Abs(_rb.velocity.x) > 0.3f)
+            {
+                // 跑步四拍循环：0.12s/帧（0→1→2→1→…），速度只影响节奏不影响帧序
+                _runFrameTimer -= Time.deltaTime;
+                if (_runFrameTimer <= 0f)
+                {
+                    _runFrameTimer = 0.12f;
+                    _runFrameIndex = (_runFrameIndex + 1) % _runFrames.Length;
+                }
+                _sr.sprite = _runFrames[_runFrameIndex];
+                return;
+            }
+
+            var idle = Pick(_idleFrames);
+            if (idle != null) _sr.sprite = idle;
+            _runFrameIndex = 0;
+        }
+
+        private static Sprite Pick(Sprite[] frames) =>
+            frames != null && frames.Length > 0 ? frames[0] : null;
+
         private bool IsGrounded()
         {
-            var box = new Vector2(0.6f, 0.16f);
-            var origin = (Vector2)transform.position + Vector2.down * 0.55f;
-            return Physics2D.OverlapBox(origin, box, 0f, groundMask) != null;
+            // 探测盒锚定碰撞体底缘（world bounds：尺寸/偏移/缩放调整自动跟随，不再写死 0.55u）
+            var col = _col != null ? _col : (_col = GetComponent<Collider2D>());
+            float bottom = col != null ? col.bounds.center.y - col.bounds.extents.y : transform.position.y - 0.1f;
+            var origin = new Vector2(transform.position.x, bottom - 0.02f);
+            // 无视 Trigger：教学牌/传送门挂在 Ground(8) 层的触发盒——空中穿过教学牌光柱会被误判
+            // "接地"，二段跳计数被空中重置 = 无限跳（用户实测复现的 bug 根因）
+            foreach (var hit in Physics2D.OverlapBoxAll(origin, new Vector2(0.5f, 0.24f), 0f, groundMask))
+                if (!hit.isTrigger) return true;
+            return false;
         }
 
         private void TryDash()

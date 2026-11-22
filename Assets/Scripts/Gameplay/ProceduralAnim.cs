@@ -174,7 +174,11 @@ namespace StarVortex.Gameplay
         {
             if (_rb == null) return false;
             var origin = _rb.position + Vector2.down * 0.12f;
-            return Physics2D.OverlapBox(origin, new Vector2(0.4f, 0.3f), 0f, groundMask) != null;
+            // 与 HeroController.IsGrounded 同规则：无视 Ground 层的 Trigger（教学牌/传送门），
+            // 否则穿过教学牌光柱时跑动弹跳误触发
+            foreach (var hit in Physics2D.OverlapBoxAll(origin, new Vector2(0.4f, 0.3f), 0f, groundMask))
+                if (!hit.isTrigger) return true;
+            return false;
         }
     }
 }

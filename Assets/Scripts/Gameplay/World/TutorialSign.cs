@@ -7,7 +7,8 @@ namespace StarVortex.Gameplay.World
     /// 新手教学牌（只由 LevelBuilder 在 Level1 布置）：
     /// 常驻视觉 = 纵向发光柱（glow_disc 纵向拉伸的暖金光带，远远就能注意到）+ 柱顶双浮动光点
     /// （主点 + 错相位回声点，像一枚呼吸的"!"）；勇者进入触发区 → 柱上方浮出 TMP 中文操作提示
-    /// （悬浮微动），离开或停留 3 秒后淡出。
+    /// （悬浮微动）。驻留节奏：停在触发区内文字常驻不倒计时，离开才开始倒计时（首见 5 秒）；
+    /// 某块牌计满一轮完整展示后，再进入仍会显示但缩短为 1.5 秒——可回看又不反复长弹。
     /// 面试点：教学放进世界里而非开局弹窗——横版节奏是边跑边学，触发式提示不打断操作；
     /// 字体资产由 LevelBuilder 显式注入（项目不依赖 TMP 全局设置，见 EnsureCjkFont 注释）。
     /// 视觉子物体全部在 Start 程序化搭建：场景文件只存触发盒与文案，改文案不用重摆场景。
@@ -20,8 +21,10 @@ namespace StarVortex.Gameplay.World
         [SerializeField] private TMP_FontAsset _fontAsset;
 
         [Header("节奏")]
-        [Tooltip("提示最长驻留秒数（超时自动淡出，离开触发区立即淡出）")]
-        [SerializeField] private float _displaySeconds = 3f;
+        [Tooltip("首次提示驻留秒数（玩家离开触发区后开始倒计时，归零淡出；停在区内常驻）")]
+        [SerializeField] private float _displaySeconds = 5f;
+        [Tooltip("完整展示过一轮后的复读秒数（再进触发区仍显示，但不反复长驻）")]
+        [SerializeField] private float _revisitSeconds = 1.5f;
         [Tooltip("淡入淡出速率（alpha 每秒变化量）")]
         [SerializeField] private float _fadeSpeed = 2.8f;
 
@@ -31,7 +34,8 @@ namespace StarVortex.Gameplay.World
         private static readonly Color EchoColor = new Color(1.4f, 1.1f, 0.45f, 1f);
         private static readonly Color TextColor = new Color(1f, 0.96f, 0.86f, 1f);
 
-        private const float BeamBaseAlpha = 0.30f;   // 光柱底光：未触发也隐约可见（引导视线）
+        private const float BeamBaseAlpha = 0.18f;   // 光柱底光：未触发也隐约可见（收窄调暗，避免大坨黄斑发糊）
+        private const float BeamLitAlpha = 0.75f;    // 触发后的光柱上限：亮到能引导、不过曝成糊斑
         private const float BeaconBaseAlpha = 0.55f; // 光点底光：远看先看到"这里有东西"
 
         private Sprite _glowSprite;
@@ -41,8 +45,10 @@ namespace StarVortex.Gameplay.World
         private TextMeshPro _label;
         private float _alpha;        // 当前提示透明度 0..1
         private float _alphaTarget;
-        private float _holdTimer;    // 进入后的驻留倒计时
+        private float _holdTimer;    // 驻留倒计时（只在离开触发区后走，区内冻结）
         private float _bobSeed;      // 各牌相位错开，避免整排光点同步跳动
+        private bool _playerInside;  // 勇者是否仍在触发区内
+        private bool _fullShown;     // 已计满一轮完整展示（之后复读缩短）
         private bool _built;
 
         /// <summary>注入文案与中文字体资产（LevelBuilder 建场景时调用）。</summary>
@@ -62,10 +68,16 @@ namespace StarVortex.Gameplay.World
         {
             if (!_built) return;
 
-            if (_holdTimer > 0f)
+            // 驻留倒计时只在离开触发区后走：玩家停在区内提示常驻（离开才开始淡出计时）；
+            // 归零时标记"已完整看过一轮"，之后复读缩短，避免反复路过反复长弹
+            if (!_playerInside && _holdTimer > 0f)
             {
                 _holdTimer -= Time.deltaTime;
-                if (_holdTimer <= 0f) _alphaTarget = 0f; // 驻留超时自动收起
+                if (_holdTimer <= 0f)
+                {
+                    _alphaTarget = 0f;
+                    _fullShown = true;
+                }
             }
             _alpha = Mathf.MoveTowards(_alpha, _alphaTarget, _fadeSpeed * Time.deltaTime);
             ApplyAlpha();
@@ -75,15 +87,15 @@ namespace StarVortex.Gameplay.World
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.GetComponentInParent<HeroController>() == null) return;
-            _holdTimer = _displaySeconds;
+            _playerInside = true;
+            _holdTimer = _fullShown ? _revisitSeconds : _displaySeconds;
             _alphaTarget = 1f;
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
             if (other.GetComponentInParent<HeroController>() == null) return;
-            _holdTimer = 0f;
-            _alphaTarget = 0f;
+            _playerInside = false; // 不立刻收字：由 Update 继续走驻留倒计时，归零才淡出
         }
 
         // ---------- 程序化视觉 ----------
@@ -96,11 +108,12 @@ namespace StarVortex.Gameplay.World
             if (_glowSprite == null)
                 Debug.LogWarning("[TutorialSign] 缺 Resources/Sprites/glow_disc——光柱/光点不可见，文字提示照常工作");
 
-            // 发光柱：glow_disc 纵向拉伸成柔和光带（2.56u 图 → 约 1.1 × 4.7u），底端沉入地面
+            // 发光柱：glow_disc 纵向拉伸成柔和光带（2.56u 图 → 约 0.77 × 4.7u），底端沉入地面；
+            // 横向收窄到 0.30——旧 0.42 的大坨黄斑糊成一团，细一点更像"光柱"也更好读
             var beamGo = new GameObject("Beam");
             beamGo.transform.SetParent(transform, false);
             beamGo.transform.localPosition = new Vector3(0f, 2.25f, 0f);
-            beamGo.transform.localScale = new Vector3(0.42f, 1.85f, 1f);
+            beamGo.transform.localScale = new Vector3(0.30f, 1.85f, 1f);
             _beam = beamGo.AddComponent<SpriteRenderer>();
             _beam.sprite = _glowSprite;
             _beam.color = BeamColor;
@@ -117,7 +130,7 @@ namespace StarVortex.Gameplay.World
             _label = labelGo.AddComponent<TextMeshPro>();
             _label.text = _message;
             if (_fontAsset != null) _label.font = _fontAsset;
-            _label.fontSize = 2.6f;
+            _label.fontSize = 3.4f; // 旧 2.6 偏小（新手反馈看不清），提升 ~30%；两行文案也按此字号排
             _label.alignment = TextAlignmentOptions.Center;
             _label.fontStyle = FontStyles.Bold;
             _label.enableWordWrapping = false;
@@ -147,7 +160,7 @@ namespace StarVortex.Gameplay.World
 
         private void ApplyAlpha()
         {
-            SetAlpha(_beam, BeamBaseAlpha + (1f - BeamBaseAlpha) * _alpha);
+            SetAlpha(_beam, BeamBaseAlpha + (BeamLitAlpha - BeamBaseAlpha) * _alpha);
             SetAlpha(_beacon, BeaconBaseAlpha + (1f - BeaconBaseAlpha) * _alpha);
             SetAlpha(_beaconEcho, 0.4f + 0.6f * _alpha);
             if (_label != null) _label.color = new Color(TextColor.r, TextColor.g, TextColor.b, _alpha);
