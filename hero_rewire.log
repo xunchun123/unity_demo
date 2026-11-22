@@ -1,0 +1,1247 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Channel LicenseClient-admin doesn't exist
+[Licensing::Module] Successfully launched the LicensingClient (PId: 6968)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-admin" at "2026-11-22T13:07:48.0927435Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 6968, path: "D:/Unity/2022.3.62f3c1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.16.2+bdef8f5
+  Session Id:              f62ea7e166514ddb97039e4b6a29a1ae
+  Correlation Id:          e9e672d9cca24afc4d6c7c1fd054fd0c
+  External correlation Id: 1395126436204466284
+  Machine Id:              5WexDtElQ85eMVAeTN9kGsKmJqY=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-admin" (connect: 1.95s, validation: 0.10s, handshake: 0.09s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-admin-notifications" at "2026-11-22T13:07:48.2817062Z"
+[Licensing::Module] Connected to LicensingClient (PId: 6968, launch time: 0.01, total connection time: 2.14s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully updated license
+Built from '2022.3/china_unity/release' branch; Version is '2022.3.62f3c1 (1623fc0bbb97) revision 1451004'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26200) 64bit Professional' Language: 'zh' Physical Memory: 16125 MB
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "F4-24DS-H92D-CAAU-D3QJ-XXXX"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+[Licensing::Client] Successfully resolved entitlement details
+
+COMMAND LINE ARGUMENTS:
+D:\Unity\2022.3.62f3c1\Editor\Unity.exe
+-batchmode
+-quit
+-projectPath
+D:/游戏demo/StarVortex
+-executeMethod
+StarVortex.EditorTools.LevelBuilder.BuildAllLevels
+-logFile
+D:/游戏demo/StarVortex/hero_rewire.log
+Successfully changed project path to: D:/游戏demo/StarVortex
+D:/游戏demo/StarVortex
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [5836]  Target information:
+
+Player connection [5836]  * "[IP] 192.168.1.3 [Port] 55504 [Flags] 2 [Guid] 3067604950 [EditorId] 3067604950 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-NEIA09S) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [5836] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [5836] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[Package Manager] UpmClient::Connect -- Connected to IPC stream "Upm-25084" after 0.6 seconds.
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 40 packages:
+  Packages from [https://packages.unity.cn]:
+    com.unity.collab-proxy@2.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.collab-proxy@2.0.0)
+    com.unity.ide.rider@3.0.18 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.ide.rider@3.0.18)
+    com.unity.ide.visualstudio@2.0.17 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.ide.visualstudio@2.0.17)
+    com.unity.inputsystem@1.7.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.inputsystem@1.7.0)
+    com.unity.test-framework@1.1.33 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.test-framework@1.1.33)
+    com.unity.textmeshpro@3.0.6 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.textmeshpro@3.0.6)
+    com.unity.timeline@1.7.3 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.timeline@1.7.3)
+    com.unity.ext.nunit@1.0.6 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.ext.nunit@1.0.6)
+    com.unity.mathematics@1.2.6 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.mathematics@1.2.6)
+    com.unity.burst@1.8.21 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.burst@1.8.21)
+    com.unity.2d.animation@9.2.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.animation@9.2.0)
+    com.unity.2d.pixel-perfect@5.1.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.pixel-perfect@5.1.0)
+    com.unity.2d.psdimporter@8.1.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.psdimporter@8.1.0)
+    com.unity.2d.spriteshape@9.1.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.spriteshape@9.1.0)
+    com.unity.2d.tilemap.extras@3.1.3 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.tilemap.extras@3.1.3)
+    com.unity.2d.aseprite@1.1.9 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.aseprite@1.1.9)
+    com.unity.searcher@4.9.2 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.searcher@4.9.2)
+    com.unity.2d.common@8.1.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.common@8.1.0)
+    com.unity.collections@1.2.4 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.collections@1.2.4)
+  Built-in packages:
+    com.unity.feature.2d@2.0.1 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.feature.2d@2.0.1)
+    com.unity.render-pipelines.universal@14.0.12 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.render-pipelines.universal@14.0.12)
+    com.unity.ugui@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.ugui@1.0.0)
+    com.unity.modules.imageconversion@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.imageconversion@1.0.0)
+    com.unity.modules.ui@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.ui@1.0.0)
+    com.unity.modules.imgui@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.imgui@1.0.0)
+    com.unity.modules.director@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.director@1.0.0)
+    com.unity.modules.animation@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.animation@1.0.0)
+    com.unity.modules.audio@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.audio@1.0.0)
+    com.unity.modules.particlesystem@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.particlesystem@1.0.0)
+    com.unity.modules.jsonserialize@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.jsonserialize@1.0.0)
+    com.unity.render-pipelines.core@14.0.12 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.render-pipelines.core@14.0.12)
+    com.unity.shadergraph@14.0.12 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.shadergraph@14.0.12)
+    com.unity.render-pipelines.universal-config@14.0.10 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.render-pipelines.universal-config@14.0.10)
+    com.unity.modules.uielements@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.uielements@1.0.0)
+    com.unity.2d.sprite@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.sprite@1.0.0)
+    com.unity.2d.tilemap@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.tilemap@1.0.0)
+    com.unity.modules.physics@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.physics@1.0.0)
+    com.unity.modules.terrain@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.terrain@1.0.0)
+    com.unity.modules.tilemap@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.tilemap@1.0.0)
+    com.unity.modules.physics2d@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.physics2d@1.0.0)
+[Subsystems] No new subsystems found in resolved package list.
+Package Manager log level set to [2]
+[Package Manager] Done registering packages in 0.08 seconds
+Refreshing native plugins compatible for Editor in 11.19 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.62f3c1 (1623fc0bbb97)
+[Subsystems] Discovering subsystems at path D:/Unity/2022.3.62f3c1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/游戏demo/StarVortex/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) UHD Graphics 730 (ID=0x4692)
+    Vendor:   Intel
+    VRAM:     8062 MB
+    Driver:   30.0.101.1371
+[Licensing::Client] Successfully resolved entitlement details
+Initialize mono
+Mono path[0] = 'D:/Unity/2022.3.62f3c1/Editor/Data/Managed'
+Mono path[1] = 'D:/Unity/2022.3.62f3c1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/Unity/2022.3.62f3c1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56084
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Unity/2022.3.62f3c1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: D:/Unity/2022.3.62f3c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002870 seconds.
+- Loaded All Assemblies, in  0.502 seconds
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.839 seconds
+Domain Reload Profiling: 1342ms
+	BeginReloadAssembly (144ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (45ms)
+	RebuildNativeTypeToScriptingClass (13ms)
+	initialDomainReloadingComplete (77ms)
+	LoadAllAssembliesAndSetupDomain (221ms)
+		LoadAssemblies (145ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (217ms)
+			TypeCache.Refresh (215ms)
+				TypeCache.ScanAssembly (195ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (841ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (641ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (19ms)
+			SetLoadedEditorAssemblies (13ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (5ms)
+			ProcessInitializeOnLoadAttributes (405ms)
+			ProcessInitializeOnLoadMethodAttributes (199ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+Assets/Scripts is a symbolic link. Using symlinks in Unity projects may cause your project to become corrupted if you create multiple references to the same asset, use recursive symlinks or use symlinks to share assets between projects used with different versions of Unity. Make sure you know what you are doing.
+Assets/Tests is a symbolic link. Using symlinks in Unity projects may cause your project to become corrupted if you create multiple references to the same asset, use recursive symlinks or use symlinks to share assets between projects used with different versions of Unity. Make sure you know what you are doing.
+Disabling directory monitoring for current editor session. Found symlinks in project which cannot be used with directory monitoring. Directory monitoring settings can be changed in preferences.
+Assembly for Assembly Definition File 'Assets/Tests/StarVortex.Tests.asmdef' will not be compiled, because it has no scripts associated with it.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:LogFormat (UnityEngine.LogType,string,object[])
+UnityEngine.Debug:LogWarningFormat (string,object[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:WarnIfThereAreAssembliesWithoutAnyScripts (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings,UnityEditor.Scripting.ScriptCompilation.ScriptAssembly[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScriptsWithSettings (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTargetGroup,UnityEditor.BuildTarget,int,string[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface/<>c__DisplayClass21_0:<CompileScripts>b__0 ()
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:EmitExceptionAsError<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus> (System.Func`1<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus>,UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTargetGroup,UnityEditor.BuildTarget,int,string[])
+
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:80
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: D:\��Ϸdemo\StarVortex\
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 188.6583ms
+Starting: D:\Unity\2022.3.62f3c1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: D:/游戏demo/StarVortex
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc -
+DisplayProgressbar: Compiling Scripts
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring "D:\Unity\2022.3.62f3c1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.InteropServices.WindowsRuntime.dll" in favor of "D:\Unity\2022.3.62f3c1\Editor\Data\NetStandard\Extensions\2.0.0\System.Runtime.InteropServices.WindowsRuntime.dll"
+warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Assembly system.componentmodel.composition has duplicate hint path. Ignoring "D:\Unity\2022.3.62f3c1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.ComponentModel.Composition.dll" in favor of "D:\Unity\2022.3.62f3c1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.ComponentModel.Composition.dll"
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Unity.Burst.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library\PackageCache\com.unity.burst@1.8.21\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 90.5390ms
+ExitCode: 0 Duration: 0s602ms
+[560/726    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra build success (0.52 seconds), 1 items updated, 726 evaluated
+AssetDatabase: script compilation time: 2.895891s
+Begin MonoManager ReloadAssembly
+Total cache size 114739876
+Total cache size after purge 114739876
+- Loaded All Assemblies, in  1.177 seconds
+Refreshing native plugins compatible for Editor in 1.97 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Refreshing native plugins compatible for Editor in 3.63 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  4.880 seconds
+Domain Reload Profiling: 6059ms
+	BeginReloadAssembly (320ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (8ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (67ms)
+	RebuildCommonClasses (57ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (38ms)
+	LoadAllAssembliesAndSetupDomain (752ms)
+		LoadAssemblies (614ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (333ms)
+			TypeCache.Refresh (260ms)
+				TypeCache.ScanAssembly (232ms)
+			ScanForSourceGeneratedMonoScriptInfo (48ms)
+			ResolveRequiredComponents (22ms)
+	FinalizeReload (4883ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (4475ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (9ms)
+			SetLoadedEditorAssemblies (11ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (169ms)
+			ProcessInitializeOnLoadAttributes (3837ms)
+			ProcessInitializeOnLoadMethodAttributes (446ms)
+			AfterProcessingInitializeOnLoad (3ms)
+			EditorAssembliesLoaded (1ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (17ms)
+Start importing Assets/Data/Hero/Weapon_Sword.asset using Guid(64faa936d733f8147b37f75a1c55262a) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+Fixing reference to the runtime script in scene file!
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+ -> (artifact id: '4d47c547ea0be19091310a71267e2ed8') in 0.184898 seconds
+Start importing Assets/Data/Hero/Weapon_Bow.asset using Guid(2b942db030d45394eaeec965188f2bcd) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+Fixing reference to the runtime script in scene file!
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+ -> (artifact id: '343497922512cd90b9fb5536c2a192f6') in 0.004725 seconds
+Start importing Assets/Data/Hero/Weapon_Staff.asset using Guid(fc8cee0881c60e64f8482e7c48c069f5) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+Fixing reference to the runtime script in scene file!
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+ -> (artifact id: '05c215951b8d3c740386e598ba0435f5') in 0.005198 seconds
+Refreshing native plugins compatible for Editor in 4.23 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=95593e641cb81f749a7f3cee4e3e1acf): Total: 12.296 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=4 (actual=0, local cache=4, cache server=0)
+		Asset DB Process Time: managed=95 ms, native=2894 ms
+		Asset DB Callback time: managed=174 ms, native=14 ms
+		Scripting: domain reloads=1, domain reload time=6148 ms, compile time=2902 ms, other=65 ms
+		Project Asset Count: scripts=5277, non-scripts=2490
+		Asset File Changes: new=0, changed=3, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.463ms
+	ApplyChangesToAssetFolders: 0.055ms
+	Scan: 422.109ms
+	OnSourceAssetsModified: 5.462ms
+	GetAllGuidsForCategorization: 4.124ms
+	CategorizeAssets: 359.535ms
+	ImportOutOfDateAssets: 5257.840ms (2063.422ms without children)
+		ImportManagerImport: 214.089ms (15.264ms without children)
+			ImportInProcess: 198.825ms
+		CompileScripts: 2901.927ms
+		ReloadNativeAssets: 0.116ms
+		UnloadImportedAssets: 55.295ms
+		ReloadImportedAssets: 0.001ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 11.059ms
+		InitializingProgressBar: 0.024ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.004ms
+		OnDemandSchedulerStart: 11.903ms
+	PostProcessAllAssets: 175.507ms
+	Hotreload: 7.711ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.002ms
+	UnloadStreamsBegin: 5.013ms
+	PersistCurrentRevisions: 5.426ms
+	UnloadStreamsEnd: 5.758ms
+	GenerateScriptTypeHashes: 19.594ms
+	Untracked: 6047.024ms
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.16 seconds
+Scanning for USB devices : 3.947ms
+Initializing Unity extensions:
+[Licensing::Client] Successfully resolved entitlement details
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-StarVortex Survivors
+Method StarVortex.EditorTools.DemoSceneBuilder.EnsureDir has invalid parameters. MenuCommand is the only optional supported parameter.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:LogFormat (UnityEngine.LogType,string,object[])
+UnityEngine.Debug:LogWarningFormat (string,object[])
+UnityEditor.MenuService:ValidateMethodForMenuCommand (System.Reflection.MethodInfo)
+UnityEditor.MenuService/<>c:<ExtractMenuItemsFromAttributes>b__18_0 (System.Reflection.MethodInfo)
+System.Linq.Enumerable/WhereEnumerableIterator`1<System.Reflection.MethodInfo>:ToArray ()
+System.Linq.Buffer`1<System.Reflection.MethodInfo>:.ctor (System.Collections.Generic.IEnumerable`1<System.Reflection.MethodInfo>)
+System.Linq.OrderedEnumerable`1<System.Reflection.MethodInfo>:ToList ()
+System.Linq.Enumerable:ToList<System.Reflection.MethodInfo> (System.Collections.Generic.IEnumerable`1<System.Reflection.MethodInfo>)
+UnityEditor.MenuService:ExtractMenuItemsFromAttributes ()
+UnityEditor.MenuService:GetMenuItemsFromAttributesById (string)
+UnityEditor.MenuService:GetMenuItemsFromAttributes ()
+
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ProgressiveSceneManager::Cancel()
+Unloading 19 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 110 unused Assets / (1.3 MB). Loaded Objects now: 4892.
+Memory consumption went from 151.6 MB to 150.3 MB.
+Total: 31.455000 ms (FindLiveObjects: 0.936500 ms CreateObjectMapping: 0.921100 ms MarkObjects: 26.077900 ms  DeleteObjects: 3.514700 ms)
+
+Asset Pipeline Refresh (id=a2c5c8d187294004bae95fa5067f5b6f): Total: 0.393 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=392 ms
+		Asset DB Callback time: managed=0 ms, native=0 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=5277, non-scripts=2490
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 1
+	InvokeBeforeRefreshCallbacks: 0.000ms
+	ApplyChangesToAssetFolders: 0.050ms
+	Scan: 300.296ms
+	OnSourceAssetsModified: 0.002ms
+	GetAllGuidsForCategorization: 1.630ms
+	CategorizeAssets: 23.906ms
+	ImportOutOfDateAssets: 9.034ms (1.174ms without children)
+		ReloadNativeAssets: 0.038ms
+		UnloadImportedAssets: 0.283ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 2.427ms
+		InitializingProgressBar: 0.001ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 5.110ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.523ms
+	UnloadStreamsBegin: 0.188ms
+	PersistCurrentRevisions: 0.996ms
+	UnloadStreamsEnd: 0.166ms
+	Untracked: 56.130ms
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 1 unused Assets / (0.5 KB). Loaded Objects now: 4892.
+Memory consumption went from 145.4 MB to 145.4 MB.
+Total: 5.298300 ms (FindLiveObjects: 0.369400 ms CreateObjectMapping: 0.267600 ms MarkObjects: 4.615800 ms  DeleteObjects: 0.043700 ms)
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+Fixing reference to the runtime script in scene file!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+Fixing reference to the runtime script in scene file!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+Fixing reference to the runtime script in scene file!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 1 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 2 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 3 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+Start importing Assets/Scenes/Level1.unity using Guid(53f796b329a71bb43adaf32cf47485ca) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '585a9bce170d3f4b9674fada085c15c4') in 0.004565 seconds
+Refreshing native plugins compatible for Editor in 4.21 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=10ea71192215f06419d118c753cc5f68): Total: 0.085 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[LevelBuilder] Level1「灰烬森林」构建完成：宽 80 格，地面段 17，怪物 11，陷阱 4，目标 Elite
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:252)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+
+(Filename: Assets/Scripts/EditorTools/LevelBuilder.cs Line: 252)
+
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Unloading 24 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 176 unused Assets / (0.9 MB). Loaded Objects now: 4918.
+Memory consumption went from 156.2 MB to 155.2 MB.
+Total: 7.456900 ms (FindLiveObjects: 0.336600 ms CreateObjectMapping: 0.155200 ms MarkObjects: 5.439900 ms  DeleteObjects: 1.522900 ms)
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+Fixing reference to the runtime script in scene file!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+Fixing reference to the runtime script in scene file!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+Fixing reference to the runtime script in scene file!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 1 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 2 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 3 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+Start importing Assets/Scenes/Level2.unity using Guid(07464e88488fbaf4a8f749868d867476) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '7c441338c5b713e4bab077319a8589e2') in 0.003055 seconds
+Refreshing native plugins compatible for Editor in 1.77 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=3980d4829cb8c9945b4a1d31504ed4fd): Total: 0.070 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[LevelBuilder] Level2「坍塌矿洞」构建完成：宽 100 格，地面段 15，怪物 12，陷阱 5，目标 Elite
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:252)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+
+(Filename: Assets/Scripts/EditorTools/LevelBuilder.cs Line: 252)
+
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Unloading 24 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 176 unused Assets / (0.9 MB). Loaded Objects now: 4918.
+Memory consumption went from 160.1 MB to 159.1 MB.
+Total: 9.360300 ms (FindLiveObjects: 1.605300 ms CreateObjectMapping: 0.784300 ms MarkObjects: 6.202500 ms  DeleteObjects: 0.765800 ms)
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+Fixing reference to the runtime script in scene file!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+Fixing reference to the runtime script in scene file!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+Fixing reference to the runtime script in scene file!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+'StarVortex.Core.BoonIds' is missing the class attribute 'ExtensionOfNativeClass'!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.AssetDatabase:LoadAssetAtPath<StarVortex.Core.WeaponKit> (string)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:222)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 248]
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 1 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 2 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 3 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+Start importing Assets/Scenes/Level3.unity using Guid(ec9d4fb8233a2cf4e83b1f3d63a08fcc) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'fec98ab3921f3589d0cad7cc14e7930d') in 0.001499 seconds
+Refreshing native plugins compatible for Editor in 3.79 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=c5ec7392a8023384ba3dca9c72b57731): Total: 0.076 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[LevelBuilder] Level3「深渊王座」构建完成：宽 60 格，地面段 1，怪物 9，陷阱 0，目标 Boss
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:252)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+
+(Filename: Assets/Scripts/EditorTools/LevelBuilder.cs Line: 252)
+
+[BuildSettings] 场景列表：MainMenu(0) → Level1 → Level2 → Level3
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.LevelBuilder:SetupBuildSettings () (at Assets/Scripts/EditorTools/LevelBuilder.cs:82)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:56)
+
+(Filename: Assets/Scripts/EditorTools/LevelBuilder.cs Line: 82)
+
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Unloading 24 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 176 unused Assets / (0.9 MB). Loaded Objects now: 4918.
+Memory consumption went from 156.4 MB to 155.4 MB.
+Total: 10.444800 ms (FindLiveObjects: 0.340600 ms CreateObjectMapping: 0.222400 ms MarkObjects: 9.109000 ms  DeleteObjects: 0.771000 ms)
+
+Start importing Assets/Settings/PostVolume.asset using Guid(52d30b28481e53043a277541f07f0384) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '90637ea5a1a320977d9626104dec93f2') in 0.004676 seconds
+Refreshing native plugins compatible for Editor in 2.59 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=24161484469409f428ea5828c48b0ccd): Total: 0.081 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Settings/PostVolume.asset using Guid(52d30b28481e53043a277541f07f0384) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '03af35e1fb961027e9dcbc2832cc52dd') in 0.002303 seconds
+Refreshing native plugins compatible for Editor in 3.34 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=7b865f6a01944b844b1885f09303bab5): Total: 0.055 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Scenes/MainMenu.unity using Guid(6b653955dba5cc54080019453010e86f) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '88b75c0d5015ca190f3823a60af03644') in 0.006002 seconds
+Refreshing native plugins compatible for Editor in 4.59 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=19611422e8c146b438b8ec1d25690074): Total: 0.078 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[Scene] 主菜单构建完成 → Assets/Scenes/MainMenu.unity
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroMenuScene () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:565)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:57)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 565)
+
+[LevelBuilder] ========== 三关 + 主菜单构建完成：Level1 灰烬森林 / Level2 坍塌矿洞 / Level3 深渊王座 ==========
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:60)
+
+(Filename: Assets/Scripts/EditorTools/LevelBuilder.cs Line: 60)
+
+Batchmode quit successfully invoked - shutting down!
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-admin-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-admin channel disconnected successfully.
+Cleanup mono
+abort_threads: Failed aborting id: 00000000000048C4, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 00000000000057AC, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 00000000000048C4, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 00000000000057AC, mono_thread_manage will ignore it
+
+debugger-agent: Unable to listen on 5280
+[Performance] WinEditorMain                                                                                                  :        1 samples, Peak.  2.75 s (1.0x), Avg.  2.75 s, Total. 2.753 s (11.7%)
+[Performance] WinEditorMain.ConfigureCrashHandler                                                                            :        1 samples, Peak.   101 us (1.0x), Avg.   101 us, Total. 100.8 us (0.0%)
+[Performance] WinEditorMain.CurlRequestInitialize                                                                            :        1 samples, Peak.   664 us (1.0x), Avg.   664 us, Total. 663.8 us (0.0%)
+[Performance] WinEditorMain.SetupLogFile                                                                                     :        1 samples, Peak.   190 us (1.0x), Avg.   190 us, Total. 189.6 us (0.0%)
+[Performance] WinEditorMain.RunNativeTestsIfRequiredAndExit                                                                  :        1 samples, Peak.   200 ns (1.0x), Avg.   200 ns, Total. 200.0 ns (0.0%)
+[Performance] WinEditorMain.Licensing                                                                                        :        1 samples, Peak.  2.69 s (1.0x), Avg.  2.69 s, Total. 2.691 s (11.4%)
+[Performance] WinEditorMain.InitializeCrashHandler                                                                           :        1 samples, Peak.  53.3 ms (1.0x), Avg.  53.3 ms, Total. 53.26 ms (0.2%)
+[Performance] WinEditorMain.CreateApplication                                                                                :        1 samples, Peak.   174 us (1.0x), Avg.   174 us, Total. 173.6 us (0.0%)
+[Performance] Application.InitializeProject                                                                                  :        1 samples, Peak.  16.7 s (1.0x), Avg.  16.7 s, Total. 16.71 s (70.8%)
+[Performance] Application.PackageManager.StartServer                                                                         :        1 samples, Peak.  15.6 ms (1.0x), Avg.  15.6 ms, Total. 15.64 ms (0.1%)
+[Performance] Application.AcquireProjectLock                                                                                 :        1 samples, Peak.  8.36 ms (1.0x), Avg.  8.36 ms, Total. 8.361 ms (0.0%)
+[Performance] Application.InitializeEngineNoGraphics                                                                         :        1 samples, Peak.  80.0 ms (1.0x), Avg.  80.0 ms, Total. 80.02 ms (0.3%)
+[Performance] Application.PackageManager.Initialize                                                                          :        1 samples, Peak.   586 ms (1.0x), Avg.   586 ms, Total. 586.3 ms (2.5%)
+[Performance] Connecting to Package Manager                                                                                  :       59 samples, Peak.   226 us (15.0x), Avg.  15.0 us, Total. 886.3 us (0.0%)
+[Performance] Application.EngineGraphics.Initialize                                                                          :        1 samples, Peak.   520 ms (1.0x), Avg.   520 ms, Total. 520.0 ms (2.2%)
+[Performance] Application.GI.Initialize                                                                                      :        1 samples, Peak.  11.7 ms (1.0x), Avg.  11.7 ms, Total. 11.68 ms (0.0%)
+[Performance] Application.LoadAllDefaultResourcesFromEditor                                                                  :        1 samples, Peak.  2.41 ms (1.0x), Avg.  2.41 ms, Total. 2.409 ms (0.0%)
+[Performance] Application.LoadMonoAssemblies                                                                                 :        1 samples, Peak.  1.39 s (1.0x), Avg.  1.39 s, Total. 1.388 s (5.9%)
+[Performance] RestoreManagedReferences                                                                                       :        2 samples, Peak.  83.2 ms (2.0x), Avg.  41.6 ms, Total. 83.22 ms (0.4%)
+[Performance] InitializeOnLoad DrivenRectTransformUndo                                                                       :        2 samples, Peak.  1.71 ms (1.5x), Avg.  1.16 ms, Total. 2.318 ms (0.0%)
+[Performance] InitializeOnLoad SceneSearch                                                                                   :        2 samples, Peak.   300 us (1.2x), Avg.   243 us, Total. 486.6 us (0.0%)
+[Performance] InitializeOnLoad CloudBuild                                                                                    :        2 samples, Peak.  13.3 us (1.3x), Avg.  10.0 us, Total. 20.00 us (0.0%)
+[Performance] InitializeOnLoad NativeFormatImporterUtility                                                                   :        2 samples, Peak.  4.73 ms (1.1x), Avg.  4.24 ms, Total. 8.485 ms (0.0%)
+[Performance] InitializeOnLoad SearchService                                                                                 :        2 samples, Peak.  4.00 ms (1.9x), Avg.  2.06 ms, Total. 4.112 ms (0.0%)
+[Performance] InitializeOnLoad SettingsService                                                                               :        2 samples, Peak.   114 us (1.9x), Avg.  60.1 us, Total. 120.2 us (0.0%)
+[Performance] InitializeOnLoad WindowLayout                                                                                  :        2 samples, Peak.  2.08 ms (1.3x), Avg.  1.60 ms, Total. 3.196 ms (0.0%)
+[Performance] InitializeOnLoad AssetStoreContext                                                                             :        2 samples, Peak.  60.9 ms (1.2x), Avg.  49.1 ms, Total. 98.15 ms (0.4%)
+[Performance] InitializeOnLoad PoolManager                                                                                   :        2 samples, Peak.  1.76 ms (1.1x), Avg.  1.59 ms, Total. 3.183 ms (0.0%)
+[Performance] InitializeOnLoad MixerEffectDefinitionReloader                                                                 :        2 samples, Peak.  5.72 ms (1.4x), Avg.  4.01 ms, Total. 8.015 ms (0.0%)
+[Performance] InitializeOnLoad ProjectSearch                                                                                 :        2 samples, Peak.   113 us (1.2x), Avg.  92.5 us, Total. 185.1 us (0.0%)
+[Performance] InitializeOnLoad UISystemProfilerRenderService                                                                 :        2 samples, Peak.  17.6 us (1.3x), Avg.  13.6 us, Total. 27.10 us (0.0%)
+[Performance] InitializeOnLoad EditMode                                                                                      :        2 samples, Peak.   573 us (1.3x), Avg.   442 us, Total. 883.2 us (0.0%)
+[Performance] InitializeOnLoad UnityConnect                                                                                  :        2 samples, Peak.  81.8 us (1.3x), Avg.  63.2 us, Total. 126.4 us (0.0%)
+[Performance] InitializeOnLoad ManagedDebugger                                                                               :        2 samples, Peak.  4.81 ms (2.0x), Avg.  2.46 ms, Total. 4.925 ms (0.0%)
+[Performance] InitializeOnLoad ShortcutIntegration                                                                           :        2 samples, Peak.   400 us (1.8x), Avg.   222 us, Total. 444.4 us (0.0%)
+[Performance] InitializeOnLoad AddComponentWindow                                                                            :        2 samples, Peak.   374 us (1.6x), Avg.   230 us, Total. 460.9 us (0.0%)
+[Performance] InitializeOnLoad ManagedDebuggerWindow                                                                         :        2 samples, Peak.   653 us (1.7x), Avg.   374 us, Total. 747.2 us (0.0%)
+[Performance] InitializeOnLoad CacheServerWindow                                                                             :        2 samples, Peak.  46.7 us (1.7x), Avg.  27.5 us, Total. 55.00 us (0.0%)
+[Performance] InitializeOnLoad PlayModeDownload                                                                              :        2 samples, Peak.  9.18 ms (2.0x), Avg.  4.66 ms, Total. 9.329 ms (0.0%)
+[Performance] InitializeOnLoad MenuItems                                                                                     :        2 samples, Peak.   153 us (1.4x), Avg.   109 us, Total. 218.4 us (0.0%)
+[Performance] InitializeOnLoad PrefabInstanceChangedListener                                                                 :        2 samples, Peak.   202 us (1.3x), Avg.   155 us, Total. 309.8 us (0.0%)
+[Performance] InitializeOnLoad ObjectSelectorSearch                                                                          :        2 samples, Peak.  74.3 us (1.0x), Avg.  72.8 us, Total. 145.6 us (0.0%)
+[Performance] InitializeOnLoad EditorMonitor                                                                                 :        2 samples, Peak.   831 us (1.2x), Avg.   714 us, Total. 1.428 ms (0.0%)
+[Performance] InitializeOnLoad RetainedMode                                                                                  :        2 samples, Peak.  6.40 ms (1.0x), Avg.  6.40 ms, Total. 12.79 ms (0.1%)
+[Performance] InitializeOnLoad EditorShaderLoader                                                                            :        2 samples, Peak.  4.22 ms (1.6x), Avg.  2.67 ms, Total. 5.338 ms (0.0%)
+[Performance] InitializeOnLoad EditorDelegateRegistration                                                                    :        2 samples, Peak.  1.78 ms (1.0x), Avg.  1.70 ms, Total. 3.400 ms (0.0%)
+[Performance] InitializeOnLoad UIDocumentHierarchyWatcher                                                                    :        2 samples, Peak.   346 us (1.4x), Avg.   255 us, Total. 510.0 us (0.0%)
+[Performance] InitializeOnLoad LiveReloadTrackerCreator                                                                      :        2 samples, Peak.   532 us (1.2x), Avg.   443 us, Total. 885.8 us (0.0%)
+[Performance] InitializeOnLoad UxmlObjectEditorFactories                                                                     :        2 samples, Peak.   853 us (1.2x), Avg.   720 us, Total. 1.439 ms (0.0%)
+[Performance] InitializeOnLoad UXMLEditorFactories                                                                           :        2 samples, Peak.   168 ms (1.2x), Avg.   141 ms, Total. 282.4 ms (1.2%)
+[Performance] InitializeOnLoad PurchasingService                                                                             :        2 samples, Peak.  27.9 ms (1.6x), Avg.  17.2 ms, Total. 34.47 ms (0.1%)
+[Performance] InitializeOnLoad CloudBuildPoller                                                                              :        2 samples, Peak.   302 us (1.5x), Avg.   200 us, Total. 399.5 us (0.0%)
+[Performance] InitializeOnLoad EditorGameServicesAnalytics                                                                   :        2 samples, Peak.  8.58 ms (1.9x), Avg.  4.46 ms, Total. 8.927 ms (0.0%)
+[Performance] InitializeOnLoad AnalyticsService                                                                              :        2 samples, Peak.  1.51 ms (1.8x), Avg.   827 us, Total. 1.654 ms (0.0%)
+[Performance] InitializeOnLoad BuildService                                                                                  :        2 samples, Peak.   736 us (1.8x), Avg.   420 us, Total. 840.9 us (0.0%)
+[Performance] InitializeOnLoad AdsService                                                                                    :        2 samples, Peak.   832 us (1.5x), Avg.   571 us, Total. 1.142 ms (0.0%)
+[Performance] InitializeOnLoad UDPService                                                                                    :        2 samples, Peak.   396 us (1.6x), Avg.   252 us, Total. 503.9 us (0.0%)
+[Performance] InitializeOnLoad CrashService                                                                                  :        2 samples, Peak.   861 us (1.6x), Avg.   529 us, Total. 1.059 ms (0.0%)
+[Performance] InitializeOnLoad ServicesRepository                                                                            :        2 samples, Peak.  5.90 us (1.7x), Avg.  3.40 us, Total. 6.800 us (0.0%)
+[Performance] InitializeOnLoad SearchWindow                                                                                  :        2 samples, Peak.   454 us (1.3x), Avg.   342 us, Total. 683.9 us (0.0%)
+[Performance] InitializeOnLoad CustomIndexers                                                                                :        2 samples, Peak.  69.9 ms (1.5x), Avg.  47.5 ms, Total. 95.02 ms (0.4%)
+[Performance] InitializeOnLoad SearchMonitor                                                                                 :        2 samples, Peak.  2.15 ms (1.1x), Avg.  1.95 ms, Total. 3.897 ms (0.0%)
+[Performance] InitializeOnLoad ParameterControllerEditor                                                                     :        2 samples, Peak.  91.6 us (1.6x), Avg.  55.8 us, Total. 111.6 us (0.0%)
+[Performance] InitializeOnLoad LayerSettingsWindow                                                                           :        2 samples, Peak.  30.1 us (1.5x), Avg.  20.1 us, Total. 40.30 us (0.0%)
+[Performance] InitializeOnLoad PackageManagerHookGUIDConverter.RegisterPackagesEventHandler                                  :        2 samples, Peak.  5.67 ms (1.9x), Avg.  2.94 ms, Total. 5.878 ms (0.0%)
+[Performance] InitializeOnLoad EditorDragAndDrop.RegisterEditorClient                                                        :        2 samples, Peak.   940 us (1.4x), Avg.   662 us, Total. 1.323 ms (0.0%)
+[Performance] InitializeOnLoad EditorEventCallbacks.InitializeFontAssetResourceChangeCallBacks                               :        2 samples, Peak.  11.3 ms (1.7x), Avg.  6.56 ms, Total. 13.13 ms (0.1%)
+[Performance] InitializeOnLoad SceneTemplateService.Init                                                                     :        2 samples, Peak.  2.40 ms (1.2x), Avg.  1.94 ms, Total. 3.887 ms (0.0%)
+[Performance] InitializeOnLoad DiagnosticSwitchesConsoleMessage.Init                                                         :        2 samples, Peak.  17.1 ms (1.9x), Avg.  8.95 ms, Total. 17.91 ms (0.1%)
+[Performance] InitializeOnLoad MemoryProfilerCompilationGuard.InjectCompileGuard                                             :        2 samples, Peak.   764 us (1.6x), Avg.   482 us, Total. 963.7 us (0.0%)
+[Performance] InitializeOnLoad EditorWindow.Initialize                                                                       :        2 samples, Peak.  3.08 ms (1.7x), Avg.  1.82 ms, Total. 3.633 ms (0.0%)
+[Performance] InitializeOnLoad AssetPostprocessingInternal.RefreshCustomDependencies                                         :        2 samples, Peak.  13.7 ms (1.7x), Avg.  8.22 ms, Total. 16.43 ms (0.1%)
+[Performance] InitializeOnLoad SysrootManager.Initialize                                                                     :        2 samples, Peak.   178 us (1.2x), Avg.   153 us, Total. 306.9 us (0.0%)
+[Performance] InitializeOnLoad PackageManagerWindow.EditorInitializedInSafeMode                                              :        2 samples, Peak.   113 ms (2.0x), Avg.  56.8 ms, Total. 113.5 ms (0.5%)
+[Performance] InitializeOnLoad ToolShortcutContext.Init                                                                      :        2 samples, Peak.  1.02 ms (1.5x), Avg.   667 us, Total. 1.334 ms (0.0%)
+[Performance] InitializeOnLoad SceneVisibilityManager.Initialize                                                             :        2 samples, Peak.  21.2 ms (1.4x), Avg.  14.6 ms, Total. 29.28 ms (0.1%)
+[Performance] InitializeOnLoad ScopedRegistryAddedPopup.SubscribeToRegistriesAdded                                           :        2 samples, Peak.  19.8 ms (2.0x), Avg.  9.98 ms, Total. 19.96 ms (0.1%)
+[Performance] AssemblyReloadEvents.afterAssemblyReload: UnityEditor.SceneTemplate.SceneTemplateService.AfterAssemblyReload   :        2 samples, Peak.  10.8 ms (1.9x), Avg.  5.64 ms, Total. 11.27 ms (0.0%)
+[Performance] ProcessService.EditorAfterLoadAllAssemblies                                                                    :        2 samples, Peak.  1.37 ms (1.3x), Avg.  1.04 ms, Total. 2.090 ms (0.0%)
+[Performance] Application.ReadLicenseInfo                                                                                    :        1 samples, Peak.  17.4 ms (1.0x), Avg.  17.4 ms, Total. 17.43 ms (0.1%)
+[Performance] Application.InitialRefresh                                                                                     :        1 samples, Peak.  12.3 s (1.0x), Avg.  12.3 s, Total. 12.31 s (52.1%)
+[Performance] ShaderImporter.SourceAssetModified                                                                             :        8 samples, Peak.  7.50 us (3.4x), Avg.  2.24 us, Total. 17.90 us (0.0%)
+[Performance] ShaderIncludeImporter.SourceAssetModified                                                                      :        8 samples, Peak.  68.4 us (6.3x), Avg.  10.9 us, Total. 87.00 us (0.0%)
+[Performance] Compiling Scripts                                                                                              :        1 samples, Peak.  2.90 s (1.0x), Avg.  2.90 s, Total. 2.896 s (12.3%)
+[Performance] AssemblyReloadEvents.beforeAssemblyReload: UnityEditor.SceneTemplate.SceneTemplateService.BeforeAssemblyReload :        1 samples, Peak.   553 us (1.0x), Avg.   553 us, Total. 553.0 us (0.0%)
+[Performance] InitializeOnLoad InputSystem                                                                                   :        1 samples, Peak.  86.0 ms (1.0x), Avg.  86.0 ms, Total. 86.01 ms (0.4%)
+[Performance] InitializeOnLoad TouchSimulation                                                                               :        1 samples, Peak.   160 us (1.0x), Avg.   160 us, Total. 160.0 us (0.0%)
+[Performance] InitializeOnLoad BurstLoader                                                                                   :        1 samples, Peak.  2.82 s (1.0x), Avg.  2.82 s, Total. 2.819 s (11.9%)
+[Performance] InitializeOnLoad ShadowCasterGroup2DManager                                                                    :        1 samples, Peak.   275 us (1.0x), Avg.   275 us, Total. 274.8 us (0.0%)
+[Performance] InitializeOnLoad EditorToolManager                                                                             :        2 samples, Peak.  9.32 ms (1.9x), Avg.  4.97 ms, Total. 9.942 ms (0.0%)
+[Performance] InitializeOnLoad ProbeGIBaking                                                                                 :        1 samples, Peak.  7.91 ms (1.0x), Avg.  7.91 ms, Total. 7.907 ms (0.0%)
+[Performance] InitializeOnLoad FilterWindow                                                                                  :        1 samples, Peak.   562 us (1.0x), Avg.   562 us, Total. 562.0 us (0.0%)
+[Performance] InitializeOnLoad RealtimeProbeSubdivisionDebug                                                                 :        1 samples, Peak.   683 us (1.0x), Avg.   683 us, Total. 683.1 us (0.0%)
+[Performance] InitializeOnLoad NodeClassCache                                                                                :        1 samples, Peak.  35.8 us (1.0x), Avg.  35.8 us, Total. 35.80 us (0.0%)
+[Performance] InitializeOnLoad ShaderGraphMaterialsUpdater                                                                   :        2 samples, Peak.  1.03 ms (1.6x), Avg.   657 us, Total. 1.314 ms (0.0%)
+[Performance] InitializeOnLoad Renderer2DAnalytics                                                                           :        1 samples, Peak.   338 us (1.0x), Avg.   338 us, Total. 337.8 us (0.0%)
+[Performance] InitializeOnLoad BackgroundWatcher                                                                             :        1 samples, Peak.   320 us (1.0x), Avg.   320 us, Total. 320.3 us (0.0%)
+[Performance] InitializeOnLoad UnityTestProtocolStarter                                                                      :        1 samples, Peak.  1.42 ms (1.0x), Avg.  1.42 ms, Total. 1.421 ms (0.0%)
+[Performance] InitializeOnLoad TestStarter                                                                                   :        1 samples, Peak.   850 us (1.0x), Avg.   850 us, Total. 849.6 us (0.0%)
+[Performance] InitializeOnLoad RerunCallbackInitializer                                                                      :        1 samples, Peak.  7.23 ms (1.0x), Avg.  7.23 ms, Total. 7.230 ms (0.0%)
+[Performance] InitializeOnLoad RiderScriptEditor                                                                             :        1 samples, Peak.  23.5 ms (1.0x), Avg.  23.5 ms, Total. 23.47 ms (0.1%)
+[Performance] InitializeOnLoad CallbackInitializer                                                                           :        1 samples, Peak.  2.99 ms (1.0x), Avg.  2.99 ms, Total. 2.995 ms (0.0%)
+[Performance] InitializeOnLoad SpriteEditorWindow                                                                            :        1 samples, Peak.  1.88 ms (1.0x), Avg.  1.88 ms, Total. 1.877 ms (0.0%)
+[Performance] InitializeOnLoad BackgroundImport                                                                              :        1 samples, Peak.  1.61 ms (1.0x), Avg.  1.61 ms, Total. 1.606 ms (0.0%)
+[Performance] InitializeOnLoad PlasticPlugin                                                                                 :        1 samples, Peak.   301 ms (1.0x), Avg.   301 ms, Total. 300.9 ms (1.3%)
+[Performance] InitializeOnLoad ToolbarBootstrap                                                                              :        1 samples, Peak.   804 us (1.0x), Avg.   804 us, Total. 804.3 us (0.0%)
+[Performance] InitializeOnLoad VisualStudioEditor                                                                            :        1 samples, Peak.  12.2 ms (1.0x), Avg.  12.2 ms, Total. 12.15 ms (0.1%)
+[Performance] InitializeOnLoad VisualStudioIntegration                                                                       :        1 samples, Peak.   254 ms (1.0x), Avg.   254 ms, Total. 253.7 ms (1.1%)
+[Performance] InitializeOnLoad TestRunnerApiListener                                                                         :        1 samples, Peak.   745 us (1.0x), Avg.   745 us, Total. 745.2 us (0.0%)
+[Performance] InitializeOnLoad PrefabLayoutRebuilder                                                                         :        1 samples, Peak.   988 us (1.0x), Avg.   988 us, Total. 988.0 us (0.0%)
+[Performance] InitializeOnLoad SpriteSkinCompositeStartup                                                                    :        1 samples, Peak.  44.3 ms (1.0x), Avg.  44.3 ms, Total. 44.26 ms (0.2%)
+[Performance] InitializeOnLoad UnityAnalyticsStorage                                                                         :        1 samples, Peak.   770 us (1.0x), Avg.   770 us, Total. 770.3 us (0.0%)
+[Performance] InitializeOnLoad BoneGizmoInitializer                                                                          :        1 samples, Peak.  6.27 ms (1.0x), Avg.  6.27 ms, Total. 6.273 ms (0.0%)
+[Performance] InitializeOnLoad Analytics                                                                                     :        1 samples, Peak.   337 us (1.0x), Avg.   337 us, Total. 337.1 us (0.0%)
+[Performance] InitializeOnLoad SceneDragAndDrop                                                                              :        1 samples, Peak.   301 us (1.0x), Avg.   301 us, Total. 300.5 us (0.0%)
+[Performance] InitializeOnLoad SpriteShapeUpdateCache                                                                        :        1 samples, Peak.   800 us (1.0x), Avg.   800 us, Total. 800.2 us (0.0%)
+[Performance] InitializeOnLoad SpriteShapeUnityAnalyticsStorage                                                              :        1 samples, Peak.  39.5 us (1.0x), Avg.  39.5 us, Total. 39.50 us (0.0%)
+[Performance] InitializeOnLoad IKEditorManager.CreateInstance                                                                :        1 samples, Peak.  7.48 ms (1.0x), Avg.  7.48 ms, Total. 7.477 ms (0.0%)
+[Performance] InitializeOnLoad $BurstDirectCallInitializer.Initialize                                                        :        7 samples, Peak.  84.1 ms (4.2x), Avg.  20.1 ms, Total. 140.5 ms (0.6%)
+[Performance] InitializeOnLoad SceneViewGridManager.Initialize                                                               :        1 samples, Peak.  11.6 ms (1.0x), Avg.  11.6 ms, Total. 11.62 ms (0.0%)
+[Performance] InitializeOnLoad TilemapPrefabStageHelper.Initialize                                                           :        1 samples, Peak.  23.0 ms (1.0x), Avg.  23.0 ms, Total. 22.98 ms (0.1%)
+[Performance] InitializeOnLoad SceneViewOpenTilePaletteHelper.Initialize                                                     :        1 samples, Peak.  3.35 ms (1.0x), Avg.  3.35 ms, Total. 3.348 ms (0.0%)
+[Performance] InitializeOnLoad TileDragAndDropManager.Initialize                                                             :        1 samples, Peak.  7.81 ms (1.0x), Avg.  7.81 ms, Total. 7.812 ms (0.0%)
+[Performance] InitializeOnLoad MaterialReimporter.RegisterUpgraderReimport                                                   :        2 samples, Peak.   438 us (1.5x), Avg.   296 us, Total. 591.4 us (0.0%)
+[Performance] InitializeOnLoad BackgroundImport.Setup                                                                        :        1 samples, Peak.  2.60 ms (1.0x), Avg.  2.60 ms, Total. 2.602 ms (0.0%)
+[Performance] InitializeOnLoad TestJobDataHolder.ResumeRunningJobs                                                           :        1 samples, Peak.  11.0 ms (1.0x), Avg.  11.0 ms, Total. 11.03 ms (0.0%)
+[Performance] InitializeOnLoad AnalyticsReporter.RegisterCallbacks                                                           :        1 samples, Peak.  1.43 ms (1.0x), Avg.  1.43 ms, Total. 1.427 ms (0.0%)
+[Performance] InitializeOnLoad DebugManagerWindowLifetimeAnalytic.SubscribeToDebugManagerOpenCloseWindows                    :        1 samples, Peak.  1.19 ms (1.0x), Avg.  1.19 ms, Total. 1.191 ms (0.0%)
+[Performance] InitializeOnLoad CoreRenderPipelinePreferences.InitPreferenceProviders                                         :        1 samples, Peak.   189 ms (1.0x), Avg.   189 ms, Total. 188.6 ms (0.8%)
+[Performance] InitializeOnLoad VolumeGizmoDrawer.InitVolumeGizmoCallbacks                                                    :        1 samples, Peak.   891 us (1.0x), Avg.   891 us, Total. 890.6 us (0.0%)
+[Performance] InitializeOnLoad DemoSceneBuilder.AutoSetupOnFirstOpen                                                         :        1 samples, Peak.   591 us (1.0x), Avg.   591 us, Total. 590.9 us (0.0%)
+[Performance] DidReloadScriptsAdvancedDropdownWindow.OnScriptReload                                                          :        2 samples, Peak.   752 us (1.3x), Avg.   587 us, Total. 1.174 ms (0.0%)
+[Performance] DidReloadScriptsTestRunnerWindow.CompilationCallback                                                           :        1 samples, Peak.  1.17 ms (1.0x), Avg.  1.17 ms, Total. 1.166 ms (0.0%)
+[Performance] DidReloadScriptsTestListCache.ScriptReloaded                                                                   :        1 samples, Peak.  7.35 ms (1.0x), Avg.  7.35 ms, Total. 7.349 ms (0.0%)
+[Performance] DidReloadScriptsLookDev.OnEditorReload                                                                         :        1 samples, Peak.  6.85 ms (1.0x), Avg.  6.85 ms, Total. 6.850 ms (0.0%)
+[Performance] DidReloadScriptsDebugWindow.OnEditorReload                                                                     :        1 samples, Peak.  10.7 ms (1.0x), Avg.  10.7 ms, Total. 10.73 ms (0.0%)
+[Performance] DidReloadScriptsVolumeComponentEditor.OnEditorReload                                                           :        1 samples, Peak.  81.2 ms (1.0x), Avg.  81.2 ms, Total. 81.15 ms (0.3%)
+[Performance] AssemblyReloadEvents.afterAssemblyReload: UnityEditor.U2D.Animation.BoneGizmo.OnAfterAssemblyReload            :        1 samples, Peak.  2.92 ms (1.0x), Avg.  2.92 ms, Total. 2.923 ms (0.0%)
+[Performance] PSDImporterAssetPostProcessor.OnPreprocessAsset                                                                :        9 samples, Peak.  1.81 ms (7.7x), Avg.   236 us, Total. 2.120 ms (0.0%)
+[Performance] PresetManagerPostProcessor.OnPreprocessAsset                                                                   :        9 samples, Peak.   744 us (8.2x), Avg.  91.1 us, Total. 819.5 us (0.0%)
+[Performance] CancelSplashScreenOnAssetChange.OnPreprocessAsset                                                              :        9 samples, Peak.   424 us (8.2x), Avg.  51.5 us, Total. 463.5 us (0.0%)
+[Performance] ShaderGraphAssetPostProcessor.OnPreprocessAsset                                                                :        9 samples, Peak.   743 us (8.5x), Avg.  87.5 us, Total. 787.3 us (0.0%)
+[Performance] SpritePostProcess.OnPreprocessAsset                                                                            :        9 samples, Peak.  81.6 ms (9.0x), Avg.  9.10 ms, Total. 81.93 ms (0.3%)
+[Performance] AssetDatabase.ImportAssets                                                                                     :       19 samples, Peak.  55.3 ms (19.0x), Avg.  2.91 ms, Total. 55.29 ms (0.2%)
+[Performance] VersionControl.Task.Wait                                                                                       :        1 samples, Peak.  35.3 us (1.0x), Avg.  35.3 us, Total. 35.30 us (0.0%)
+[Performance] TMPro_TexturePostProcessor.OnPostprocessAllAssets                                                              :       14 samples, Peak.  1.08 ms (5.5x), Avg.   198 us, Total. 2.769 ms (0.0%)
+[Performance] AssetPostprocessor.OnPostprocessAllAssets                                                                      :       14 samples, Peak.   882 us (6.2x), Avg.   143 us, Total. 1.996 ms (0.0%)
+[Performance] BuilderAssetPostprocessor.OnPostprocessAllAssets                                                               :       14 samples, Peak.  8.57 ms (6.7x), Avg.  1.28 ms, Total. 17.90 ms (0.1%)
+[Performance] ArtifactBrowserPostProcessor.OnPostprocessAllAssets                                                            :       14 samples, Peak.  2.49 ms (6.9x), Avg.   359 us, Total. 5.032 ms (0.0%)
+[Performance] AssetEvents.OnPostprocessAllAssets                                                                             :       28 samples, Peak.   891 us (10.6x), Avg.  83.7 us, Total. 2.343 ms (0.0%)
+[Performance] AudioMixerPostprocessor.OnPostprocessAllAssets                                                                 :       14 samples, Peak.   636 us (6.6x), Avg.  96.5 us, Total. 1.351 ms (0.0%)
+[Performance] StyleCatalogPostProcessor.OnPostprocessAllAssets                                                               :       14 samples, Peak.  44.5 ms (7.0x), Avg.  6.37 ms, Total. 89.24 ms (0.4%)
+[Performance] BuildCatalog                                                                                                   :        1 samples, Peak.  41.9 ms (1.0x), Avg.  41.9 ms, Total. 41.88 ms (0.2%)
+[Performance] ModelImporterPostProcessor.OnPostprocessAllAssets                                                              :       14 samples, Peak.  3.86 ms (6.4x), Avg.   604 us, Total. 8.454 ms (0.0%)
+[Performance] MaterialPostprocessor.OnPostprocessAllAssets                                                                   :       28 samples, Peak.  2.51 ms (7.0x), Avg.   357 us, Total. 9.994 ms (0.0%)
+[Performance] UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets                                      :       14 samples, Peak.  8.99 ms (6.9x), Avg.  1.30 ms, Total. 18.23 ms (0.1%)
+[Performance] RetainedModeAssetPostprocessor.OnPostprocessAllAssets                                                          :       14 samples, Peak.  5.98 ms (6.9x), Avg.   869 us, Total. 12.17 ms (0.1%)
+[Performance] AssetChangedListener.OnPostprocessAllAssets                                                                    :       14 samples, Peak.  2.07 ms (3.8x), Avg.   542 us, Total. 7.588 ms (0.0%)
+[Performance] PostProcessor.OnPostprocessAllAssets                                                                           :       14 samples, Peak.   431 us (5.2x), Avg.  82.6 us, Total. 1.157 ms (0.0%)
+[Performance] ShaderGraphAssetPostProcessor.OnPostprocessAllAssets                                                           :       14 samples, Peak.  5.48 ms (5.9x), Avg.   932 us, Total. 13.05 ms (0.1%)
+[Performance] SpeedTreePostProcessor.OnPostprocessAllAssets                                                                  :       14 samples, Peak.   650 us (6.4x), Avg.   102 us, Total. 1.429 ms (0.0%)
+[Performance] TextAssetPostProcessor.OnPostprocessAllAssets                                                                  :       14 samples, Peak.   913 us (5.7x), Avg.   161 us, Total. 2.251 ms (0.0%)
+[Performance] AssetProcessor.OnPostprocessAllAssets                                                                          :       42 samples, Peak.  10.0 ms (14.3x), Avg.   700 us, Total. 29.39 ms (0.1%)
+[Performance] SpriteLibraryAssetPostprocessor.OnPostprocessAllAssets                                                         :       14 samples, Peak.   732 us (6.8x), Avg.   107 us, Total. 1.501 ms (0.0%)
+[Performance] PSDImporterAssetPostProcessor.OnPostprocessAllAssets                                                           :       14 samples, Peak.   223 us (6.5x), Avg.  34.1 us, Total. 477.9 us (0.0%)
+[Performance] PSDImportPostProcessor.OnPostprocessAllAssets                                                                  :       14 samples, Peak.  2.47 ms (7.0x), Avg.   354 us, Total. 4.952 ms (0.0%)
+[Performance] SpriteEditorTexturePostprocessor.OnPostprocessAllAssets                                                        :       14 samples, Peak.  1.04 ms (3.8x), Avg.   273 us, Total. 3.823 ms (0.0%)
+[Performance] SpriteShapeAssetPostProcessor.OnPostprocessAllAssets                                                           :       14 samples, Peak.  7.54 ms (5.9x), Avg.  1.27 ms, Total. 17.74 ms (0.1%)
+[Performance] SyncVS.PostprocessSyncProject                                                                                  :        7 samples, Peak.   329 us (2.4x), Avg.   139 us, Total. 973.8 us (0.0%)
+[Performance] EditorApplication.projectChanged: UnityEditor.Audio.MixerEffectDefinitionReloader.OnProjectChanged             :        2 samples, Peak.   867 us (1.1x), Avg.   778 us, Total. 1.556 ms (0.0%)
+[Performance] EditorApplication.projectChanged: UnityEngine.InputSystem.LowLevel.NativeInputRuntime.OnProjectChanged         :        2 samples, Peak.   397 us (2.0x), Avg.   200 us, Total. 400.0 us (0.0%)
+[Performance] Application.ImportPackagesAndSetTemplateWhenCreatingProject                                                    :        1 samples, Peak.  26.3 ms (1.0x), Avg.  26.3 ms, Total. 26.26 ms (0.1%)
+[Performance] Application.SyncCurrentColorSpace                                                                              :        1 samples, Peak.   342 ms (1.0x), Avg.   342 ms, Total. 342.4 ms (1.5%)
+[Performance] Application.OnUsbDevicesChanged                                                                                :        1 samples, Peak.  4.07 ms (1.0x), Avg.  4.07 ms, Total. 4.070 ms (0.0%)
+[Performance] Application.AssetInstanceCacheUpdate                                                                           :        1 samples, Peak.   800 ns (1.0x), Avg.   800 ns, Total. 800.0 ns (0.0%)
+[Performance] Application.UnityExtensions.Initialize                                                                         :        1 samples, Peak.  28.2 ms (1.0x), Avg.  28.2 ms, Total. 28.22 ms (0.1%)
+[Performance] CodeEditorProjectSync.SyncEditorProject                                                                        :        1 samples, Peak.   650 us (1.0x), Avg.   650 us, Total. 649.8 us (0.0%)
+[Performance] Application.ExecuteStartups                                                                                    :        1 samples, Peak.   466 ms (1.0x), Avg.   466 ms, Total. 465.9 ms (2.0%)
+[Performance] Menu.RegisterMenuInterface                                                                                     :       26 samples, Peak.  4.90 us (9.1x), Avg.   538 ns, Total. 14.00 us (0.0%)
+[Performance] Gizmo.RebuildRenderers                                                                                         :        1 samples, Peak.   455 ms (1.0x), Avg.   455 ms, Total. 455.4 ms (1.9%)
+[Performance] Gizmo.AddGizmoRenderers                                                                                        :       90 samples, Peak.  10.3 ms (50.7x), Avg.   203 us, Total. 18.24 ms (0.1%)
+[Performance] Application.editorInitializingProject                                                                          :        1 samples, Peak.   345 ms (1.0x), Avg.   345 ms, Total. 345.2 ms (1.5%)
+[Performance] Application.InitializeMenu                                                                                     :        1 samples, Peak.   374 ms (1.0x), Avg.   374 ms, Total. 373.7 ms (1.6%)
+[Performance] Menu.RebuildAll                                                                                                :        1 samples, Peak.   374 ms (1.0x), Avg.   374 ms, Total. 373.7 ms (1.6%)
+[Performance] Menu.BuildRegisteredMenuInterfaces                                                                             :        1 samples, Peak.   367 ms (1.0x), Avg.   367 ms, Total. 367.0 ms (1.6%)
+[Performance] Menu.FilterMenuItem                                                                                            :      745 samples, Peak.   206 ms (728.6x), Avg.   283 us, Total. 211.0 ms (0.9%)
+[Performance] UpdateAllMenus                                                                                                 :        1 samples, Peak.  1.65 ms (1.0x), Avg.  1.65 ms, Total. 1.649 ms (0.0%)
+[Performance] Menu.RebuildOSMainMenu                                                                                         :        2 samples, Peak.  4.03 ms (1.2x), Avg.  3.48 ms, Total. 6.966 ms (0.0%)
+[Performance] EditorSceneManager.sceneClosing: UnityEditor.SceneVisibilityManager.EditorSceneManagerOnSceneClosing           :        5 samples, Peak.  1.52 ms (4.9x), Avg.   313 us, Total. 1.563 ms (0.0%)
+[Performance] GUIView.RepaintAll.PlayerLoopController                                                                        :        5 samples, Peak.  3.50 us (1.5x), Avg.  2.30 us, Total. 11.50 us (0.0%)
+[Performance] EditorSceneManager.newSceneCreated: UnityEditor.SceneTemplate.SceneTemplateService.OnNewSceneCreated           :        5 samples, Peak.   913 us (4.9x), Avg.   185 us, Total. 925.3 us (0.0%)
+[Performance] EditorSceneManager.newSceneCreated: UnityEditor.SceneVisibilityManager.EditorSceneManagerOnNewSceneCreated     :        5 samples, Peak.   653 us (4.3x), Avg.   153 us, Total. 764.7 us (0.0%)
+[Performance] EditorSceneManager.newSceneCreated: UnityEditor.SceneManagement.StageNavigationManager.OnNewSceneCreated       :        5 samples, Peak.   279 us (4.9x), Avg.  57.2 us, Total. 286.1 us (0.0%)
+[Performance] Application.InvokeFinishedLoadingProject                                                                       :        1 samples, Peak.  98.1 ms (1.0x), Avg.  98.1 ms, Total. 98.14 ms (0.4%)
+[Performance] ProcessService.OnProjectLoaded                                                                                 :        1 samples, Peak.   357 us (1.0x), Avg.   357 us, Total. 356.9 us (0.0%)
+[Performance] AssetDatabase.Refresh                                                                                          :        1 samples, Peak.   393 ms (1.0x), Avg.   393 ms, Total. 393.2 ms (1.7%)
+[Performance] SceneDataContainer.TransformHierarchyChangedSetParentCallback                                                  :     1440 samples, Peak.  50.3 us (34.5x), Avg.  1.46 us, Total. 2.099 ms (0.0%)
+[Performance] SceneVisibilityState.IsFlagSetInParents                                                                        :     4512 samples, Peak.  32.5 us (68.9x), Avg.   472 ns, Total. 2.127 ms (0.0%)
+[Performance] PaletteAssetModificationProcessor.OnWillSaveAssets                                                             :       10 samples, Peak.   970 us (7.8x), Avg.   124 us, Total. 1.239 ms (0.0%)
+[Performance] AssetModificationProcessor.OnWillSaveAssets                                                                    :       10 samples, Peak.   827 us (9.6x), Avg.  86.5 us, Total. 865.1 us (0.0%)
+[Performance] BuilderAssetModificationProcessor.OnWillSaveAssets                                                             :       10 samples, Peak.   913 us (9.5x), Avg.  95.7 us, Total. 957.0 us (0.0%)
+[Performance] TerrainModificationProcessor.OnWillSaveAssets                                                                  :       10 samples, Peak.  1.05 ms (9.7x), Avg.   108 us, Total. 1.080 ms (0.0%)
+[Performance] EditorSceneManager.sceneSaving: callback in UnityEditor.U2D.SpriteShapeUpdateCache                             :        4 samples, Peak.  2.56 ms (3.6x), Avg.   720 us, Total. 2.879 ms (0.0%)
+[Performance] EditorSceneManager.sceneSaving: UnityEditor.SceneTemplate.SceneTemplateService.OnSceneSaving                   :        4 samples, Peak.   902 us (3.9x), Avg.   231 us, Total. 922.3 us (0.0%)
+[Performance] EditorSceneManager.sceneSaving: UnityEditor.SceneVisibilityManager.EditorSceneManagerOnSceneSaving             :        4 samples, Peak.   284 us (3.8x), Avg.  73.9 us, Total. 295.8 us (0.0%)
+[Performance] PaletteAssetModificationProcessor.OnWillCreateAsset                                                            :        6 samples, Peak.   204 us (4.3x), Avg.  47.5 us, Total. 285.1 us (0.0%)
+[Performance] MaterialModificationProcessor.OnWillCreateAsset                                                                :       12 samples, Peak.   543 us (6.8x), Avg.  79.7 us, Total. 956.5 us (0.0%)
+[Performance] BuilderAssetModificationProcessor.OnWillCreateAsset                                                            :        6 samples, Peak.   723 us (5.6x), Avg.   130 us, Total. 777.5 us (0.0%)
+[Performance] AssetDatabase.ImportAsset                                                                                      :        4 samples, Peak.  85.0 ms (1.1x), Avg.  77.6 ms, Total. 310.4 ms (1.3%)
+[Performance] EditorSceneManager.sceneSaved: UnityEditor.SceneTemplate.SceneTemplateService.OnSceneSaved                     :        4 samples, Peak.  75.5 ms (1.4x), Avg.  53.7 ms, Total. 214.6 ms (0.9%)
+[Performance] EditorSceneManager.sceneSaved: UnityEditor.SceneVisibilityManager.EditorSceneManagerOnSceneSaved               :        4 samples, Peak.   330 us (3.3x), Avg.   101 us, Total. 402.1 us (0.0%)
+[Performance] EditorApplication.quitting: Unity.Burst.Editor.BurstLoader.OnEditorApplicationQuitting                         :        1 samples, Peak.  64.1 us (1.0x), Avg.  64.1 us, Total. 64.10 us (0.0%)
+[Performance] EditorApplication.quitting: UnityEditor.Tilemaps.SceneViewGridManager.EditorQuitting                           :        1 samples, Peak.   162 us (1.0x), Avg.   162 us, Total. 161.8 us (0.0%)
+[Performance] EditorApplication.quitting: callback in UnityEditor.TextCore.Text.EditorEventCallbacks                         :        1 samples, Peak.  56.0 ms (1.0x), Avg.  56.0 ms, Total. 56.03 ms (0.2%)
+[Performance] Application.Shutdown.PauseProfilerSession                                                                      :        1 samples, Peak.  57.5 us (1.0x), Avg.  57.5 us, Total. 57.50 us (0.0%)
+[Performance] Application.Shutdown.PauseAssetImportWorkers                                                                   :        1 samples, Peak.  1.45 ms (1.0x), Avg.  1.45 ms, Total. 1.450 ms (0.0%)
+[Performance] Application.Shutdown.SaveAssets                                                                                :        1 samples, Peak.  12.0 ms (1.0x), Avg.  12.0 ms, Total. 12.05 ms (0.1%)
+[Performance] Application.Shutdown.CleanupRenderPipeline                                                                     :        1 samples, Peak.  23.9 us (1.0x), Avg.  23.9 us, Total. 23.90 us (0.0%)
+[Performance] Application.Shutdown.StopPreloadManager                                                                        :        1 samples, Peak.  9.93 ms (1.0x), Avg.  9.93 ms, Total. 9.926 ms (0.0%)
+[Performance] Application.Shutdown.DestroyWorld                                                                              :        1 samples, Peak.  6.09 ms (1.0x), Avg.  6.09 ms, Total. 6.089 ms (0.0%)
+[Performance] Application.Shutdown.CleanupAfterLoad                                                                          :        1 samples, Peak.   337 ms (1.0x), Avg.   337 ms, Total. 336.8 ms (1.4%)
+[Performance] Application.Shutdown.Progress                                                                                  :        1 samples, Peak.  48.3 us (1.0x), Avg.  48.3 us, Total. 48.30 us (0.0%)
+[Performance] Application.Shutdown.GICleanupManagers                                                                         :        1 samples, Peak.  16.0 ms (1.0x), Avg.  16.0 ms, Total. 16.02 ms (0.1%)
+[Performance] Application.Shutdown.MenuCleanupClass                                                                          :        1 samples, Peak.  1.87 ms (1.0x), Avg.  1.87 ms, Total. 1.873 ms (0.0%)
+[Performance] Application.Shutdown.ADBSaveStateBeforeShutdown                                                                :        1 samples, Peak.  18.4 us (1.0x), Avg.  18.4 us, Total. 18.40 us (0.0%)
+[Performance] Application.Shutdown.RemoteShutdown                                                                            :        1 samples, Peak.  1.30 us (1.0x), Avg.  1.30 us, Total. 1.300 us (0.0%)
+[Performance] Application.Shutdown.CleanupVCProvider                                                                         :        1 samples, Peak.  22.5 us (1.0x), Avg.  22.5 us, Total. 22.50 us (0.0%)
+[Performance] Application.Shutdown.InputShutdown                                                                             :        1 samples, Peak.   900 ns (1.0x), Avg.   900 ns, Total. 900.0 ns (0.0%)
+[Performance] Application.Shutdown.GizmoManagerDestroy                                                                       :        1 samples, Peak.  2.75 ms (1.0x), Avg.  2.75 ms, Total. 2.748 ms (0.0%)
+[Performance] Application.Shutdown.ProfilerSession                                                                           :        1 samples, Peak.  1.33 ms (1.0x), Avg.  1.33 ms, Total. 1.325 ms (0.0%)
+[Performance] Application.Shutdown.ReleaseGfxWindowOnAllGUIViews                                                             :        1 samples, Peak.  1.50 us (1.0x), Avg.  1.50 us, Total. 1.500 us (0.0%)
+[Performance] Application.Shutdown.CleanupEngine                                                                             :        1 samples, Peak.   305 ms (1.0x), Avg.   305 ms, Total. 304.7 ms (1.3%)
+[Performance] Application.Shutdown.CleanupAssetDatabase                                                                      :        1 samples, Peak.  23.1 ms (1.0x), Avg.  23.1 ms, Total. 23.14 ms (0.1%)
+[Performance] Application.Shutdown.ScriptCompilationCleanUp                                                                  :        1 samples, Peak.  44.4 ms (1.0x), Avg.  44.4 ms, Total. 44.45 ms (0.2%)
+[Performance] Application.Shutdown.DestroyJobSystem                                                                          :        1 samples, Peak.   252 us (1.0x), Avg.   252 us, Total. 251.6 us (0.0%)
+[Performance] Application.Shutdown.CleanupPersistentManager                                                                  :        1 samples, Peak.  3.69 ms (1.0x), Avg.  3.69 ms, Total. 3.692 ms (0.0%)
+[Performance] Application.Shutdown.CleanupAsyncReadManager                                                                   :        1 samples, Peak.   448 us (1.0x), Avg.   448 us, Total. 448.3 us (0.0%)
+[Performance] Application.Shutdown.CleanupProgressBar                                                                        :        1 samples, Peak.   800 ns (1.0x), Avg.   800 ns, Total. 800.0 ns (0.0%)
+[Performance] Application.Shutdown.CleanupMono                                                                               :        1 samples, Peak.   300 ms (1.0x), Avg.   300 ms, Total. 299.7 ms (1.3%)
+[Performance] Application.Shutdown.CleanupStdConverters                                                                      :        1 samples, Peak.  10.4 us (1.0x), Avg.  10.4 us, Total. 10.40 us (0.0%)
+[Performance] Application.Shutdown.UnloadAllPlatformSupportModuleNativeDlls                                                  :        1 samples, Peak.  1.00 us (1.0x), Avg.  1.00 us, Total. 1.000 us (0.0%)
+[Performance] Application.Shutdown.UnloadAllPlatformSupportNativeLibraries                                                   :        1 samples, Peak.   200 ns (1.0x), Avg.   200 ns, Total. 200.0 ns (0.0%)
+[Performance] Application.Shutdown.CleanupAutoDocumentation                                                                  :        1 samples, Peak.   420 us (1.0x), Avg.   420 us, Total. 419.8 us (0.0%)
+[Performance] Application.Shutdown.ShaderNameManagerDestroy                                                                  :        1 samples, Peak.   108 us (1.0x), Avg.   108 us, Total. 108.0 us (0.0%)
+[Performance] Application.Shutdown.CleanupCacheServer                                                                        :        1 samples, Peak.   100 ns (1.0x), Avg.   100 ns, Total. 100.0 ns (0.0%)
+[Performance] Application.Shutdown.Virtualization_Shutdown                                                                   :        1 samples, Peak.   500 ns (1.0x), Avg.   500 ns, Total. 500.0 ns (0.0%)
+[Performance] Application.Shutdown.DevConnections                                                                            :        1 samples, Peak.   212 us (1.0x), Avg.   212 us, Total. 212.4 us (0.0%)
+Exiting batchmode successfully now!
+Exiting without the bug reporter. Application will terminate with return code 0

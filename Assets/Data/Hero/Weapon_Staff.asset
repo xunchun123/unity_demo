@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e1e7e3ee4976cc4b877f18912e0350d, type: 3}
+  m_Name: Weapon_Staff
+  m_EditorClassIdentifier: 
+  kind: 1
+  displayName: "\u6CD5\u6756"
+  description: "\u5965\u672F\u5F39\u514D\u8D39\u8FDE\u5C04\uFF0CK \u79D8\u6CD5\u65B0\u661F\u8017\u84DD\u3002\u5F3A\u5316\u6811\uFF1A\u706B\u7403\u5206\u88C2
+    / \u71C3\u70E7\u5730\u9762 / \u53CC\u751F\u706B\u7403 / \u7206\u88C2\u8303\u56F4
+    / \u51B0\u971C\u65B0\u661F / \u5965\u672F\u6D8C\u6D41"
+  attackInterval: 0.45
+  attackDamageMul: 1.1
+  boonPool:
+  - staff_fireball_split
+  - staff_burning_ground
+  - staff_twin_bolt
+  - staff_big_burst
+  - staff_frost_nova
+  - staff_arcane_flow

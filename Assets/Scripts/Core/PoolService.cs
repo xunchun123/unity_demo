@@ -100,5 +100,19 @@ namespace StarVortex.Core
                 Destroy(instance); // 未走池的兜底直接销毁
             }
         }
+
+        /// <summary>
+        /// 场景切换前把所有池内活动实例回池。池根节点跨场景常驻（DontDestroyOnLoad），
+        /// 场景卸载不会销毁活动实例——不主动回收它们就会变成"僵尸"：不再被 Director 管理、
+        /// 引用已销毁的玩家，却仍计入 Enemy.AliveCount（几局之后刷怪永久停摆）。
+        /// </summary>
+        public void DespawnAllActive()
+        {
+            if (_instanceToPrefab.Count == 0) return;
+            var active = new List<GameObject>();
+            foreach (var kv in _instanceToPrefab)
+                if (kv.Key != null && kv.Key.activeSelf) active.Add(kv.Key);
+            foreach (var go in active) Despawn(go);
+        }
     }
 }

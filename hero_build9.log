@@ -1,0 +1,1501 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Channel LicenseClient-admin doesn't exist
+[Licensing::Module] Successfully launched the LicensingClient (PId: 19212)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-admin" at "2026-11-22T13:04:16.7629279Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 19212, path: "D:/Unity/2022.3.62f3c1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.16.2+bdef8f5
+  Session Id:              ffd653edcb3e417b98149da630374a49
+  Correlation Id:          aa0a271ed8e551e0caa8f14e3c79633f
+  External correlation Id: 3401892993886662894
+  Machine Id:              5WexDtElQ85eMVAeTN9kGsKmJqY=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-admin" (connect: 0.85s, validation: 0.07s, handshake: 0.06s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-admin-notifications" at "2026-11-22T13:04:16.8982684Z"
+[Licensing::Module] Connected to LicensingClient (PId: 19212, launch time: 0.01, total connection time: 0.99s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully updated license
+Built from '2022.3/china_unity/release' branch; Version is '2022.3.62f3c1 (1623fc0bbb97) revision 1451004'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26200) 64bit Professional' Language: 'zh' Physical Memory: 16125 MB
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "F4-24DS-H92D-CAAU-D3QJ-XXXX"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+[Licensing::Client] Successfully resolved entitlement details
+
+COMMAND LINE ARGUMENTS:
+D:\Unity\2022.3.62f3c1\Editor\Unity.exe
+-batchmode
+-quit
+-projectPath
+D:/游戏demo/StarVortex
+-executeMethod
+StarVortex.EditorTools.DemoSceneBuilder.GenerateAll
+-logFile
+D:/游戏demo/StarVortex/hero_build9.log
+Successfully changed project path to: D:/游戏demo/StarVortex
+D:/游戏demo/StarVortex
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [10148]  Target information:
+
+Player connection [10148]  * "[IP] 192.168.1.3 [Port] 55504 [Flags] 2 [Guid] 2399917495 [EditorId] 2399917495 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-NEIA09S) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [10148] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [10148] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+[Package Manager] UpmClient::Connect -- Connected to IPC stream "Upm-3224" after 0.4 seconds.
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 40 packages:
+  Packages from [https://packages.unity.cn]:
+    com.unity.collab-proxy@2.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.collab-proxy@2.0.0)
+    com.unity.ide.rider@3.0.18 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.ide.rider@3.0.18)
+    com.unity.ide.visualstudio@2.0.17 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.ide.visualstudio@2.0.17)
+    com.unity.inputsystem@1.7.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.inputsystem@1.7.0)
+    com.unity.test-framework@1.1.33 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.test-framework@1.1.33)
+    com.unity.textmeshpro@3.0.6 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.textmeshpro@3.0.6)
+    com.unity.timeline@1.7.3 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.timeline@1.7.3)
+    com.unity.ext.nunit@1.0.6 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.ext.nunit@1.0.6)
+    com.unity.mathematics@1.2.6 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.mathematics@1.2.6)
+    com.unity.burst@1.8.21 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.burst@1.8.21)
+    com.unity.2d.animation@9.2.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.animation@9.2.0)
+    com.unity.2d.pixel-perfect@5.1.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.pixel-perfect@5.1.0)
+    com.unity.2d.psdimporter@8.1.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.psdimporter@8.1.0)
+    com.unity.2d.spriteshape@9.1.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.spriteshape@9.1.0)
+    com.unity.2d.tilemap.extras@3.1.3 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.tilemap.extras@3.1.3)
+    com.unity.2d.aseprite@1.1.9 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.aseprite@1.1.9)
+    com.unity.searcher@4.9.2 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.searcher@4.9.2)
+    com.unity.2d.common@8.1.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.common@8.1.0)
+    com.unity.collections@1.2.4 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.collections@1.2.4)
+  Built-in packages:
+    com.unity.feature.2d@2.0.1 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.feature.2d@2.0.1)
+    com.unity.render-pipelines.universal@14.0.12 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.render-pipelines.universal@14.0.12)
+    com.unity.ugui@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.ugui@1.0.0)
+    com.unity.modules.imageconversion@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.imageconversion@1.0.0)
+    com.unity.modules.ui@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.ui@1.0.0)
+    com.unity.modules.imgui@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.imgui@1.0.0)
+    com.unity.modules.director@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.director@1.0.0)
+    com.unity.modules.animation@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.animation@1.0.0)
+    com.unity.modules.audio@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.audio@1.0.0)
+    com.unity.modules.particlesystem@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.particlesystem@1.0.0)
+    com.unity.modules.jsonserialize@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.jsonserialize@1.0.0)
+    com.unity.render-pipelines.core@14.0.12 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.render-pipelines.core@14.0.12)
+    com.unity.shadergraph@14.0.12 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.shadergraph@14.0.12)
+    com.unity.render-pipelines.universal-config@14.0.10 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.render-pipelines.universal-config@14.0.10)
+    com.unity.modules.uielements@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.uielements@1.0.0)
+    com.unity.2d.sprite@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.sprite@1.0.0)
+    com.unity.2d.tilemap@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.2d.tilemap@1.0.0)
+    com.unity.modules.physics@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.physics@1.0.0)
+    com.unity.modules.terrain@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.terrain@1.0.0)
+    com.unity.modules.tilemap@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.tilemap@1.0.0)
+    com.unity.modules.physics2d@1.0.0 (location: D:\游戏demo\StarVortex\Library\PackageCache\com.unity.modules.physics2d@1.0.0)
+[Subsystems] No new subsystems found in resolved package list.
+Package Manager log level set to [2]
+[Package Manager] Done registering packages in 0.07 seconds
+Refreshing native plugins compatible for Editor in 4.13 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.62f3c1 (1623fc0bbb97)
+[Subsystems] Discovering subsystems at path D:/Unity/2022.3.62f3c1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/游戏demo/StarVortex/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) UHD Graphics 730 (ID=0x4692)
+    Vendor:   Intel
+    VRAM:     8062 MB
+    Driver:   30.0.101.1371
+[Licensing::Client] Successfully resolved entitlement details
+Initialize mono
+Mono path[0] = 'D:/Unity/2022.3.62f3c1/Editor/Data/Managed'
+Mono path[1] = 'D:/Unity/2022.3.62f3c1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'D:/Unity/2022.3.62f3c1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56224
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: D:/Unity/2022.3.62f3c1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: D:/Unity/2022.3.62f3c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.007088 seconds.
+- Loaded All Assemblies, in  0.335 seconds
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.257 seconds
+Domain Reload Profiling: 593ms
+	BeginReloadAssembly (101ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (30ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (50ms)
+	LoadAllAssembliesAndSetupDomain (146ms)
+		LoadAssemblies (101ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (144ms)
+			TypeCache.Refresh (143ms)
+				TypeCache.ScanAssembly (128ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (257ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (214ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (7ms)
+			SetLoadedEditorAssemblies (7ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (4ms)
+			ProcessInitializeOnLoadAttributes (151ms)
+			ProcessInitializeOnLoadMethodAttributes (45ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+Assets/Scripts is a symbolic link. Using symlinks in Unity projects may cause your project to become corrupted if you create multiple references to the same asset, use recursive symlinks or use symlinks to share assets between projects used with different versions of Unity. Make sure you know what you are doing.
+Assets/Tests is a symbolic link. Using symlinks in Unity projects may cause your project to become corrupted if you create multiple references to the same asset, use recursive symlinks or use symlinks to share assets between projects used with different versions of Unity. Make sure you know what you are doing.
+Disabling directory monitoring for current editor session. Found symlinks in project which cannot be used with directory monitoring. Directory monitoring settings can be changed in preferences.
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+Assembly for Assembly Definition File 'Assets/Tests/StarVortex.Tests.asmdef' will not be compiled, because it has no scripts associated with it.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:LogFormat (UnityEngine.LogType,string,object[])
+UnityEngine.Debug:LogWarningFormat (string,object[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:WarnIfThereAreAssembliesWithoutAnyScripts (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings,UnityEditor.Scripting.ScriptCompilation.ScriptAssembly[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScriptsWithSettings (UnityEditor.Scripting.ScriptCompilation.ScriptAssemblySettings)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilation:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTargetGroup,UnityEditor.BuildTarget,int,string[])
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface/<>c__DisplayClass21_0:<CompileScripts>b__0 ()
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:EmitExceptionAsError<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus> (System.Func`1<UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus>,UnityEditor.Scripting.ScriptCompilation.EditorCompilation/CompileStatus)
+UnityEditor.Scripting.ScriptCompilation.EditorCompilationInterface:CompileScripts (UnityEditor.Scripting.ScriptCompilation.EditorScriptCompilationOptions,UnityEditor.BuildTargetGroup,UnityEditor.BuildTarget,int,string[])
+
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:80
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Production
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: D:\��Ϸdemo\StarVortex\
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/Ping'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/Ping application/grpc - - 200 - application/grpc 48.3146ms
+Starting: D:\Unity\2022.3.62f3c1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: D:/游戏demo/StarVortex
+DisplayProgressbar: Compiling Scripts
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring "D:\Unity\2022.3.62f3c1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\Facades\System.Runtime.InteropServices.WindowsRuntime.dll" in favor of "D:\Unity\2022.3.62f3c1\Editor\Data\NetStandard\Extensions\2.0.0\System.Runtime.InteropServices.WindowsRuntime.dll"
+warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Assembly system.componentmodel.composition has duplicate hint path. Ignoring "D:\Unity\2022.3.62f3c1\Editor\Data\UnityReferenceAssemblies\unity-4.8-api\System.ComponentModel.Composition.dll" in favor of "D:\Unity\2022.3.62f3c1\Editor\Data\NetStandard\compat\2.1.0\shims\netfx\System.ComponentModel.Composition.dll"
+info: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
+      Resolved Unity.Burst.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e with Library\PackageCache\com.unity.burst@1.8.21\Unity.Burst.CodeGen\Unity.Burst.Cecil.dll
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/ConfigurePostProcessors'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/ConfigurePostProcessors application/grpc - - 200 - application/grpc 54.1211ms
+info: Microsoft.AspNetCore.Hosting.Diagnostics[1]
+      Request starting HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc -
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[0]
+      Executing endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      Processing assembly Library/Bee/artifacts/1900b0aE.dag/StarVortex.EditorTools.dll, with 119 defines and 222 references
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Unity.ILPP.Runner.PostProcessingPipeline[0]
+      running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+info: Microsoft.AspNetCore.Routing.EndpointMiddleware[1]
+      Executed endpoint 'gRPC - /UnityILPP.PostProcessing/PostProcessAssembly'
+info: Microsoft.AspNetCore.Hosting.Diagnostics[2]
+      Request finished HTTP/2 POST http://ilpp/UnityILPP.PostProcessing/PostProcessAssembly application/grpc - - 200 - application/grpc 39.2476ms
+ExitCode: 0 Duration: 3s93ms
+[394/726    0s] WriteResponseFile Library/Bee/artifacts/rsp/4747638433968585886.rsp
+[559/726    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[722/726    1s] Csc Library/Bee/artifacts/1900b0aE.dag/StarVortex.EditorTools.dll (+2 others)
+[723/726    0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/StarVortex.EditorTools.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/StarVortex.EditorTools.dll, with 119 defines and 222 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[724/726    0s] CopyFiles Library/ScriptAssemblies/StarVortex.EditorTools.pdb
+[725/726    0s] CopyFiles Library/ScriptAssemblies/StarVortex.EditorTools.dll
+*** Tundra build success (3.03 seconds), 6 items updated, 726 evaluated
+AssetDatabase: script compilation time: 3.795885s
+Begin MonoManager ReloadAssembly
+Total cache size 114739876
+Total cache size after purge 114739876
+- Loaded All Assemblies, in  0.859 seconds
+Refreshing native plugins compatible for Editor in 1.50 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Start importing Assets/Scripts/EditorTools/DemoSceneBuilder.Hero.cs using Guid(20fdb89025883144c82bca4309e5d515) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '797ba6e6732bd545281c61e92031e9dd') in 0.012001 seconds
+Refreshing native plugins compatible for Editor in 1.43 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  2.494 seconds
+Domain Reload Profiling: 3352ms
+	BeginReloadAssembly (165ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (8ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (31ms)
+	RebuildCommonClasses (31ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (28ms)
+	LoadAllAssembliesAndSetupDomain (625ms)
+		LoadAssemblies (545ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (163ms)
+			TypeCache.Refresh (131ms)
+				TypeCache.ScanAssembly (117ms)
+			ScanForSourceGeneratedMonoScriptInfo (21ms)
+			ResolveRequiredComponents (9ms)
+	FinalizeReload (2494ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2281ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (7ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (59ms)
+			ProcessInitializeOnLoadAttributes (2046ms)
+			ProcessInitializeOnLoadMethodAttributes (162ms)
+			AfterProcessingInitializeOnLoad (3ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (14ms)
+Refreshing native plugins compatible for Editor in 1.86 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=b32ee402608cf5540a091bbaa49a7667): Total: 8.357 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=5 (actual=1, local cache=4, cache server=0)
+		Asset DB Process Time: managed=4 ms, native=992 ms
+		Asset DB Callback time: managed=114 ms, native=7 ms
+		Scripting: domain reloads=1, domain reload time=3408 ms, compile time=3798 ms, other=31 ms
+		Project Asset Count: scripts=5277, non-scripts=2487
+		Asset File Changes: new=0, changed=1, moved=0, deleted=3
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.357ms
+	ApplyChangesToAssetFolders: 0.041ms
+	Scan: 102.967ms
+	OnSourceAssetsModified: 1.831ms
+	UnregisterDeletedAssets: 0.005ms
+	GetAllGuidsForCategorization: 0.850ms
+	CategorizeAssets: 158.582ms
+	ImportOutOfDateAssets: 2552.347ms (-1286.831ms without children)
+		ImportManagerImport: 15.502ms (2.255ms without children)
+			ImportInProcess: 13.218ms
+			UpdateCategorizedAssets: 0.030ms
+		CompileScripts: 3797.613ms
+		ReloadNativeAssets: 0.025ms
+		UnloadImportedAssets: 21.946ms
+		ReloadImportedAssets: 0.296ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 2.351ms
+		InitializingProgressBar: 0.001ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 1.443ms
+	PostProcessAllAssets: 113.283ms
+	Hotreload: 6.507ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.001ms
+	UnloadStreamsBegin: 1.353ms
+	PersistCurrentRevisions: 0.560ms
+	UnloadStreamsEnd: 0.135ms
+	GenerateScriptTypeHashes: 4.206ms
+	Untracked: 5418.304ms
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Scanning for USB devices : 3.024ms
+Initializing Unity extensions:
+[Licensing::Client] Successfully resolved entitlement details
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-StarVortex Survivors
+Method StarVortex.EditorTools.DemoSceneBuilder.EnsureDir has invalid parameters. MenuCommand is the only optional supported parameter.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:LogFormat (UnityEngine.LogType,string,object[])
+UnityEngine.Debug:LogWarningFormat (string,object[])
+UnityEditor.MenuService:ValidateMethodForMenuCommand (System.Reflection.MethodInfo)
+UnityEditor.MenuService/<>c:<ExtractMenuItemsFromAttributes>b__18_0 (System.Reflection.MethodInfo)
+System.Linq.Enumerable/WhereEnumerableIterator`1<System.Reflection.MethodInfo>:ToArray ()
+System.Linq.Buffer`1<System.Reflection.MethodInfo>:.ctor (System.Collections.Generic.IEnumerable`1<System.Reflection.MethodInfo>)
+System.Linq.OrderedEnumerable`1<System.Reflection.MethodInfo>:ToList ()
+System.Linq.Enumerable:ToList<System.Reflection.MethodInfo> (System.Collections.Generic.IEnumerable`1<System.Reflection.MethodInfo>)
+UnityEditor.MenuService:ExtractMenuItemsFromAttributes ()
+UnityEditor.MenuService:GetMenuItemsFromAttributesById (string)
+UnityEditor.MenuService:GetMenuItemsFromAttributes ()
+
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ProgressiveSceneManager::Cancel()
+Unloading 19 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 110 unused Assets / (1.3 MB). Loaded Objects now: 4892.
+Memory consumption went from 155.1 MB to 153.8 MB.
+Total: 6.630600 ms (FindLiveObjects: 0.466500 ms CreateObjectMapping: 0.774100 ms MarkObjects: 4.843600 ms  DeleteObjects: 0.544000 ms)
+
+[Build] ========== 勇者远征 一键搭建开始 ==========
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:154)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.cs Line: 154)
+
+DisplayProgressbar: 勇者远征
+Start importing Assets/Art/Generated/particle_soft.png using Guid(b2dbdbf8e8054824d8aeb86b2d508855) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'ec67012678b5faff098fb887eb49088b') in 0.019618 seconds
+Refreshing native plugins compatible for Editor in 3.66 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=f9a7c765843a0cf4b97ed27dab6c5b8f): Total: 0.074 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/particle_soft.png using Guid(b2dbdbf8e8054824d8aeb86b2d508855) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'ec67012678b5faff098fb887eb49088b') in 0.004060 seconds
+Refreshing native plugins compatible for Editor in 1.41 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=56ff9b293031dac4f92dbeb0e257268f): Total: 0.024 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/particle_spark.png using Guid(1c3b5ae79a4de2d48873e01fd2c8f459) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'a142a9591ee65847fa706d899f19aeb4') in 0.002768 seconds
+Refreshing native plugins compatible for Editor in 1.60 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=9663548d5ce63c04986665a9fbb5ae14): Total: 0.028 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/particle_spark.png using Guid(1c3b5ae79a4de2d48873e01fd2c8f459) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'a142a9591ee65847fa706d899f19aeb4') in 0.002334 seconds
+Refreshing native plugins compatible for Editor in 4.16 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=e449744efd4fe874e87bd7119ea2c8d4): Total: 0.026 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/ring_shockwave.png using Guid(f8b8e5c5c377cd3459774774b045091f) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'b512ebb02783c388c9fb7831dc0bf602') in 0.007685 seconds
+Refreshing native plugins compatible for Editor in 1.89 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=bd8b714f903e3014384220bc62ffedcd): Total: 0.036 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/ring_shockwave.png using Guid(f8b8e5c5c377cd3459774774b045091f) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'b512ebb02783c388c9fb7831dc0bf602') in 0.004523 seconds
+Refreshing native plugins compatible for Editor in 2.74 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=f3afe368954a6fd42b53d46797206ca3): Total: 0.031 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/glow_disc.png using Guid(879d4a216525cb34da7d25d4c100edba) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '41e37b5f03af953a8110eaedf9622bec') in 0.011518 seconds
+Refreshing native plugins compatible for Editor in 3.99 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=2af8c3078e13c89428e75ebc62a5a76d): Total: 0.042 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/glow_disc.png using Guid(879d4a216525cb34da7d25d4c100edba) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '41e37b5f03af953a8110eaedf9622bec') in 0.009418 seconds
+Refreshing native plugins compatible for Editor in 1.41 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=8b1c3eaa72032ed4eb2466c660282c1f): Total: 0.028 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=4700b2a25c343f548b2d64481fbef1c9): Total: 0.053 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+[NeonArt] 生成 4 张特效精灵 → Assets/Art/Generated（角色/背景由 Hifi 管线提供）
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.NeonArtGenerator:GenerateAll () (at Assets/Scripts/EditorTools/NeonArtGenerator.cs:40)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:156)
+
+(Filename: Assets/Scripts/EditorTools/NeonArtGenerator.cs Line: 40)
+
+Asset Pipeline Refresh (id=a1183b3c19427ce489dc4787bd30c43a): Total: 0.054 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/hero_0.png using Guid(669d5fa39bffbe6489f5c5ae76af8090) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'cc8f9b4c10b6bc9113da0e802beb2c9f') in 0.007257 seconds
+Refreshing native plugins compatible for Editor in 1.88 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=1e81637e8eab0a044879bf5015626ac5): Total: 0.051 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/hero_0.png using Guid(669d5fa39bffbe6489f5c5ae76af8090) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'cc8f9b4c10b6bc9113da0e802beb2c9f') in 0.007488 seconds
+Refreshing native plugins compatible for Editor in 2.16 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=55b78f8c272157f49b23cc7bb2858119): Total: 0.032 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/slime_0.png using Guid(4030aff4924ad874f930dedc7ca08449) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '8ece746fbff2163049ea51ea97be567a') in 0.012675 seconds
+Refreshing native plugins compatible for Editor in 1.95 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=acc19d4af73207942bf5b4601e343e66): Total: 0.042 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/slime_0.png using Guid(4030aff4924ad874f930dedc7ca08449) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '8ece746fbff2163049ea51ea97be567a') in 0.003420 seconds
+Refreshing native plugins compatible for Editor in 2.50 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=083f9fb7a85fd504e86c90b244ca8f56): Total: 0.024 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/slime_1.png using Guid(10f3472172193494bb407c93bbf5ca92) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'f4c6916ca051c07e812440d2878a347e') in 0.003836 seconds
+Refreshing native plugins compatible for Editor in 1.45 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=a3249f971c56daf4f9879ad9ee48626c): Total: 0.037 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/slime_1.png using Guid(10f3472172193494bb407c93bbf5ca92) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'f4c6916ca051c07e812440d2878a347e') in 0.003681 seconds
+Refreshing native plugins compatible for Editor in 4.15 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=14fc6341ef819a14c8627ce398164ef5): Total: 0.027 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/bat_0.png using Guid(2feb1342e2933b4419e9a57664bd8e29) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '612b156c876f6c5693453931e02fba73') in 0.006269 seconds
+Refreshing native plugins compatible for Editor in 1.47 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=9b8d36d1c32ccc64ea02f0534af14e0c): Total: 0.026 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/bat_0.png using Guid(2feb1342e2933b4419e9a57664bd8e29) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '612b156c876f6c5693453931e02fba73') in 0.005246 seconds
+Refreshing native plugins compatible for Editor in 1.40 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=4494e68433a095747bc448d010de59a2): Total: 0.029 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/bat_1.png using Guid(6706450793165ef41805d57daf5bc60f) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '7d11e050be8032d55ab78ac2cc6b3281') in 0.003489 seconds
+Refreshing native plugins compatible for Editor in 2.04 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=a5ed23bdd463c284c9997952fb5653bc): Total: 0.033 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/bat_1.png using Guid(6706450793165ef41805d57daf5bc60f) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '7d11e050be8032d55ab78ac2cc6b3281') in 0.004188 seconds
+Refreshing native plugins compatible for Editor in 2.03 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=e83bb6cbf5d577e46b00afa1c9452c7b): Total: 0.033 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/mage_0.png using Guid(9856d22b9b3bac64784326d283e4262b) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '3e5f10dcae74d7faac0be6df9d7a0375') in 0.007111 seconds
+Refreshing native plugins compatible for Editor in 1.77 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=7052eb5c817f1d14982f8865c33db912): Total: 0.031 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/mage_0.png using Guid(9856d22b9b3bac64784326d283e4262b) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '3e5f10dcae74d7faac0be6df9d7a0375') in 0.004387 seconds
+Refreshing native plugins compatible for Editor in 2.08 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=abb972abe6b6b7c43b28935aca831fcf): Total: 0.032 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/mage_1.png using Guid(375fbaec9c824f9408061ea8b55eefe7) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'd6fdeb9dda3b63bd875f1fe3c3094547') in 0.003838 seconds
+Refreshing native plugins compatible for Editor in 1.46 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=675882c9c212b044c9521ffe0f539d06): Total: 0.030 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/mage_1.png using Guid(375fbaec9c824f9408061ea8b55eefe7) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'd6fdeb9dda3b63bd875f1fe3c3094547') in 0.002692 seconds
+Refreshing native plugins compatible for Editor in 1.44 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=1c7ca61a9e910fd418f60ce32dc4253f): Total: 0.030 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/elite_0.png using Guid(61302ab5c837e784bb020327b72385ef) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '3abbd0e1f0318e8cc97364d61253645d') in 0.007568 seconds
+Refreshing native plugins compatible for Editor in 1.87 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=93157b1b4efb6174abe5aec7562cd9ed): Total: 0.027 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/elite_0.png using Guid(61302ab5c837e784bb020327b72385ef) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '3abbd0e1f0318e8cc97364d61253645d') in 0.006945 seconds
+Refreshing native plugins compatible for Editor in 1.65 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=241de0e6b7e62334a929b93046d6ea60): Total: 0.031 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/elite_1.png using Guid(2c9da634104d388439282fddc1629eb1) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '24a2641da3efc9c459fa9025f5b520af') in 0.007247 seconds
+Refreshing native plugins compatible for Editor in 2.09 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=479a6cc48bb76b44ab8036770caca6f5): Total: 0.028 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/elite_1.png using Guid(2c9da634104d388439282fddc1629eb1) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '24a2641da3efc9c459fa9025f5b520af') in 0.005658 seconds
+Refreshing native plugins compatible for Editor in 1.86 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=36cad9a7aa8206c41a5c129ef2269ee1): Total: 0.028 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/boss_0.png using Guid(312d395ef8efc864a833724449b178fa) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '220615c11f7d5bf55084682449e4dc79') in 0.010507 seconds
+Refreshing native plugins compatible for Editor in 3.70 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=15c6c844785893f4aa09a2d2b51634cf): Total: 0.050 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/boss_0.png using Guid(312d395ef8efc864a833724449b178fa) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '220615c11f7d5bf55084682449e4dc79') in 0.003244 seconds
+Refreshing native plugins compatible for Editor in 2.71 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=ae39d8442e9637c4495b66a3d09ba9ea): Total: 0.033 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/boss_1.png using Guid(daa3496d187b8db4084fbea5061df683) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '9cc0940398f033a45a19aed26b65fb62') in 0.003918 seconds
+Refreshing native plugins compatible for Editor in 1.86 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=baad2f363e9470441b6e74ca4340d8be): Total: 0.028 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/boss_1.png using Guid(daa3496d187b8db4084fbea5061df683) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '9cc0940398f033a45a19aed26b65fb62') in 0.003359 seconds
+Refreshing native plugins compatible for Editor in 1.47 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=4ad4f5dd6e1768e498488be6e9ee117f): Total: 0.024 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/spike.png using Guid(525a86dff2b9ee0479bb29e7760c2f02) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'e0dfc0aaca5961744f8b6155e127c204') in 0.003061 seconds
+Refreshing native plugins compatible for Editor in 1.46 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=bd5a733f9a907c84f81d19e4dbb9c465): Total: 0.029 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/spike.png using Guid(525a86dff2b9ee0479bb29e7760c2f02) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'e0dfc0aaca5961744f8b6155e127c204') in 0.002683 seconds
+Refreshing native plugins compatible for Editor in 1.45 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=f151accc8aac18c4683c399c3bcf76a1): Total: 0.022 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/platform_tile.png using Guid(e689e2a62c560224cbd9efc78576ddf6) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'c56ac880e1a10ec62a83664bdf42c8a1') in 0.003428 seconds
+Refreshing native plugins compatible for Editor in 1.45 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=f3ec48f8ce5674249a3982b799ec6543): Total: 0.027 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/platform_tile.png using Guid(e689e2a62c560224cbd9efc78576ddf6) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'c56ac880e1a10ec62a83664bdf42c8a1') in 0.002262 seconds
+Refreshing native plugins compatible for Editor in 1.80 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=8f3ede43f36f2f9419f3eabd8694da43): Total: 0.024 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/slash_0.png using Guid(8ac08657d3f30ee479cd312b26042b2a) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '9b7bf891b7399ef2ae090d54f63647b4') in 0.004494 seconds
+Refreshing native plugins compatible for Editor in 1.44 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=8d90ad1d9dfdc3e41862362cbc60a9b5): Total: 0.023 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/slash_0.png using Guid(8ac08657d3f30ee479cd312b26042b2a) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '9b7bf891b7399ef2ae090d54f63647b4') in 0.002556 seconds
+Refreshing native plugins compatible for Editor in 1.50 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=4f74837cbb7fd734ab49a2b5baf817aa): Total: 0.026 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/slash_1.png using Guid(44fde41e757832249989eeef0544a4a1) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '70aa8042523115e8567738d065c4e90c') in 0.003125 seconds
+Refreshing native plugins compatible for Editor in 2.10 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=44dace9a96b91e04abcd4a4ffbb993b8): Total: 0.024 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/slash_1.png using Guid(44fde41e757832249989eeef0544a4a1) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '70aa8042523115e8567738d065c4e90c') in 0.002695 seconds
+Refreshing native plugins compatible for Editor in 1.46 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=65778790bb5e9be429f6ad172f303c16): Total: 0.022 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/slash_2.png using Guid(601f3d19bb49dbb449131a036a9eba82) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'b7f5f1b45b73665230011a91256df9d2') in 0.003008 seconds
+Refreshing native plugins compatible for Editor in 2.22 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=3aa20a79ccaf58b4e9ed242aaefe63fc): Total: 0.026 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/slash_2.png using Guid(601f3d19bb49dbb449131a036a9eba82) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'b7f5f1b45b73665230011a91256df9d2') in 0.005628 seconds
+Refreshing native plugins compatible for Editor in 1.42 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=cf203153e11348f4ca4603bae9eec93b): Total: 0.023 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/proj_fireball.png using Guid(e749be504e80cee488b4fcb385a19a99) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '16dda1e808b262ac584b7cd8691a0c05') in 0.003698 seconds
+Refreshing native plugins compatible for Editor in 1.82 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=1f0b3a3144f25f248814bc842c72465c): Total: 0.025 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/proj_fireball.png using Guid(e749be504e80cee488b4fcb385a19a99) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '16dda1e808b262ac584b7cd8691a0c05') in 0.004832 seconds
+Refreshing native plugins compatible for Editor in 1.45 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=ba8940c75603ac048a7388ab21387551): Total: 0.022 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/proj_arrow.png using Guid(643d396eb7df9eb4bafa00f564a1e7dd) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '6c528c13fd7883f7dac0775ece9266bf') in 0.002807 seconds
+Refreshing native plugins compatible for Editor in 3.55 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=f1592c4129b79af4b9e7ac0f05cbb9c5): Total: 0.025 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/proj_arrow.png using Guid(643d396eb7df9eb4bafa00f564a1e7dd) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '6c528c13fd7883f7dac0775ece9266bf') in 0.003075 seconds
+Refreshing native plugins compatible for Editor in 1.41 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=46b17f26188d1a84fa5ebd570b7068e8): Total: 0.023 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/proj_swordwave.png using Guid(98c4c1a4a01f5ea45bb781290897a2d5) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '3d0fd7e8901b8ae15f7ad0ee4148e8bc') in 0.002764 seconds
+Refreshing native plugins compatible for Editor in 1.44 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=eff1d57387561114c91c4150b716ed04): Total: 0.029 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/proj_swordwave.png using Guid(98c4c1a4a01f5ea45bb781290897a2d5) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '3d0fd7e8901b8ae15f7ad0ee4148e8bc') in 0.003339 seconds
+Refreshing native plugins compatible for Editor in 1.51 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=09e9159c63d0b0f43a6e7c5243295088): Total: 0.022 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/portal.png using Guid(e5784c22ce2f83543af46772b161f508) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '25f3d4f0b4822f2d6bb59efd9cb93389') in 0.007695 seconds
+Refreshing native plugins compatible for Editor in 1.43 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=eed02a5e3d7a2ea43a94ec87438385fc): Total: 0.025 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/portal.png using Guid(e5784c22ce2f83543af46772b161f508) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '25f3d4f0b4822f2d6bb59efd9cb93389') in 0.002998 seconds
+Refreshing native plugins compatible for Editor in 1.89 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=1fad05d6ca71d9a429864f0db41b3387): Total: 0.027 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/lightning.png using Guid(d2373580875130948a981086a881e3ca) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'a0befffccf7c320046ae92cdd46ab5f8') in 0.003196 seconds
+Refreshing native plugins compatible for Editor in 1.47 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=6ec3cc28085c6ce46aa53e6df95b5bc8): Total: 0.031 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Art/Generated/lightning.png using Guid(d2373580875130948a981086a881e3ca) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'a0befffccf7c320046ae92cdd46ab5f8') in 0.003236 seconds
+Refreshing native plugins compatible for Editor in 2.85 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=88be068d207dd0641bb7e352d188f450): Total: 0.031 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Resources/Sprites/glow_disc.png using Guid(2620e95d17c7a4642bfd6870b8c6a4a1) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'cb6bc3d107dcafee80cb366f82e04859') in 0.007730 seconds
+Refreshing native plugins compatible for Editor in 1.44 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=d2b7029a59959e94f8b0d4bd0bcc16cd): Total: 0.039 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Resources/Sprites/glow_disc.png using Guid(2620e95d17c7a4642bfd6870b8c6a4a1) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'cb6bc3d107dcafee80cb366f82e04859') in 0.007662 seconds
+Refreshing native plugins compatible for Editor in 2.24 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=a95e291129650f44ca55ebd678767963): Total: 0.036 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Resources/Sprites/slash_0.png using Guid(e4860046f8d8db248bd491dffa5133a8) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '445f22710cb288368b3e23ff0ca0e838') in 0.003504 seconds
+Refreshing native plugins compatible for Editor in 2.33 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=dec43469039023443a4791a5d50f7e62): Total: 0.043 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Resources/Sprites/slash_0.png using Guid(e4860046f8d8db248bd491dffa5133a8) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '445f22710cb288368b3e23ff0ca0e838') in 0.005378 seconds
+Refreshing native plugins compatible for Editor in 2.74 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=8c4e34657b1d5bc4a9f9384c8896087a): Total: 0.044 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Resources/Sprites/slash_1.png using Guid(792c1e69eaf3db74f8410dd9ec9ee722) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'f6d33a104a0fe29040d1345e772cc049') in 0.006764 seconds
+Refreshing native plugins compatible for Editor in 2.15 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=cea761f35086b8f4b877e5171d2050f5): Total: 0.042 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Resources/Sprites/slash_1.png using Guid(792c1e69eaf3db74f8410dd9ec9ee722) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'f6d33a104a0fe29040d1345e772cc049') in 0.004363 seconds
+Refreshing native plugins compatible for Editor in 2.76 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=0681ae811a99d134daf4696ebb025837): Total: 0.043 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Resources/Sprites/slash_2.png using Guid(de65d320444f8494397f052526c3fe27) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '049c1f456d2a6aadfd27f5d3c4a59c5c') in 0.003490 seconds
+Refreshing native plugins compatible for Editor in 1.57 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=165785a67b4c34b498ee43b448b925d3): Total: 0.034 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Resources/Sprites/slash_2.png using Guid(de65d320444f8494397f052526c3fe27) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '049c1f456d2a6aadfd27f5d3c4a59c5c') in 0.003420 seconds
+Refreshing native plugins compatible for Editor in 1.77 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=dc5ea9d81fca9d2489d5b727c75671d2): Total: 0.032 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=89c4002d05aabee4fbcefa014738a96d): Total: 0.065 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+[FantasyArt] 横版占位美术完成（含 Resources 通道）
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.NeonArtGenerator:GenerateFantasy () (at Assets/Scripts/EditorTools/FantasyArtGenerator.cs:55)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:164)
+
+(Filename: Assets/Scripts/EditorTools/FantasyArtGenerator.cs Line: 55)
+
+Start importing Assets/Audio/Generated/sfx_shoot.wav using Guid(f27790aeff43db741968b2506dcff7cf) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'b6a6fd3a00c2300fe61476ea89bb5b0e') in 0.164796 seconds
+Refreshing native plugins compatible for Editor in 1.88 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=84ab239d41de42d49b7afca0687177c2): Total: 0.185 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Audio/Generated/sfx_hit.wav using Guid(8e69960d8484298419fd4ac1e16c5878) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '5f94135c5ef4b51c1a7e12888744d29b') in 0.093179 seconds
+Refreshing native plugins compatible for Editor in 1.62 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=ab2b48e4c03c65f44aaa9768135c4f1c): Total: 0.109 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Audio/Generated/sfx_crit.wav using Guid(9ce77aa647410e7419f99cc872ce7ac5) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '21e2dafbdcc40e08b44c4ef31d26ab80') in 0.087683 seconds
+Refreshing native plugins compatible for Editor in 1.45 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=a6d2faac4c1ea4740b68f23c40ff2732): Total: 0.112 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Audio/Generated/sfx_kill.wav using Guid(de10024d6d1431d4d92eaff2ee4b4e29) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'c44845bf876a64c82e466ac69147012f') in 0.099081 seconds
+Refreshing native plugins compatible for Editor in 1.51 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=596b80c7512a91a4c891bcb7e98258f9): Total: 0.120 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Audio/Generated/sfx_elitekill.wav using Guid(568aab868dce6dd4fba916bb30fcf85d) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '8a3a921b7f892f08e4e08052237d318b') in 0.086875 seconds
+Refreshing native plugins compatible for Editor in 1.82 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=97178d02f8559df4294dacc8ebea508c): Total: 0.108 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Audio/Generated/sfx_pickup.wav using Guid(c33be8c36efd6b043992a534d8bae0bd) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'ecb4a4e19367e3af74362559058edcea') in 0.097103 seconds
+Refreshing native plugins compatible for Editor in 1.81 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=7adedc95cabec444daf4b4c8f4fc28b0): Total: 0.118 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Audio/Generated/sfx_levelup.wav using Guid(8d2049b6df3a80647a1193318fb7320b) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'd42b109fa934f91004438b3eb339d182') in 0.094307 seconds
+Refreshing native plugins compatible for Editor in 1.50 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=fb1fb8fb878cf944ca6ea0461dc4110a): Total: 0.109 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Audio/Generated/sfx_hurt.wav using Guid(68d47baec7d73e34185e759c8e2f454f) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '96ce69d5e50890445af8a5f2897bb0c9') in 0.087166 seconds
+Refreshing native plugins compatible for Editor in 2.01 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=a697953de5f9a664195a1ae4192ba97f): Total: 0.113 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Audio/Generated/sfx_gameover.wav using Guid(9dde54d2f45983447a9f6f443e7ede30) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '3507272070ecab3efeb2e82d4fa4c005') in 0.116104 seconds
+Refreshing native plugins compatible for Editor in 2.48 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=925635e57185b8045a21fbbfc43b500f): Total: 0.140 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Audio/Generated/sfx_click.wav using Guid(0b9fd5eec0aa9d342a5e6e3c31ab94cb) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '7b9934c3214e8c6cbfb3805fd3ea7775') in 0.084195 seconds
+Refreshing native plugins compatible for Editor in 1.49 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=9bd61b2a5614b974f829396ebf5eabab): Total: 0.105 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Audio/Generated/music_ambient.wav using Guid(4b15e96de5e2f8b4a9f37c1e714d3596) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '4614688edb8b265c8feb1eb78813f64b') in 0.150908 seconds
+Refreshing native plugins compatible for Editor in 2.08 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=87c323b89d9d066488bbc3e5ca5583ca): Total: 0.172 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=cac69e5ec47622b4594d13e3279aef4e): Total: 0.060 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+[SfxSynth] 合成 11 个音频 → Assets/Audio/Generated
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.SfxSynth:GenerateAll () (at Assets/Scripts/EditorTools/SfxSynth.cs:90)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:167)
+
+(Filename: Assets/Scripts/EditorTools/SfxSynth.cs Line: 90)
+
+Asset Pipeline Refresh (id=7343c4d5900164d43bc47b8c295c27eb): Total: 0.049 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Start importing Assets/Prefabs/Hero/Hero.controller using Guid(2dc7b5c725046024cb60abf35358f71e) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '3a0496d7b6878acb107d41794399bedc') in 0.001596 seconds
+Refreshing native plugins compatible for Editor in 1.90 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=2ed6dd0f0b0e3f2448ef0db636540df8): Total: 0.032 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Prefabs/Hero/Hero.controller using Guid(2dc7b5c725046024cb60abf35358f71e) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'ae41a1fc86f7af29f5840971f86b6457') in 0.001618 seconds
+Refreshing native plugins compatible for Editor in 1.97 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=ec3523e2e06d6f148a406ff62810bcbd): Total: 0.034 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+StarVortex.EditorTools.DemoSceneBuilder:CreateHeroPrefab () (at Assets/Scripts/EditorTools/DemoSceneBuilder.Hero.cs:54)
+StarVortex.EditorTools.DemoSceneBuilder:CreateHeroAssets () (at Assets/Scripts/EditorTools/DemoSceneBuilder.Hero.cs:29)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:174)
+
+[Assets/Scripts/EditorTools/DemoSceneBuilder.Hero.cs line 54]
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+StarVortex.EditorTools.DemoSceneBuilder:CreateHeroPrefab () (at Assets/Scripts/EditorTools/DemoSceneBuilder.Hero.cs:54)
+StarVortex.EditorTools.DemoSceneBuilder:CreateHeroAssets () (at Assets/Scripts/EditorTools/DemoSceneBuilder.Hero.cs:29)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:174)
+
+[Assets/Scripts/EditorTools/DemoSceneBuilder.Hero.cs line 54]
+
+Asset Pipeline Refresh (id=05812916905b2c64b9f6433ae1a611ae): Total: 0.005 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=0bf593de24e49ee47aea27c7cf9ec7b5): Total: 0.004 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=3b66b358bf4bd90448c19b6d668240dc): Total: 0.004 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=2f2b1ad52fe7a1e4488af92cf755f228): Total: 0.003 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=72106e28df73bc5479962d7642722ca7): Total: 0.004 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=372f5cc5369662044ba23c7b4e3ea291): Total: 0.006 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=4c957d12c6f382a4794efa7a9358674e): Total: 0.003 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=4b54be23b39390f40ad68deebebc01d7): Total: 0.012 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=484d72e879629bc419c7f499fec19fd4): Total: 0.006 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+No script asset for WeaponKit. Check that the definition is in a file of the same name and that it compiles properly.
+Start importing Assets/Data/Hero/Weapon_Sword.asset using Guid(64faa936d733f8147b37f75a1c55262a) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'a8c035e94c987ac913bdb95dfa51fd45') in 0.001626 seconds
+Refreshing native plugins compatible for Editor in 1.44 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=ee81a39dde129af4c885ee53b37d921f): Total: 0.036 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+No script asset for WeaponKit. Check that the definition is in a file of the same name and that it compiles properly.
+Start importing Assets/Data/Hero/Weapon_Staff.asset using Guid(fc8cee0881c60e64f8482e7c48c069f5) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'bf442a95fe5da695ddbc1a108995ecb4') in 0.001487 seconds
+Refreshing native plugins compatible for Editor in 1.45 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=efef8d968085012498574005237bbda5): Total: 0.032 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+No script asset for WeaponKit. Check that the definition is in a file of the same name and that it compiles properly.
+Start importing Assets/Data/Hero/Weapon_Bow.asset using Guid(2b942db030d45394eaeec965188f2bcd) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '7aa5c53847adc24fb221cc872f576670') in 0.002261 seconds
+Refreshing native plugins compatible for Editor in 1.63 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=6d122c37ddf1ec74aab422c9e196e8fa): Total: 0.035 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Data/Hero/Weapon_Sword.asset using Guid(64faa936d733f8147b37f75a1c55262a) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '77b6da0e456bcc522b4b72e636b13166') in 0.004192 seconds
+Start importing Assets/Data/Hero/Weapon_Bow.asset using Guid(2b942db030d45394eaeec965188f2bcd) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '22284cc196dc4e538c5cfbabb3f1c18d') in 0.002782 seconds
+Start importing Assets/Data/Hero/Weapon_Staff.asset using Guid(fc8cee0881c60e64f8482e7c48c069f5) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '8c40872658307bd3451efde0ad5ad0ed') in 0.001260 seconds
+Refreshing native plugins compatible for Editor in 1.40 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=390abbc35d6753542aff2b5612d2df1e): Total: 0.037 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[HeroAssets] 勇者资产构建完成
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.DemoSceneBuilder:CreateHeroAssets () (at Assets/Scripts/EditorTools/DemoSceneBuilder.Hero.cs:34)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:174)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.Hero.cs Line: 34)
+
+Asset Pipeline Refresh (id=80e629cb527d1454883ec7cbf7c558d2): Total: 0.049 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 187 unused Assets / (79.0 KB). Loaded Objects now: 4897.
+Memory consumption went from 158.6 MB to 158.6 MB.
+Total: 9.458200 ms (FindLiveObjects: 0.355000 ms CreateObjectMapping: 0.147000 ms MarkObjects: 8.372200 ms  DeleteObjects: 0.580900 ms)
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 1 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 2 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 3 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+Start importing ProjectSettings/GraphicsSettings.asset using Guid(00000000000000006100000000000000) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '2894b8e3cba122d1cb1c6993de0607d2') in 0.002497 seconds
+Refreshing native plugins compatible for Editor in 1.41 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=a096f32cb9df97b49992bba1fe983f1d): Total: 0.025 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Scenes/Level1.unity using Guid(53f796b329a71bb43adaf32cf47485ca) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '7ebc88f2b67e34326415b53367e4ea6a') in 0.000953 seconds
+Refreshing native plugins compatible for Editor in 2.24 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=fc17b6018f3aeeb4b8e7047ec4c98f47): Total: 0.035 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[LevelBuilder] Level1「灰烬森林」构建完成：宽 80 格，地面段 17，怪物 11，陷阱 4，目标 Elite
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:252)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:53)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/LevelBuilder.cs Line: 252)
+
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 176 unused Assets / (0.9 MB). Loaded Objects now: 4923.
+Memory consumption went from 169.9 MB to 168.9 MB.
+Total: 4.814300 ms (FindLiveObjects: 0.230000 ms CreateObjectMapping: 0.101900 ms MarkObjects: 3.703900 ms  DeleteObjects: 0.777700 ms)
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 1 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 2 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 3 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+Start importing Assets/Scenes/Level2.unity using Guid(07464e88488fbaf4a8f749868d867476) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '4c59a1c5c583a248b93daf6ce9355ea4') in 0.001280 seconds
+Refreshing native plugins compatible for Editor in 1.39 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=4b98fe4cba9b8fa45b2602539fa87e01): Total: 0.038 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[LevelBuilder] Level2「坍塌矿洞」构建完成：宽 100 格，地面段 15，怪物 12，陷阱 5，目标 Elite
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:252)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:54)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/LevelBuilder.cs Line: 252)
+
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Unloading 24 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 176 unused Assets / (0.9 MB). Loaded Objects now: 4923.
+Memory consumption went from 174.1 MB to 173.2 MB.
+Total: 4.378500 ms (FindLiveObjects: 0.190100 ms CreateObjectMapping: 0.098700 ms MarkObjects: 3.742200 ms  DeleteObjects: 0.346800 ms)
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+Asset 'Hero': Transition 'Attack -> Exit' in state 'Attack' doesn't have an Exit Time or any condition, transition will be ignored
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.PrefabUtility:InstantiatePrefab_internal (UnityEngine.Object,UnityEngine.SceneManagement.Scene,UnityEngine.Transform)
+UnityEditor.PrefabUtility:InstantiatePrefab (UnityEngine.Object)
+StarVortex.EditorTools.LevelBuilder:BuildHero (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:361)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:241)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+[Assets/Scripts/EditorTools/LevelBuilder.cs line 361]
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 1 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 2 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+[HeroUI] 缺少武器 Kit 资产（先运行 StarVortex/Hero/构建勇者资产）：Assets/Data/Hero/Weapon_*.asset 第 3 个为空
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+StarVortex.EditorTools.DemoSceneBuilder:LoadHeroWeaponKits () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:230)
+StarVortex.EditorTools.DemoSceneBuilder:BuildWeaponSelectPanel (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:214)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroUiSet (UnityEngine.Transform) (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:470)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:248)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 230)
+
+Start importing Assets/Scenes/Level3.unity using Guid(ec9d4fb8233a2cf4e83b1f3d63a08fcc) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '270b8e7ca6df9a91e1bb76951d1985de') in 0.001085 seconds
+Refreshing native plugins compatible for Editor in 1.63 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=6b43cdcad14075749b918daea9c33a3b): Total: 0.038 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[LevelBuilder] Level3「深渊王座」构建完成：宽 60 格，地面段 1，怪物 9，陷阱 0，目标 Boss
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.LevelBuilder:BuildLevel (StarVortex.Gameplay.World.LevelSpec) (at Assets/Scripts/EditorTools/LevelBuilder.cs:252)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:55)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/LevelBuilder.cs Line: 252)
+
+[BuildSettings] 场景列表：MainMenu(0) → Level1 → Level2 → Level3
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.LevelBuilder:SetupBuildSettings () (at Assets/Scripts/EditorTools/LevelBuilder.cs:82)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:56)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/LevelBuilder.cs Line: 82)
+
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Unloading 24 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 176 unused Assets / (0.9 MB). Loaded Objects now: 4923.
+Memory consumption went from 178.0 MB to 177.1 MB.
+Total: 4.971600 ms (FindLiveObjects: 0.242600 ms CreateObjectMapping: 0.113600 ms MarkObjects: 3.893600 ms  DeleteObjects: 0.720700 ms)
+
+Start importing Assets/Settings/PostVolume.asset using Guid(52d30b28481e53043a277541f07f0384) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '90637ea5a1a320977d9626104dec93f2') in 0.001486 seconds
+Refreshing native plugins compatible for Editor in 1.34 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=092f8cb6d61fba04fbcdb26d14fed38f): Total: 0.046 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Settings/PostVolume.asset using Guid(52d30b28481e53043a277541f07f0384) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: '03af35e1fb961027e9dcbc2832cc52dd') in 0.003505 seconds
+Refreshing native plugins compatible for Editor in 1.49 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=250b4556494de274192bdd1cb22a4e05): Total: 0.032 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Scenes/MainMenu.unity using Guid(6b653955dba5cc54080019453010e86f) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+ -> (artifact id: 'e919cf25f84932b217bca76d502bdfa6') in 0.000977 seconds
+Refreshing native plugins compatible for Editor in 1.62 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Asset Pipeline Refresh (id=064a85155f6d25f4fa09457644e7b232): Total: 0.038 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[Scene] 主菜单构建完成 → Assets/Scenes/MainMenu.unity
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.DemoSceneBuilder:BuildHeroMenuScene () (at Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs:565)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:57)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.HeroUI.cs Line: 565)
+
+[LevelBuilder] ========== 三关 + 主菜单构建完成：Level1 灰烬森林 / Level2 坍塌矿洞 / Level3 深渊王座 ==========
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.LevelBuilder:BuildAllLevels () (at Assets/Scripts/EditorTools/LevelBuilder.cs:60)
+System.Reflection.RuntimeMethodInfo:Invoke (object,System.Reflection.BindingFlags,System.Reflection.Binder,object[],System.Globalization.CultureInfo)
+System.Reflection.MethodBase:Invoke (object,object[])
+StarVortex.EditorTools.DemoSceneBuilder:InvokeLevelBuilder () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:196)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:178)
+
+(Filename: Assets/Scripts/EditorTools/LevelBuilder.cs Line: 60)
+
+[Build] ========== 搭建完成！打开 MainMenu 开始游戏 ==========
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+StarVortex.EditorTools.DemoSceneBuilder:GenerateAll () (at Assets/Scripts/EditorTools/DemoSceneBuilder.cs:184)
+
+(Filename: Assets/Scripts/EditorTools/DemoSceneBuilder.cs Line: 184)
+
+Batchmode quit successfully invoked - shutting down!
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] LicenseClient-admin-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-admin channel disconnected successfully.
+Cleanup mono
+abort_threads: Failed aborting id: 0000000000005BB0, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 0000000000005AE4, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 0000000000005BB0, mono_thread_manage will ignore it
+
+abort_threads: Failed aborting id: 0000000000005AE4, mono_thread_manage will ignore it
+
+debugger-agent: Unable to listen on 5284
+[Performance] WinEditorMain                                                                                                  :        1 samples, Peak.  1.55 s (1.0x), Avg.  1.55 s, Total. 1.551 s (8.6%)
+[Performance] WinEditorMain.ConfigureCrashHandler                                                                            :        1 samples, Peak.  30.1 us (1.0x), Avg.  30.1 us, Total. 30.10 us (0.0%)
+[Performance] WinEditorMain.CurlRequestInitialize                                                                            :        1 samples, Peak.   419 us (1.0x), Avg.   419 us, Total. 418.5 us (0.0%)
+[Performance] WinEditorMain.SetupLogFile                                                                                     :        1 samples, Peak.   183 us (1.0x), Avg.   183 us, Total. 183.1 us (0.0%)
+[Performance] WinEditorMain.RunNativeTestsIfRequiredAndExit                                                                  :        1 samples, Peak.   200 ns (1.0x), Avg.   200 ns, Total. 200.0 ns (0.0%)
+[Performance] WinEditorMain.Licensing                                                                                        :        1 samples, Peak.  1.52 s (1.0x), Avg.  1.52 s, Total. 1.517 s (8.4%)
+[Performance] WinEditorMain.InitializeCrashHandler                                                                           :        1 samples, Peak.  29.5 ms (1.0x), Avg.  29.5 ms, Total. 29.52 ms (0.2%)
+[Performance] WinEditorMain.CreateApplication                                                                                :        1 samples, Peak.   134 us (1.0x), Avg.   134 us, Total. 134.1 us (0.0%)
+[Performance] Application.InitializeProject                                                                                  :        1 samples, Peak.  10.5 s (1.0x), Avg.  10.5 s, Total. 10.47 s (58.1%)
+[Performance] Application.PackageManager.StartServer                                                                         :        1 samples, Peak.  8.33 ms (1.0x), Avg.  8.33 ms, Total. 8.325 ms (0.0%)
+[Performance] Application.AcquireProjectLock                                                                                 :        1 samples, Peak.  3.47 ms (1.0x), Avg.  3.47 ms, Total. 3.467 ms (0.0%)
+[Performance] Application.InitializeEngineNoGraphics                                                                         :        1 samples, Peak.  61.9 ms (1.0x), Avg.  61.9 ms, Total. 61.93 ms (0.3%)
+[Performance] Application.PackageManager.Initialize                                                                          :        1 samples, Peak.   440 ms (1.0x), Avg.   440 ms, Total. 440.2 ms (2.4%)
+[Performance] Connecting to Package Manager                                                                                  :       45 samples, Peak.   111 us (14.2x), Avg.  7.80 us, Total. 351.2 us (0.0%)
+[Performance] Application.EngineGraphics.Initialize                                                                          :        1 samples, Peak.   286 ms (1.0x), Avg.   286 ms, Total. 286.4 ms (1.6%)
+[Performance] Application.GI.Initialize                                                                                      :        1 samples, Peak.  6.69 ms (1.0x), Avg.  6.69 ms, Total. 6.692 ms (0.0%)
+[Performance] Application.LoadAllDefaultResourcesFromEditor                                                                  :        1 samples, Peak.  3.31 ms (1.0x), Avg.  3.31 ms, Total. 3.309 ms (0.0%)
+[Performance] Application.LoadMonoAssemblies                                                                                 :        1 samples, Peak.   606 ms (1.0x), Avg.   606 ms, Total. 606.0 ms (3.4%)
+[Performance] RestoreManagedReferences                                                                                       :        2 samples, Peak.  55.1 ms (2.0x), Avg.  27.6 ms, Total. 55.13 ms (0.3%)
+[Performance] InitializeOnLoad DrivenRectTransformUndo                                                                       :        2 samples, Peak.   496 us (1.0x), Avg.   483 us, Total. 966.3 us (0.0%)
+[Performance] InitializeOnLoad SceneSearch                                                                                   :        2 samples, Peak.   161 us (1.2x), Avg.   129 us, Total. 258.7 us (0.0%)
+[Performance] InitializeOnLoad CloudBuild                                                                                    :        2 samples, Peak.  4.70 us (1.3x), Avg.  3.65 us, Total. 7.300 us (0.0%)
+[Performance] InitializeOnLoad NativeFormatImporterUtility                                                                   :        2 samples, Peak.  2.54 ms (1.0x), Avg.  2.52 ms, Total. 5.036 ms (0.0%)
+[Performance] InitializeOnLoad SearchService                                                                                 :        2 samples, Peak.   122 us (1.0x), Avg.   121 us, Total. 242.4 us (0.0%)
+[Performance] InitializeOnLoad SettingsService                                                                               :        2 samples, Peak.  57.9 us (1.7x), Avg.  35.0 us, Total. 70.00 us (0.0%)
+[Performance] InitializeOnLoad WindowLayout                                                                                  :        2 samples, Peak.  2.55 ms (1.5x), Avg.  1.65 ms, Total. 3.300 ms (0.0%)
+[Performance] InitializeOnLoad AssetStoreContext                                                                             :        2 samples, Peak.  30.2 ms (1.0x), Avg.  29.4 ms, Total. 58.70 ms (0.3%)
+[Performance] InitializeOnLoad PoolManager                                                                                   :        2 samples, Peak.   649 us (1.1x), Avg.   593 us, Total. 1.185 ms (0.0%)
+[Performance] InitializeOnLoad MixerEffectDefinitionReloader                                                                 :        2 samples, Peak.  5.36 ms (1.5x), Avg.  3.50 ms, Total. 7.009 ms (0.0%)
+[Performance] InitializeOnLoad ProjectSearch                                                                                 :        2 samples, Peak.  83.5 us (1.0x), Avg.  82.1 us, Total. 164.2 us (0.0%)
+[Performance] InitializeOnLoad UISystemProfilerRenderService                                                                 :        2 samples, Peak. 10.00 us (1.1x), Avg.  9.20 us, Total. 18.40 us (0.0%)
+[Performance] InitializeOnLoad EditMode                                                                                      :        2 samples, Peak.   676 us (1.3x), Avg.   520 us, Total. 1.040 ms (0.0%)
+[Performance] InitializeOnLoad UnityConnect                                                                                  :        2 samples, Peak.  82.6 us (1.3x), Avg.  62.9 us, Total. 125.9 us (0.0%)
+[Performance] InitializeOnLoad ManagedDebugger                                                                               :        2 samples, Peak.   686 us (1.7x), Avg.   393 us, Total. 785.2 us (0.0%)
+[Performance] InitializeOnLoad ShortcutIntegration                                                                           :        2 samples, Peak.  65.2 us (1.2x), Avg.  56.0 us, Total. 112.1 us (0.0%)
+[Performance] InitializeOnLoad AddComponentWindow                                                                            :        2 samples, Peak.   114 us (1.1x), Avg.   101 us, Total. 201.1 us (0.0%)
+[Performance] InitializeOnLoad ManagedDebuggerWindow                                                                         :        2 samples, Peak.   129 us (1.0x), Avg.   123 us, Total. 247.0 us (0.0%)
+[Performance] InitializeOnLoad CacheServerWindow                                                                             :        2 samples, Peak.  11.4 us (1.0x), Avg.  11.3 us, Total. 22.50 us (0.0%)
+[Performance] InitializeOnLoad PlayModeDownload                                                                              :        2 samples, Peak.  4.18 ms (1.9x), Avg.  2.17 ms, Total. 4.341 ms (0.0%)
+[Performance] InitializeOnLoad MenuItems                                                                                     :        2 samples, Peak.  84.8 us (1.1x), Avg.  75.9 us, Total. 151.9 us (0.0%)
+[Performance] InitializeOnLoad PrefabInstanceChangedListener                                                                 :        2 samples, Peak.   104 us (1.0x), Avg.   103 us, Total. 205.9 us (0.0%)
+[Performance] InitializeOnLoad ObjectSelectorSearch                                                                          :        2 samples, Peak.  81.4 us (1.5x), Avg.  53.6 us, Total. 107.1 us (0.0%)
+[Performance] InitializeOnLoad EditorMonitor                                                                                 :        2 samples, Peak.   585 us (1.3x), Avg.   468 us, Total. 935.5 us (0.0%)
+[Performance] InitializeOnLoad RetainedMode                                                                                  :        2 samples, Peak.  1.99 ms (1.0x), Avg.  1.96 ms, Total. 3.925 ms (0.0%)
+[Performance] InitializeOnLoad EditorShaderLoader                                                                            :        2 samples, Peak.   529 us (1.0x), Avg.   504 us, Total. 1.009 ms (0.0%)
+[Performance] InitializeOnLoad EditorDelegateRegistration                                                                    :        2 samples, Peak.   394 us (1.0x), Avg.   385 us, Total. 769.7 us (0.0%)
+[Performance] InitializeOnLoad UIDocumentHierarchyWatcher                                                                    :        2 samples, Peak.  67.8 us (1.1x), Avg.  61.1 us, Total. 122.1 us (0.0%)
+[Performance] InitializeOnLoad LiveReloadTrackerCreator                                                                      :        2 samples, Peak.   148 us (1.1x), Avg.   132 us, Total. 264.3 us (0.0%)
+[Performance] InitializeOnLoad UxmlObjectEditorFactories                                                                     :        2 samples, Peak.   388 us (1.0x), Avg.   381 us, Total. 762.1 us (0.0%)
+[Performance] InitializeOnLoad UXMLEditorFactories                                                                           :        2 samples, Peak.  63.9 ms (1.0x), Avg.  62.9 ms, Total. 125.9 ms (0.7%)
+[Performance] InitializeOnLoad PurchasingService                                                                             :        2 samples, Peak.  8.32 ms (1.1x), Avg.  7.85 ms, Total. 15.70 ms (0.1%)
+[Performance] InitializeOnLoad CloudBuildPoller                                                                              :        2 samples, Peak.   360 us (1.5x), Avg.   241 us, Total. 482.6 us (0.0%)
+[Performance] InitializeOnLoad EditorGameServicesAnalytics                                                                   :        2 samples, Peak.  2.75 ms (1.7x), Avg.  1.58 ms, Total. 3.160 ms (0.0%)
+[Performance] InitializeOnLoad AnalyticsService                                                                              :        2 samples, Peak.   201 us (1.1x), Avg.   189 us, Total. 377.1 us (0.0%)
+[Performance] InitializeOnLoad BuildService                                                                                  :        2 samples, Peak.   175 us (1.1x), Avg.   154 us, Total. 308.1 us (0.0%)
+[Performance] InitializeOnLoad AdsService                                                                                    :        2 samples, Peak.   402 us (1.1x), Avg.   358 us, Total. 715.2 us (0.0%)
+[Performance] InitializeOnLoad UDPService                                                                                    :        2 samples, Peak.   117 us (1.0x), Avg.   115 us, Total. 230.8 us (0.0%)
+[Performance] InitializeOnLoad CrashService                                                                                  :        2 samples, Peak.   170 us (1.1x), Avg.   156 us, Total. 311.2 us (0.0%)
+[Performance] InitializeOnLoad ServicesRepository                                                                            :        2 samples, Peak.   500 ns (1.3x), Avg.   400 ns, Total. 800.0 ns (0.0%)
+[Performance] InitializeOnLoad SearchWindow                                                                                  :        2 samples, Peak.   149 us (1.1x), Avg.   131 us, Total. 262.9 us (0.0%)
+[Performance] InitializeOnLoad CustomIndexers                                                                                :        2 samples, Peak.  17.3 ms (1.2x), Avg.  13.9 ms, Total. 27.72 ms (0.2%)
+[Performance] InitializeOnLoad SearchMonitor                                                                                 :        2 samples, Peak.  1.37 ms (1.3x), Avg.  1.05 ms, Total. 2.090 ms (0.0%)
+[Performance] InitializeOnLoad ParameterControllerEditor                                                                     :        2 samples, Peak.  19.8 us (1.2x), Avg.  16.3 us, Total. 32.60 us (0.0%)
+[Performance] InitializeOnLoad LayerSettingsWindow                                                                           :        2 samples, Peak.  22.7 us (1.7x), Avg.  13.1 us, Total. 26.30 us (0.0%)
+[Performance] InitializeOnLoad PackageManagerHookGUIDConverter.RegisterPackagesEventHandler                                  :        2 samples, Peak.  1.23 ms (1.8x), Avg.   696 us, Total. 1.392 ms (0.0%)
+[Performance] InitializeOnLoad EditorDragAndDrop.RegisterEditorClient                                                        :        2 samples, Peak.   319 us (1.2x), Avg.   267 us, Total. 533.3 us (0.0%)
+[Performance] InitializeOnLoad EditorEventCallbacks.InitializeFontAssetResourceChangeCallBacks                               :        2 samples, Peak.  1.73 ms (1.1x), Avg.  1.60 ms, Total. 3.202 ms (0.0%)
+[Performance] InitializeOnLoad SceneTemplateService.Init                                                                     :        2 samples, Peak.  1.21 ms (1.1x), Avg.  1.10 ms, Total. 2.193 ms (0.0%)
+[Performance] InitializeOnLoad DiagnosticSwitchesConsoleMessage.Init                                                         :        2 samples, Peak.  7.26 ms (1.9x), Avg.  3.91 ms, Total. 7.817 ms (0.0%)
+[Performance] InitializeOnLoad MemoryProfilerCompilationGuard.InjectCompileGuard                                             :        2 samples, Peak.   378 us (1.4x), Avg.   278 us, Total. 556.0 us (0.0%)
+[Performance] InitializeOnLoad EditorWindow.Initialize                                                                       :        2 samples, Peak.  3.88 ms (1.8x), Avg.  2.10 ms, Total. 4.208 ms (0.0%)
+[Performance] InitializeOnLoad AssetPostprocessingInternal.RefreshCustomDependencies                                         :        2 samples, Peak.  2.87 ms (1.0x), Avg.  2.84 ms, Total. 5.671 ms (0.0%)
+[Performance] InitializeOnLoad SysrootManager.Initialize                                                                     :        2 samples, Peak.  28.1 us (1.4x), Avg.  20.7 us, Total. 41.40 us (0.0%)
+[Performance] InitializeOnLoad PackageManagerWindow.EditorInitializedInSafeMode                                              :        2 samples, Peak.  22.5 ms (2.0x), Avg.  11.4 ms, Total. 22.75 ms (0.1%)
+[Performance] InitializeOnLoad ToolShortcutContext.Init                                                                      :        2 samples, Peak.   211 us (1.3x), Avg.   161 us, Total. 322.9 us (0.0%)
+[Performance] InitializeOnLoad SceneVisibilityManager.Initialize                                                             :        2 samples, Peak.  6.02 ms (1.7x), Avg.  3.52 ms, Total. 7.034 ms (0.0%)
+[Performance] InitializeOnLoad ScopedRegistryAddedPopup.SubscribeToRegistriesAdded                                           :        2 samples, Peak.  14.5 ms (2.0x), Avg.  7.31 ms, Total. 14.62 ms (0.1%)
+[Performance] AssemblyReloadEvents.afterAssemblyReload: UnityEditor.SceneTemplate.SceneTemplateService.AfterAssemblyReload   :        2 samples, Peak.  5.05 ms (1.9x), Avg.  2.65 ms, Total. 5.291 ms (0.0%)
+[Performance] ProcessService.EditorAfterLoadAllAssemblies                                                                    :        2 samples, Peak.   309 us (1.2x), Avg.   260 us, Total. 519.7 us (0.0%)
+[Performance] Application.ReadLicenseInfo                                                                                    :        1 samples, Peak.  15.6 ms (1.0x), Avg.  15.6 ms, Total. 15.62 ms (0.1%)
+[Performance] Application.InitialRefresh                                                                                     :        1 samples, Peak.  8.36 s (1.0x), Avg.  8.36 s, Total. 8.363 s (46.4%)
+[Performance] ShaderImporter.SourceAssetModified                                                                             :       14 samples, Peak.  2.90 us (2.8x), Avg.  1.05 us, Total. 14.70 us (0.0%)
+[Performance] ShaderIncludeImporter.SourceAssetModified                                                                      :       14 samples, Peak.  1.10 us (1.2x), Avg.   886 ns, Total. 12.40 us (0.0%)
+[Performance] Compiling Scripts                                                                                              :        1 samples, Peak.  3.80 s (1.0x), Avg.  3.80 s, Total. 3.796 s (21.1%)
+[Performance] AssemblyReloadEvents.beforeAssemblyReload: UnityEditor.SceneTemplate.SceneTemplateService.BeforeAssemblyReload :        1 samples, Peak.   983 us (1.0x), Avg.   983 us, Total. 983.2 us (0.0%)
+[Performance] PSDImporterAssetPostProcessor.OnPreprocessAsset                                                                :       85 samples, Peak.   989 us (34.5x), Avg.  28.7 us, Total. 2.439 ms (0.0%)
+[Performance] PresetManagerPostProcessor.OnPreprocessAsset                                                                   :       85 samples, Peak.   205 us (18.6x), Avg.  11.0 us, Total. 935.6 us (0.0%)
+[Performance] CancelSplashScreenOnAssetChange.OnPreprocessAsset                                                              :       85 samples, Peak.   118 us (29.1x), Avg.  4.06 us, Total. 345.2 us (0.0%)
+[Performance] ShaderGraphAssetPostProcessor.OnPreprocessAsset                                                                :       85 samples, Peak.   742 us (54.0x), Avg.  13.7 us, Total. 1.167 ms (0.0%)
+[Performance] SpritePostProcess.OnPreprocessAsset                                                                            :       85 samples, Peak.  3.63 ms (22.4x), Avg.   162 us, Total. 13.76 ms (0.1%)
+[Performance] InitializeOnLoad InputSystem                                                                                   :        1 samples, Peak.  53.7 ms (1.0x), Avg.  53.7 ms, Total. 53.68 ms (0.3%)
+[Performance] InitializeOnLoad TouchSimulation                                                                               :        1 samples, Peak.   135 us (1.0x), Avg.   135 us, Total. 135.0 us (0.0%)
+[Performance] InitializeOnLoad BurstLoader                                                                                   :        1 samples, Peak.  1.54 s (1.0x), Avg.  1.54 s, Total. 1.542 s (8.6%)
+[Performance] InitializeOnLoad ShadowCasterGroup2DManager                                                                    :        1 samples, Peak.   367 us (1.0x), Avg.   367 us, Total. 366.5 us (0.0%)
+[Performance] InitializeOnLoad EditorToolManager                                                                             :        2 samples, Peak.  8.21 ms (1.4x), Avg.  5.72 ms, Total. 11.43 ms (0.1%)
+[Performance] InitializeOnLoad ProbeGIBaking                                                                                 :        1 samples, Peak.  2.92 ms (1.0x), Avg.  2.92 ms, Total. 2.920 ms (0.0%)
+[Performance] InitializeOnLoad FilterWindow                                                                                  :        1 samples, Peak.  58.0 us (1.0x), Avg.  58.0 us, Total. 58.00 us (0.0%)
+[Performance] InitializeOnLoad RealtimeProbeSubdivisionDebug                                                                 :        1 samples, Peak.   216 us (1.0x), Avg.   216 us, Total. 215.9 us (0.0%)
+[Performance] InitializeOnLoad NodeClassCache                                                                                :        1 samples, Peak.  61.5 us (1.0x), Avg.  61.5 us, Total. 61.50 us (0.0%)
+[Performance] InitializeOnLoad ShaderGraphMaterialsUpdater                                                                   :        2 samples, Peak.   580 us (1.5x), Avg.   381 us, Total. 761.1 us (0.0%)
+[Performance] InitializeOnLoad Renderer2DAnalytics                                                                           :        1 samples, Peak.   129 us (1.0x), Avg.   129 us, Total. 129.2 us (0.0%)
+[Performance] InitializeOnLoad BackgroundWatcher                                                                             :        1 samples, Peak.   220 us (1.0x), Avg.   220 us, Total. 219.9 us (0.0%)
+[Performance] InitializeOnLoad UnityTestProtocolStarter                                                                      :        1 samples, Peak.  3.47 ms (1.0x), Avg.  3.47 ms, Total. 3.471 ms (0.0%)
+[Performance] InitializeOnLoad TestStarter                                                                                   :        1 samples, Peak.  1.16 ms (1.0x), Avg.  1.16 ms, Total. 1.164 ms (0.0%)
+[Performance] InitializeOnLoad RerunCallbackInitializer                                                                      :        1 samples, Peak.  5.06 ms (1.0x), Avg.  5.06 ms, Total. 5.058 ms (0.0%)
+[Performance] InitializeOnLoad RiderScriptEditor                                                                             :        1 samples, Peak.  16.2 ms (1.0x), Avg.  16.2 ms, Total. 16.19 ms (0.1%)
+[Performance] InitializeOnLoad CallbackInitializer                                                                           :        1 samples, Peak.  1.61 ms (1.0x), Avg.  1.61 ms, Total. 1.613 ms (0.0%)
+[Performance] InitializeOnLoad SpriteEditorWindow                                                                            :        1 samples, Peak.   571 us (1.0x), Avg.   571 us, Total. 570.8 us (0.0%)
+[Performance] InitializeOnLoad BackgroundImport                                                                              :        1 samples, Peak.   201 us (1.0x), Avg.   201 us, Total. 200.5 us (0.0%)
+[Performance] InitializeOnLoad PlasticPlugin                                                                                 :        1 samples, Peak.   138 ms (1.0x), Avg.   138 ms, Total. 137.9 ms (0.8%)
+[Performance] InitializeOnLoad ToolbarBootstrap                                                                              :        1 samples, Peak.   492 us (1.0x), Avg.   492 us, Total. 492.4 us (0.0%)
+[Performance] InitializeOnLoad VisualStudioEditor                                                                            :        1 samples, Peak.  7.89 ms (1.0x), Avg.  7.89 ms, Total. 7.889 ms (0.0%)
+[Performance] InitializeOnLoad VisualStudioIntegration                                                                       :        1 samples, Peak.  90.6 ms (1.0x), Avg.  90.6 ms, Total. 90.64 ms (0.5%)
+[Performance] InitializeOnLoad TestRunnerApiListener                                                                         :        1 samples, Peak.   120 us (1.0x), Avg.   120 us, Total. 120.0 us (0.0%)
+[Performance] InitializeOnLoad PrefabLayoutRebuilder                                                                         :        1 samples, Peak.   227 us (1.0x), Avg.   227 us, Total. 226.8 us (0.0%)
+[Performance] InitializeOnLoad SpriteSkinCompositeStartup                                                                    :        1 samples, Peak.  20.0 ms (1.0x), Avg.  20.0 ms, Total. 19.98 ms (0.1%)
+[Performance] InitializeOnLoad UnityAnalyticsStorage                                                                         :        1 samples, Peak.   535 us (1.0x), Avg.   535 us, Total. 535.5 us (0.0%)
+[Performance] InitializeOnLoad BoneGizmoInitializer                                                                          :        1 samples, Peak.  5.23 ms (1.0x), Avg.  5.23 ms, Total. 5.229 ms (0.0%)
+[Performance] InitializeOnLoad Analytics                                                                                     :        1 samples, Peak.   288 us (1.0x), Avg.   288 us, Total. 288.1 us (0.0%)
+[Performance] InitializeOnLoad SceneDragAndDrop                                                                              :        1 samples, Peak.   250 us (1.0x), Avg.   250 us, Total. 249.8 us (0.0%)
+[Performance] InitializeOnLoad SpriteShapeUpdateCache                                                                        :        1 samples, Peak.   550 us (1.0x), Avg.   550 us, Total. 549.6 us (0.0%)
+[Performance] InitializeOnLoad SpriteShapeUnityAnalyticsStorage                                                              :        1 samples, Peak.  21.8 us (1.0x), Avg.  21.8 us, Total. 21.80 us (0.0%)
+[Performance] InitializeOnLoad IKEditorManager.CreateInstance                                                                :        1 samples, Peak.  2.07 ms (1.0x), Avg.  2.07 ms, Total. 2.071 ms (0.0%)
+[Performance] InitializeOnLoad $BurstDirectCallInitializer.Initialize                                                        :        7 samples, Peak.  20.3 ms (3.3x), Avg.  6.15 ms, Total. 43.08 ms (0.2%)
+[Performance] InitializeOnLoad SceneViewGridManager.Initialize                                                               :        1 samples, Peak.  5.18 ms (1.0x), Avg.  5.18 ms, Total. 5.178 ms (0.0%)
+[Performance] InitializeOnLoad TilemapPrefabStageHelper.Initialize                                                           :        1 samples, Peak.  5.29 ms (1.0x), Avg.  5.29 ms, Total. 5.292 ms (0.0%)
+[Performance] InitializeOnLoad SceneViewOpenTilePaletteHelper.Initialize                                                     :        1 samples, Peak.  2.49 ms (1.0x), Avg.  2.49 ms, Total. 2.488 ms (0.0%)
+[Performance] InitializeOnLoad TileDragAndDropManager.Initialize                                                             :        1 samples, Peak.  1.09 ms (1.0x), Avg.  1.09 ms, Total. 1.087 ms (0.0%)
+[Performance] InitializeOnLoad MaterialReimporter.RegisterUpgraderReimport                                                   :        2 samples, Peak.   358 us (1.6x), Avg.   222 us, Total. 443.8 us (0.0%)
+[Performance] InitializeOnLoad BackgroundImport.Setup                                                                        :        1 samples, Peak.  3.49 ms (1.0x), Avg.  3.49 ms, Total. 3.490 ms (0.0%)
+[Performance] InitializeOnLoad TestJobDataHolder.ResumeRunningJobs                                                           :        1 samples, Peak.  1.35 ms (1.0x), Avg.  1.35 ms, Total. 1.351 ms (0.0%)
+[Performance] InitializeOnLoad AnalyticsReporter.RegisterCallbacks                                                           :        1 samples, Peak.   331 us (1.0x), Avg.   331 us, Total. 331.5 us (0.0%)
+[Performance] InitializeOnLoad DebugManagerWindowLifetimeAnalytic.SubscribeToDebugManagerOpenCloseWindows                    :        1 samples, Peak.   494 us (1.0x), Avg.   494 us, Total. 493.9 us (0.0%)
+[Performance] InitializeOnLoad CoreRenderPipelinePreferences.InitPreferenceProviders                                         :        1 samples, Peak.  66.7 ms (1.0x), Avg.  66.7 ms, Total. 66.68 ms (0.4%)
+[Performance] InitializeOnLoad VolumeGizmoDrawer.InitVolumeGizmoCallbacks                                                    :        1 samples, Peak.   370 us (1.0x), Avg.   370 us, Total. 370.1 us (0.0%)
+[Performance] InitializeOnLoad DemoSceneBuilder.AutoSetupOnFirstOpen                                                         :        1 samples, Peak.   394 us (1.0x), Avg.   394 us, Total. 393.6 us (0.0%)
+[Performance] DidReloadScriptsAdvancedDropdownWindow.OnScriptReload                                                          :        2 samples, Peak.   677 us (1.5x), Avg.   456 us, Total. 911.0 us (0.0%)
+[Performance] DidReloadScriptsTestRunnerWindow.CompilationCallback                                                           :        1 samples, Peak.   746 us (1.0x), Avg.   746 us, Total. 746.5 us (0.0%)
+[Performance] DidReloadScriptsTestListCache.ScriptReloaded                                                                   :        1 samples, Peak.  2.19 ms (1.0x), Avg.  2.19 ms, Total. 2.191 ms (0.0%)
+[Performance] DidReloadScriptsLookDev.OnEditorReload                                                                         :        1 samples, Peak.   253 us (1.0x), Avg.   253 us, Total. 252.9 us (0.0%)
+[Performance] DidReloadScriptsDebugWindow.OnEditorReload                                                                     :        1 samples, Peak.  10.8 ms (1.0x), Avg.  10.8 ms, Total. 10.80 ms (0.1%)
+[Performance] DidReloadScriptsVolumeComponentEditor.OnEditorReload                                                           :        1 samples, Peak.  40.7 ms (1.0x), Avg.  40.7 ms, Total. 40.71 ms (0.2%)
+[Performance] AssemblyReloadEvents.afterAssemblyReload: UnityEditor.U2D.Animation.BoneGizmo.OnAfterAssemblyReload            :        1 samples, Peak.  1.22 ms (1.0x), Avg.  1.22 ms, Total. 1.219 ms (0.0%)
+[Performance] AssetDatabase.ImportAssets                                                                                     :       99 samples, Peak.  37.0 ms (28.5x), Avg.  1.30 ms, Total. 128.5 ms (0.7%)
+[Performance] VersionControl.Task.Wait                                                                                       :        1 samples, Peak.   136 us (1.0x), Avg.   136 us, Total. 136.4 us (0.0%)
+[Performance] TMPro_TexturePostProcessor.OnPostprocessAllAssets                                                              :      166 samples, Peak.  2.72 ms (4.3x), Avg.   625 us, Total. 103.7 ms (0.6%)
+[Performance] AssetPostprocessor.OnPostprocessAllAssets                                                                      :      166 samples, Peak.   641 us (33.2x), Avg.  19.3 us, Total. 3.203 ms (0.0%)
+[Performance] BuilderAssetPostprocessor.OnPostprocessAllAssets                                                               :      166 samples, Peak.  3.92 ms (51.6x), Avg.  76.1 us, Total. 12.63 ms (0.1%)
+[Performance] ArtifactBrowserPostProcessor.OnPostprocessAllAssets                                                            :      166 samples, Peak.   588 us (48.9x), Avg.  12.0 us, Total. 1.995 ms (0.0%)
+[Performance] AssetEvents.OnPostprocessAllAssets                                                                             :      332 samples, Peak.   188 us (34.6x), Avg.  5.45 us, Total. 1.810 ms (0.0%)
+[Performance] AudioMixerPostprocessor.OnPostprocessAllAssets                                                                 :      166 samples, Peak.  1.77 ms (71.7x), Avg.  24.6 us, Total. 4.088 ms (0.0%)
+[Performance] StyleCatalogPostProcessor.OnPostprocessAllAssets                                                               :      166 samples, Peak.  44.3 ms (81.2x), Avg.   545 us, Total. 90.52 ms (0.5%)
+[Performance] BuildCatalog                                                                                                   :        1 samples, Peak.  42.5 ms (1.0x), Avg.  42.5 ms, Total. 42.47 ms (0.2%)
+[Performance] ModelImporterPostProcessor.OnPostprocessAllAssets                                                              :      166 samples, Peak.  1.38 ms (26.5x), Avg.  52.1 us, Total. 8.655 ms (0.0%)
+[Performance] MaterialPostprocessor.OnPostprocessAllAssets                                                                   :      332 samples, Peak.  2.21 ms (85.3x), Avg.  25.9 us, Total. 8.614 ms (0.0%)
+[Performance] UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets                                      :      166 samples, Peak.  2.88 ms (70.6x), Avg.  40.8 us, Total. 6.770 ms (0.0%)
+[Performance] RetainedModeAssetPostprocessor.OnPostprocessAllAssets                                                          :      166 samples, Peak.  3.45 ms (51.8x), Avg.  66.6 us, Total. 11.05 ms (0.1%)
+[Performance] AssetChangedListener.OnPostprocessAllAssets                                                                    :      166 samples, Peak.  4.86 ms (50.7x), Avg.  95.7 us, Total. 15.89 ms (0.1%)
+[Performance] PostProcessor.OnPostprocessAllAssets                                                                           :      166 samples, Peak.   233 us (19.9x), Avg.  11.7 us, Total. 1.944 ms (0.0%)
+[Performance] ShaderGraphAssetPostProcessor.OnPostprocessAllAssets                                                           :      166 samples, Peak.  5.09 ms (31.8x), Avg.   160 us, Total. 26.55 ms (0.1%)
+[Performance] SpeedTreePostProcessor.OnPostprocessAllAssets                                                                  :      166 samples, Peak.   374 us (32.1x), Avg.  11.7 us, Total. 1.935 ms (0.0%)
+[Performance] TextAssetPostProcessor.OnPostprocessAllAssets                                                                  :      166 samples, Peak.   694 us (28.3x), Avg.  24.5 us, Total. 4.070 ms (0.0%)
+[Performance] AssetProcessor.OnPostprocessAllAssets                                                                          :      498 samples, Peak.  3.38 ms (121.4x), Avg.  27.9 us, Total. 13.88 ms (0.1%)
+[Performance] SpriteLibraryAssetPostprocessor.OnPostprocessAllAssets                                                         :      166 samples, Peak.   314 us (41.9x), Avg.  7.50 us, Total. 1.245 ms (0.0%)
+[Performance] PSDImporterAssetPostProcessor.OnPostprocessAllAssets                                                           :      166 samples, Peak.   127 us (26.4x), Avg.  4.82 us, Total. 799.7 us (0.0%)
+[Performance] PSDImportPostProcessor.OnPostprocessAllAssets                                                                  :      166 samples, Peak.   121 us (30.4x), Avg.  3.98 us, Total. 660.0 us (0.0%)
+[Performance] SpriteEditorTexturePostprocessor.OnPostprocessAllAssets                                                        :      166 samples, Peak.   324 us (11.7x), Avg.  27.6 us, Total. 4.581 ms (0.0%)
+[Performance] SpriteShapeAssetPostProcessor.OnPostprocessAllAssets                                                           :      166 samples, Peak.   593 us (19.0x), Avg.  31.3 us, Total. 5.192 ms (0.0%)
+[Performance] SyncVS.PostprocessSyncProject                                                                                  :       83 samples, Peak.   410 us (7.6x), Avg.  54.2 us, Total. 4.502 ms (0.0%)
+[Performance] EditorApplication.projectChanged: UnityEditor.Audio.MixerEffectDefinitionReloader.OnProjectChanged             :        8 samples, Peak.   910 us (2.4x), Avg.   381 us, Total. 3.045 ms (0.0%)
+[Performance] EditorApplication.projectChanged: UnityEngine.InputSystem.LowLevel.NativeInputRuntime.OnProjectChanged         :        8 samples, Peak.   797 us (7.8x), Avg.   102 us, Total. 812.6 us (0.0%)
+[Performance] Application.ImportPackagesAndSetTemplateWhenCreatingProject                                                    :        1 samples, Peak.  22.8 ms (1.0x), Avg.  22.8 ms, Total. 22.82 ms (0.1%)
+[Performance] Application.SyncCurrentColorSpace                                                                              :        1 samples, Peak.   119 ms (1.0x), Avg.   119 ms, Total. 118.8 ms (0.7%)
+[Performance] Application.OnUsbDevicesChanged                                                                                :        1 samples, Peak.  3.10 ms (1.0x), Avg.  3.10 ms, Total. 3.096 ms (0.0%)
+[Performance] Application.AssetInstanceCacheUpdate                                                                           :        1 samples, Peak.   300 ns (1.0x), Avg.   300 ns, Total. 300.0 ns (0.0%)
+[Performance] Application.UnityExtensions.Initialize                                                                         :        1 samples, Peak.  3.59 ms (1.0x), Avg.  3.59 ms, Total. 3.592 ms (0.0%)
+[Performance] CodeEditorProjectSync.SyncEditorProject                                                                        :        1 samples, Peak.   134 us (1.0x), Avg.   134 us, Total. 134.2 us (0.0%)
+[Performance] Application.ExecuteStartups                                                                                    :        1 samples, Peak.  78.3 ms (1.0x), Avg.  78.3 ms, Total. 78.32 ms (0.4%)
+[Performance] Menu.RegisterMenuInterface                                                                                     :       26 samples, Peak.   700 ns (4.6x), Avg.   154 ns, Total. 4.000 us (0.0%)
+[Performance] Gizmo.RebuildRenderers                                                                                         :        1 samples, Peak.  77.3 ms (1.0x), Avg.  77.3 ms, Total. 77.28 ms (0.4%)
+[Performance] Gizmo.AddGizmoRenderers                                                                                        :       90 samples, Peak.  2.33 ms (42.0x), Avg.  55.5 us, Total. 4.995 ms (0.0%)
+[Performance] Application.editorInitializingProject                                                                          :        1 samples, Peak.   120 ms (1.0x), Avg.   120 ms, Total. 119.6 ms (0.7%)
+[Performance] Application.InitializeMenu                                                                                     :        1 samples, Peak.   115 ms (1.0x), Avg.   115 ms, Total. 115.0 ms (0.6%)
+[Performance] Menu.RebuildAll                                                                                                :        1 samples, Peak.   115 ms (1.0x), Avg.   115 ms, Total. 115.0 ms (0.6%)
+[Performance] Menu.BuildRegisteredMenuInterfaces                                                                             :        1 samples, Peak.   113 ms (1.0x), Avg.   113 ms, Total. 112.8 ms (0.6%)
+[Performance] Menu.FilterMenuItem                                                                                            :      745 samples, Peak.  77.9 ms (742.0x), Avg.   105 us, Total. 78.24 ms (0.4%)
+[Performance] UpdateAllMenus                                                                                                 :        1 samples, Peak.   520 us (1.0x), Avg.   520 us, Total. 520.1 us (0.0%)
+[Performance] Menu.RebuildOSMainMenu                                                                                         :        2 samples, Peak.  1.94 ms (1.1x), Avg.  1.69 ms, Total. 3.379 ms (0.0%)
+[Performance] EditorSceneManager.sceneClosing: UnityEditor.SceneVisibilityManager.EditorSceneManagerOnSceneClosing           :        5 samples, Peak.   239 us (4.4x), Avg.  53.8 us, Total. 268.9 us (0.0%)
+[Performance] GUIView.RepaintAll.PlayerLoopController                                                                        :        5 samples, Peak.  1.70 us (1.4x), Avg.  1.20 us, Total. 6.000 us (0.0%)
+[Performance] EditorSceneManager.newSceneCreated: UnityEditor.SceneTemplate.SceneTemplateService.OnNewSceneCreated           :        5 samples, Peak.   256 us (4.7x), Avg.  54.5 us, Total. 272.3 us (0.0%)
+[Performance] EditorSceneManager.newSceneCreated: UnityEditor.SceneVisibilityManager.EditorSceneManagerOnNewSceneCreated     :        5 samples, Peak.   199 us (3.3x), Avg.  59.8 us, Total. 299.1 us (0.0%)
+[Performance] EditorSceneManager.newSceneCreated: UnityEditor.SceneManagement.StageNavigationManager.OnNewSceneCreated       :        5 samples, Peak.  68.8 us (4.3x), Avg.  15.9 us, Total. 79.40 us (0.0%)
+[Performance] Application.InvokeFinishedLoadingProject                                                                       :        1 samples, Peak.  22.4 ms (1.0x), Avg.  22.4 ms, Total. 22.41 ms (0.1%)
+[Performance] ProcessService.OnProjectLoaded                                                                                 :        1 samples, Peak.   140 us (1.0x), Avg.   140 us, Total. 140.0 us (0.0%)
+[Performance] AssetDatabase.ImportAsset                                                                                      :       73 samples, Peak.   185 ms (4.0x), Avg.  46.2 ms, Total. 3.373 s (18.7%)
+[Performance] TextureImporter.Import                                                                                         :       58 samples, Peak.  11.0 ms (6.5x), Avg.  1.69 ms, Total. 98.18 ms (0.5%)
+[Performance] Light2DPostProcess.OnPostprocessSprites                                                                        :       58 samples, Peak.   531 us (9.5x), Avg.  55.8 us, Total. 3.238 ms (0.0%)
+[Performance] SpritePostProcess.OnPostprocessSprites                                                                         :       58 samples, Peak.  6.28 ms (13.0x), Avg.   484 us, Total. 28.09 ms (0.2%)
+[Performance] PaletteAssetModificationProcessor.OnWillSaveAssets                                                             :       27 samples, Peak.   339 us (16.3x), Avg.  20.8 us, Total. 562.8 us (0.0%)
+[Performance] AssetModificationProcessor.OnWillSaveAssets                                                                    :       27 samples, Peak.   276 us (24.0x), Avg.  11.5 us, Total. 309.8 us (0.0%)
+[Performance] BuilderAssetModificationProcessor.OnWillSaveAssets                                                             :       27 samples, Peak.   448 us (24.4x), Avg.  18.3 us, Total. 494.6 us (0.0%)
+[Performance] TerrainModificationProcessor.OnWillSaveAssets                                                                  :       27 samples, Peak.   653 us (25.5x), Avg.  25.6 us, Total. 690.0 us (0.0%)
+[Performance] AssetDatabase.Refresh                                                                                          :        6 samples, Peak.  65.0 ms (1.2x), Avg.  55.0 ms, Total. 330.2 ms (1.8%)
+[Performance] PaletteAssetModificationProcessor.OnWillCreateAsset                                                            :       14 samples, Peak.   152 us (8.9x), Avg.  17.1 us, Total. 239.5 us (0.0%)
+[Performance] MaterialModificationProcessor.OnWillCreateAsset                                                                :       28 samples, Peak.   168 us (9.8x), Avg.  17.1 us, Total. 478.5 us (0.0%)
+[Performance] BuilderAssetModificationProcessor.OnWillCreateAsset                                                            :       14 samples, Peak.   192 us (9.9x), Avg.  19.3 us, Total. 269.9 us (0.0%)
+[Performance] SceneDataContainer.TransformHierarchyChangedSetParentCallback                                                  :     1443 samples, Peak.  16.0 us (22.2x), Avg.   719 ns, Total. 1.038 ms (0.0%)
+[Performance] SceneVisibilityState.IsFlagSetInParents                                                                        :     4515 samples, Peak.  8.40 us (33.0x), Avg.   255 ns, Total. 1.149 ms (0.0%)
+[Performance] EditorSceneManager.sceneSaving: callback in UnityEditor.U2D.SpriteShapeUpdateCache                             :        4 samples, Peak.   673 us (3.4x), Avg.   197 us, Total. 788.2 us (0.0%)
+[Performance] EditorSceneManager.sceneSaving: UnityEditor.SceneTemplate.SceneTemplateService.OnSceneSaving                   :        4 samples, Peak.   204 us (3.8x), Avg.  53.0 us, Total. 212.1 us (0.0%)
+[Performance] EditorSceneManager.sceneSaving: UnityEditor.SceneVisibilityManager.EditorSceneManagerOnSceneSaving             :        4 samples, Peak.  93.9 us (3.8x), Avg.  24.7 us, Total. 98.80 us (0.0%)
+[Performance] EditorSceneManager.sceneSaved: UnityEditor.SceneTemplate.SceneTemplateService.OnSceneSaved                     :        4 samples, Peak.  42.8 ms (1.4x), Avg.  30.2 ms, Total. 120.9 ms (0.7%)
+[Performance] EditorSceneManager.sceneSaved: UnityEditor.SceneVisibilityManager.EditorSceneManagerOnSceneSaved               :        4 samples, Peak.   141 us (3.3x), Avg.  42.1 us, Total. 168.4 us (0.0%)
+[Performance] EditorApplication.quitting: Unity.Burst.Editor.BurstLoader.OnEditorApplicationQuitting                         :        1 samples, Peak.  79.1 us (1.0x), Avg.  79.1 us, Total. 79.10 us (0.0%)
+[Performance] EditorApplication.quitting: UnityEditor.Tilemaps.SceneViewGridManager.EditorQuitting                           :        1 samples, Peak.   532 us (1.0x), Avg.   532 us, Total. 532.1 us (0.0%)
+[Performance] EditorApplication.quitting: callback in UnityEditor.TextCore.Text.EditorEventCallbacks                         :        1 samples, Peak.  8.69 ms (1.0x), Avg.  8.69 ms, Total. 8.693 ms (0.0%)
+[Performance] Application.Shutdown.PauseProfilerSession                                                                      :        1 samples, Peak.  46.4 us (1.0x), Avg.  46.4 us, Total. 46.40 us (0.0%)
+[Performance] Application.Shutdown.PauseAssetImportWorkers                                                                   :        1 samples, Peak.   546 us (1.0x), Avg.   546 us, Total. 545.7 us (0.0%)
+[Performance] Application.Shutdown.SaveAssets                                                                                :        1 samples, Peak.  3.91 ms (1.0x), Avg.  3.91 ms, Total. 3.907 ms (0.0%)
+[Performance] Application.Shutdown.CleanupRenderPipeline                                                                     :        1 samples, Peak.  7.90 us (1.0x), Avg.  7.90 us, Total. 7.900 us (0.0%)
+[Performance] Application.Shutdown.StopPreloadManager                                                                        :        1 samples, Peak.  10.4 ms (1.0x), Avg.  10.4 ms, Total. 10.43 ms (0.1%)
+[Performance] Application.Shutdown.DestroyWorld                                                                              :        1 samples, Peak.  3.36 ms (1.0x), Avg.  3.36 ms, Total. 3.364 ms (0.0%)
+[Performance] Application.Shutdown.CleanupAfterLoad                                                                          :        1 samples, Peak.   212 ms (1.0x), Avg.   212 ms, Total. 212.1 ms (1.2%)
+[Performance] Application.Shutdown.Progress                                                                                  :        1 samples, Peak.  12.3 us (1.0x), Avg.  12.3 us, Total. 12.30 us (0.0%)
+[Performance] Application.Shutdown.GICleanupManagers                                                                         :        1 samples, Peak.  1.10 ms (1.0x), Avg.  1.10 ms, Total. 1.103 ms (0.0%)
+[Performance] Application.Shutdown.MenuCleanupClass                                                                          :        1 samples, Peak.   507 us (1.0x), Avg.   507 us, Total. 506.6 us (0.0%)
+[Performance] Application.Shutdown.ADBSaveStateBeforeShutdown                                                                :        1 samples, Peak.  15.3 us (1.0x), Avg.  15.3 us, Total. 15.30 us (0.0%)
+[Performance] Application.Shutdown.RemoteShutdown                                                                            :        1 samples, Peak.  2.10 us (1.0x), Avg.  2.10 us, Total. 2.100 us (0.0%)
+[Performance] Application.Shutdown.CleanupVCProvider                                                                         :        1 samples, Peak.  14.0 us (1.0x), Avg.  14.0 us, Total. 14.00 us (0.0%)
+[Performance] Application.Shutdown.InputShutdown                                                                             :        1 samples, Peak.  1.50 us (1.0x), Avg.  1.50 us, Total. 1.500 us (0.0%)
+[Performance] Application.Shutdown.GizmoManagerDestroy                                                                       :        1 samples, Peak.  1.51 ms (1.0x), Avg.  1.51 ms, Total. 1.509 ms (0.0%)
+[Performance] Application.Shutdown.ProfilerSession                                                                           :        1 samples, Peak.   720 us (1.0x), Avg.   720 us, Total. 720.5 us (0.0%)
+[Performance] Application.Shutdown.ReleaseGfxWindowOnAllGUIViews                                                             :        1 samples, Peak.  1.50 us (1.0x), Avg.  1.50 us, Total. 1.500 us (0.0%)
+[Performance] Application.Shutdown.CleanupEngine                                                                             :        1 samples, Peak.   154 ms (1.0x), Avg.   154 ms, Total. 154.4 ms (0.9%)
+[Performance] Application.Shutdown.CleanupAssetDatabase                                                                      :        1 samples, Peak.  14.5 ms (1.0x), Avg.  14.5 ms, Total. 14.49 ms (0.1%)
+[Performance] Application.Shutdown.ScriptCompilationCleanUp                                                                  :        1 samples, Peak.  19.7 ms (1.0x), Avg.  19.7 ms, Total. 19.73 ms (0.1%)
+[Performance] Application.Shutdown.DestroyJobSystem                                                                          :        1 samples, Peak.   127 us (1.0x), Avg.   127 us, Total. 126.8 us (0.0%)
+[Performance] Application.Shutdown.CleanupPersistentManager                                                                  :        1 samples, Peak.  3.09 ms (1.0x), Avg.  3.09 ms, Total. 3.086 ms (0.0%)
+[Performance] Application.Shutdown.CleanupAsyncReadManager                                                                   :        1 samples, Peak.   633 us (1.0x), Avg.   633 us, Total. 633.1 us (0.0%)
+[Performance] Application.Shutdown.CleanupProgressBar                                                                        :        1 samples, Peak.   400 ns (1.0x), Avg.   400 ns, Total. 400.0 ns (0.0%)
+[Performance] Application.Shutdown.CleanupMono                                                                               :        1 samples, Peak.   156 ms (1.0x), Avg.   156 ms, Total. 156.1 ms (0.9%)
+[Performance] Application.Shutdown.CleanupStdConverters                                                                      :        1 samples, Peak.  7.50 us (1.0x), Avg.  7.50 us, Total. 7.500 us (0.0%)
+[Performance] Application.Shutdown.UnloadAllPlatformSupportModuleNativeDlls                                                  :        1 samples, Peak.   600 ns (1.0x), Avg.   600 ns, Total. 600.0 ns (0.0%)
+[Performance] Application.Shutdown.UnloadAllPlatformSupportNativeLibraries                                                   :        1 samples, Peak.   100 ns (1.0x), Avg.   100 ns, Total. 100.0 ns (0.0%)
+[Performance] Application.Shutdown.CleanupAutoDocumentation                                                                  :        1 samples, Peak.   374 us (1.0x), Avg.   374 us, Total. 373.7 us (0.0%)
+[Performance] Application.Shutdown.ShaderNameManagerDestroy                                                                  :        1 samples, Peak.  42.1 us (1.0x), Avg.  42.1 us, Total. 42.10 us (0.0%)
+[Performance] Application.Shutdown.CleanupCacheServer                                                                        :        1 samples, Peak.   200 ns (1.0x), Avg.   200 ns, Total. 200.0 ns (0.0%)
+[Performance] Application.Shutdown.Virtualization_Shutdown                                                                   :        1 samples, Peak.   400 ns (1.0x), Avg.   400 ns, Total. 400.0 ns (0.0%)
+[Performance] Application.Shutdown.DevConnections                                                                            :        1 samples, Peak.   109 us (1.0x), Avg.   109 us, Total. 108.6 us (0.0%)
+Exiting batchmode successfully now!
+Exiting without the bug reporter. Application will terminate with return code 0

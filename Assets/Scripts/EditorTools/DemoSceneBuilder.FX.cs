@@ -8,6 +8,22 @@ namespace StarVortex.EditorTools
     /// <summary>一键搭建器（粒子部分）：Juice 系统的 5 个 ParticleSystem。</summary>
     public static partial class DemoSceneBuilder
     {
+        /// <summary>发光材质：自写加色 Shader（Assets/Settings/UnlitAdditive.asset 已入库）或 Sprites/Default 兜底。</summary>
+        internal static Material NeonMaterial(Color color, bool additive)
+        {
+            EnsureDir("Assets/Materials/Generated");
+            string path = $"Assets/Materials/Generated/Mat_Glow_{ColorUtility.ToHtmlStringRGBA(color)}_{(additive ? "Add" : "Norm")}.mat";
+            var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (mat != null) return mat;
+
+            var shader = additive
+                ? (Shader.Find("StarVortex/UnlitAdditive") ?? Shader.Find("Sprites/Default"))
+                : Shader.Find("Sprites/Default");
+            mat = new Material(shader);
+            mat.SetColor("_Color", color);
+            AssetDatabase.CreateAsset(mat, path);
+            return mat;
+        }
         /// <summary>通用迸发粒子（死亡/命中/拾取/枪口共用参数模板，Emit 粒子由运行时逐次发射）。</summary>
         private static ParticleSystem BuildParticle(Transform parent, string name, float baseSize,
             ParticleSystemSimulationSpace simulationSpace = ParticleSystemSimulationSpace.World)

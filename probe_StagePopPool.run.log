@@ -1,0 +1,218 @@
+Mono path[0] = 'D:/游戏demo/StarVortex/Builds/Probe/Probe_Data/Managed'
+Mono config path = 'D:/游戏demo/StarVortex/Builds/Probe/MonoBleedingEdge/etc'
+Input System module state changed to: Initialized.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Initialize engine version: 2022.3.62f3c1 (1623fc0bbb97)
+[Subsystems] Discovering subsystems at path D:/游戏demo/StarVortex/Builds/Probe/Probe_Data/UnitySubsystems
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) UHD Graphics 730 (ID=0x4692)
+    Vendor:   Intel
+    VRAM:     8062 MB
+    Driver:   30.0.101.1371
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.229 seconds
+- Finished resetting the current domain, in  0.001 seconds
+The file 'D:/游戏demo/StarVortex/Builds/Probe/Probe_Data/level0' is corrupted! Remove it and launch unity again!
+[Position out of bounds!]
+Crash!!!
+SymInit: Symbol-SearchPath: '.;D:\��Ϸdemo\StarVortex;D:/游戏demo/StarVortex/Builds/Probe/Probe_Data/Plugins\x86_64;D:/游戏demo/StarVortex/Builds/Probe/Probe_Data/Plugins;D:\��Ϸdemo\StarVortex\Builds\Probe;C:\WINDOWS;C:\WINDOWS', symOptions: 534, UserName: 'admin'
+OS-Version: 10.0.0
+D:\��Ϸdemo\StarVortex\Builds\Probe\Probe.exe:Probe.exe (00007FF623B00000), size: 688128 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 2022.3.62.9212
+C:\WINDOWS\SYSTEM32\ntdll.dll:ntdll.dll (00007FFA61500000), size: 2523136 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\KERNEL32.DLL:KERNEL32.DLL (00007FFA5FAC0000), size: 831488 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\KERNELBASE.dll:KERNELBASE.dll (00007FFA5EE00000), size: 4198400 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\apphelp.dll:apphelp.dll (00007FFA5A430000), size: 651264 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+D:\��Ϸdemo\StarVortex\Builds\Probe\UnityPlayer.dll:UnityPlayer.dll (00007FF9CB640000), size: 32071680 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 2022.3.62.9212
+C:\WINDOWS\System32\USER32.dll:USER32.dll (00007FFA60B30000), size: 1929216 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\System32\win32u.dll:win32u.dll (00007FFA5E7B0000), size: 159744 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\GDI32.dll:GDI32.dll (00007FFA5F290000), size: 176128 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.8328
+C:\WINDOWS\System32\gdi32full.dll:gdi32full.dll (00007FFA5EA80000), size: 1220608 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\msvcp_win.dll:msvcp_win.dll (00007FFA5E7E0000), size: 667648 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\ucrtbase.dll:ucrtbase.dll (00007FFA5E890000), size: 1359872 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\ole32.dll:ole32.dll (00007FFA60990000), size: 1679360 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\System32\combase.dll:combase.dll (00007FFA605B0000), size: 3715072 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\RPCRT4.dll:RPCRT4.dll (00007FFA5F420000), size: 1146880 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\SHLWAPI.dll:SHLWAPI.dll (00007FFA60090000), size: 417792 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\SETUPAPI.dll:SETUPAPI.dll (00007FFA5F540000), size: 4747264 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\System32\msvcrt.dll:msvcrt.dll (00007FFA5FFE0000), size: 692224 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 7.0.26100.9711
+C:\WINDOWS\System32\ADVAPI32.dll:ADVAPI32.dll (00007FFA5F350000), size: 770048 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\sechost.dll:sechost.dll (00007FFA5FA10000), size: 688128 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\SHELL32.dll:SHELL32.dll (00007FFA60D10000), size: 7979008 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\VERSION.dll:VERSION.dll (00007FFA4CEB0000), size: 45056 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.1150
+C:\WINDOWS\System32\OLEAUT32.dll:OLEAUT32.dll (00007FFA5FF00000), size: 888832 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\IMM32.dll:IMM32.dll (00007FFA602E0000), size: 200704 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9278
+C:\WINDOWS\System32\CRYPT32.dll:CRYPT32.dll (00007FFA5EC70000), size: 1568768 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\OPENGL32.dll:OPENGL32.dll (00007FF9D1850000), size: 1097728 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9278
+C:\WINDOWS\System32\WS2_32.dll:WS2_32.dll (00007FFA5F2C0000), size: 528384 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\WINMM.dll:WINMM.dll (00007FFA4E930000), size: 225280 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\WINHTTP.dll:WINHTTP.dll (00007FFA588A0000), size: 1220608 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\bcrypt.dll:bcrypt.dll (00007FFA5E5D0000), size: 172032 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\HID.DLL:HID.DLL (00007FFA5C9D0000), size: 61440 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.1150
+C:\WINDOWS\SYSTEM32\dwmapi.dll:dwmapi.dll (00007FFA5A960000), size: 188416 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\GLU32.dll:GLU32.dll (00007FF9D3580000), size: 233472 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\dxcore.dll:dxcore.dll (00007FFA5AE90000), size: 278528 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\kernel.appcore.dll:kernel.appcore.dll (00007FFA5D350000), size: 110592 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9278
+C:\WINDOWS\System32\bcryptPrimitives.dll:bcryptPrimitives.dll (00007FFA5EBB0000), size: 704512 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\system32\uxtheme.dll:uxtheme.dll (00007FFA5A840000), size: 684032 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\shcore.dll:shcore.dll (00007FFA5FC30000), size: 1019904 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+D:\��Ϸdemo\StarVortex\Builds\Probe\MonoBleedingEdge\EmbedRuntime\mono-2.0-bdwgc.dll:mono-2.0-bdwgc.dll (00007FF9C3A50000), size: 10825728 (result: 0), SymType: '-deferred-', PDB: ''
+C:\WINDOWS\SYSTEM32\windows.storage.dll:windows.storage.dll (00007FFA5C110000), size: 9101312 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\profapi.dll:profapi.dll (00007FFA5E600000), size: 167936 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\iphlpapi.dll:iphlpapi.dll (00007FFA5CD00000), size: 208896 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9278
+C:\WINDOWS\System32\MSCTF.dll:MSCTF.dll (00007FFA60440000), size: 1425408 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\d3d11.dll:d3d11.dll (00007FFA5BD20000), size: 2486272 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\dxgi.dll:dxgi.dll (00007FFA5BF90000), size: 1290240 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\powrprof.dll:powrprof.dll (00007FFA5E540000), size: 385024 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.3912
+C:\WINDOWS\SYSTEM32\UMPDC.dll:UMPDC.dll (00007FFA5E520000), size: 86016 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.8972
+C:\WINDOWS\SYSTEM32\directxdatabasehelper.dll:directxdatabasehelper.dll (00007FFA589D0000), size: 389120 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\cfgmgr32.dll:cfgmgr32.dll (00007FFA5E200000), size: 335872 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\igd10iumd64.dll:igd10iumd64.dll (00007FFA55DF0000), size: 28000256 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 30.0.101.1371
+C:\WINDOWS\SYSTEM32\ncrypt.dll:ncrypt.dll (00007FFA5DEA0000), size: 196608 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\NTASN1.dll:NTASN1.dll (00007FFA5DE50000), size: 258048 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.1882
+C:\WINDOWS\SYSTEM32\ControlLib.dll:ControlLib.dll (00007FFA55B70000), size: 233472 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 1.0.64.0
+C:\WINDOWS\SYSTEM32\DEVOBJ.dll:DEVOBJ.dll (00007FFA5E260000), size: 192512 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\IntelControlLib.dll:IntelControlLib.dll (00007FFA55AE0000), size: 393216 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 1.0.64.0
+C:\WINDOWS\System32\WINTRUST.dll:WINTRUST.dll (00007FFA5E9F0000), size: 532480 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\MSASN1.dll:MSASN1.dll (00007FFA5DDA0000), size: 77824 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\igdgmm64.dll:igdgmm64.dll (00007FFA54F70000), size: 3960832 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 30.0.101.1371
+C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\igc64.dll:igc64.dll (00007FFA51750000), size: 56434688 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 30.0.101.1371
+C:\WINDOWS\System32\clbcatq.dll:clbcatq.dll (00007FFA5FDC0000), size: 716800 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 2001.12.10941.16384
+C:\WINDOWS\System32\MMDevApi.dll:MMDevApi.dll (00007FFA51230000), size: 679936 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\AUDIOSES.DLL:AUDIOSES.DLL (00007FFA4FE60000), size: 1810432 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\resourcepolicyclient.dll:resourcepolicyclient.dll (00007FFA5ACF0000), size: 81920 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.8115
+D:\��Ϸdemo\StarVortex\Builds\Probe\Probe_Data\Plugins\x86_64\lib_burst_generated.dll:lib_burst_generated.dll (00007FFA43220000), size: 290816 (result: 0), SymType: '-deferred-', PDB: ''
+C:\WINDOWS\SYSTEM32\dbghelp.dll:dbghelp.dll (00007FFA5BAC0000), size: 2408448 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\SspiCli.dll:SspiCli.dll (00007FFA5D610000), size: 303104 (result: 0), SymType: '-deferred-', PDB: '', fileVersion: 10.0.26100.9711
+
+========== OUTPUTTING STACK TRACE ==================
+
+0x00007FF9CC6E7531 (UnityPlayer) UnityMain
+0x00007FF9CC6E78B7 (UnityPlayer) UnityMain
+SymInit: Symbol-SearchPath: '.;D:\��Ϸdemo\StarVortex;D:/游戏demo/StarVortex/Builds/Probe/Probe_Data/Plugins\x86_64;D:/游戏demo/StarVortex/Builds/Probe/Probe_Data/Plugins;D:\��Ϸdemo\StarVortex\Builds\Probe;C:\WINDOWS;C:\WINDOWS', symOptions: 534, UserName: 'admin'
+OS-Version: 10.0.0
+D:\��Ϸdemo\StarVortex\Builds\Probe\Probe.exe:Probe.exe (00007FF623B00000), size: 688128 (result: 0), SymType: '-exported-', PDB: 'D:\��Ϸdemo\StarVortex\Builds\Probe\Probe.e', fileVersion: 2022.3.62.9212
+C:\WINDOWS\SYSTEM32\ntdll.dll:ntdll.dll (00007FFA61500000), size: 2523136 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\ntdll.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\KERNEL32.DLL:KERNEL32.DLL (00007FFA5FAC0000), size: 831488 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\KERNEL32.DLL', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\KERNELBASE.dll:KERNELBASE.dll (00007FFA5EE00000), size: 4198400 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\KERNELBASE.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\apphelp.dll:apphelp.dll (00007FFA5A430000), size: 651264 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\apphelp.dll', fileVersion: 10.0.26100.9711
+D:\��Ϸdemo\StarVortex\Builds\Probe\UnityPlayer.dll:UnityPlayer.dll (00007FF9CB640000), size: 32071680 (result: 0), SymType: '-exported-', PDB: 'D:\��Ϸdemo\StarVortex\Builds\Probe\UnityPlayer.d', fileVersion: 2022.3.62.9212
+C:\WINDOWS\System32\USER32.dll:USER32.dll (00007FFA60B30000), size: 1929216 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\USER32.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\System32\win32u.dll:win32u.dll (00007FFA5E7B0000), size: 159744 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\win32u.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\GDI32.dll:GDI32.dll (00007FFA5F290000), size: 176128 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\GDI32.dll', fileVersion: 10.0.26100.8328
+C:\WINDOWS\System32\gdi32full.dll:gdi32full.dll (00007FFA5EA80000), size: 1220608 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\gdi32full.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\msvcp_win.dll:msvcp_win.dll (00007FFA5E7E0000), size: 667648 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\msvcp_win.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\ucrtbase.dll:ucrtbase.dll (00007FFA5E890000), size: 1359872 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\ucrtbase.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\ole32.dll:ole32.dll (00007FFA60990000), size: 1679360 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\ole32.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\System32\combase.dll:combase.dll (00007FFA605B0000), size: 3715072 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\combase.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\RPCRT4.dll:RPCRT4.dll (00007FFA5F420000), size: 1146880 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\RPCRT4.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\SHLWAPI.dll:SHLWAPI.dll (00007FFA60090000), size: 417792 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\SHLWAPI.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\SETUPAPI.dll:SETUPAPI.dll (00007FFA5F540000), size: 4747264 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\SETUPAPI.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\System32\msvcrt.dll:msvcrt.dll (00007FFA5FFE0000), size: 692224 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\msvcrt.dll', fileVersion: 7.0.26100.9711
+C:\WINDOWS\System32\ADVAPI32.dll:ADVAPI32.dll (00007FFA5F350000), size: 770048 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\ADVAPI32.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\sechost.dll:sechost.dll (00007FFA5FA10000), size: 688128 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\sechost.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\SHELL32.dll:SHELL32.dll (00007FFA60D10000), size: 7979008 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\SHELL32.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\VERSION.dll:VERSION.dll (00007FFA4CEB0000), size: 45056 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\VERSION.dll', fileVersion: 10.0.26100.1150
+C:\WINDOWS\System32\OLEAUT32.dll:OLEAUT32.dll (00007FFA5FF00000), size: 888832 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\OLEAUT32.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\IMM32.dll:IMM32.dll (00007FFA602E0000), size: 200704 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\IMM32.dll', fileVersion: 10.0.26100.9278
+C:\WINDOWS\System32\CRYPT32.dll:CRYPT32.dll (00007FFA5EC70000), size: 1568768 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\CRYPT32.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\OPENGL32.dll:OPENGL32.dll (00007FF9D1850000), size: 1097728 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\OPENGL32.dll', fileVersion: 10.0.26100.9278
+C:\WINDOWS\System32\WS2_32.dll:WS2_32.dll (00007FFA5F2C0000), size: 528384 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\WS2_32.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\WINMM.dll:WINMM.dll (00007FFA4E930000), size: 225280 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\WINMM.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\WINHTTP.dll:WINHTTP.dll (00007FFA588A0000), size: 1220608 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\WINHTTP.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\bcrypt.dll:bcrypt.dll (00007FFA5E5D0000), size: 172032 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\bcrypt.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\HID.DLL:HID.DLL (00007FFA5C9D0000), size: 61440 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\HID.DLL', fileVersion: 10.0.26100.1150
+C:\WINDOWS\SYSTEM32\dwmapi.dll:dwmapi.dll (00007FFA5A960000), size: 188416 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\dwmapi.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\GLU32.dll:GLU32.dll (00007FF9D3580000), size: 233472 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\GLU32.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\dxcore.dll:dxcore.dll (00007FFA5AE90000), size: 278528 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\dxcore.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\kernel.appcore.dll:kernel.appcore.dll (00007FFA5D350000), size: 110592 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\kernel.appcore.dll', fileVersion: 10.0.26100.9278
+C:\WINDOWS\System32\bcryptPrimitives.dll:bcryptPrimitives.dll (00007FFA5EBB0000), size: 704512 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\bcryptPrimitives.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\system32\uxtheme.dll:uxtheme.dll (00007FFA5A840000), size: 684032 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\system32\uxtheme.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\shcore.dll:shcore.dll (00007FFA5FC30000), size: 1019904 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\shcore.dll', fileVersion: 10.0.26100.9711
+D:\��Ϸdemo\StarVortex\Builds\Probe\MonoBleedingEdge\EmbedRuntime\mono-2.0-bdwgc.dll:mono-2.0-bdwgc.dll (00007FF9C3A50000), size: 10825728 (result: 0), SymType: '-exported-', PDB: 'D:\��Ϸdemo\StarVortex\Builds\Probe\MonoBleedingEdge\EmbedRuntime\mono-2.0-bdwgc.d'
+C:\WINDOWS\SYSTEM32\windows.storage.dll:windows.storage.dll (00007FFA5C110000), size: 9101312 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\windows.storage.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\profapi.dll:profapi.dll (00007FFA5E600000), size: 167936 (result: 0), SymType: '-nosymbols-', PDB: 'C:\WINDOWS\SYSTEM32\profapi.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\iphlpapi.dll:iphlpapi.dll (00007FFA5CD00000), size: 208896 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\iphlpapi.dll', fileVersion: 10.0.26100.9278
+C:\WINDOWS\System32\MSCTF.dll:MSCTF.dll (00007FFA60440000), size: 1425408 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\MSCTF.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\d3d11.dll:d3d11.dll (00007FFA5BD20000), size: 2486272 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\d3d11.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\dxgi.dll:dxgi.dll (00007FFA5BF90000), size: 1290240 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\dxgi.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\powrprof.dll:powrprof.dll (00007FFA5E540000), size: 385024 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\powrprof.dll', fileVersion: 10.0.26100.3912
+C:\WINDOWS\SYSTEM32\UMPDC.dll:UMPDC.dll (00007FFA5E520000), size: 86016 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\UMPDC.dll', fileVersion: 10.0.26100.8972
+C:\WINDOWS\SYSTEM32\directxdatabasehelper.dll:directxdatabasehelper.dll (00007FFA589D0000), size: 389120 (result: 0), SymType: '-nosymbols-', PDB: 'C:\WINDOWS\SYSTEM32\directxdatabasehelper.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\cfgmgr32.dll:cfgmgr32.dll (00007FFA5E200000), size: 335872 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\cfgmgr32.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\igd10iumd64.dll:igd10iumd64.dll (00007FFA55DF0000), size: 28000256 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\igd10iumd64.dll', fileVersion: 30.0.101.1371
+C:\WINDOWS\SYSTEM32\ncrypt.dll:ncrypt.dll (00007FFA5DEA0000), size: 196608 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\ncrypt.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\NTASN1.dll:NTASN1.dll (00007FFA5DE50000), size: 258048 (result: 0), SymType: '-nosymbols-', PDB: 'C:\WINDOWS\SYSTEM32\NTASN1.dll', fileVersion: 10.0.26100.1882
+C:\WINDOWS\SYSTEM32\ControlLib.dll:ControlLib.dll (00007FFA55B70000), size: 233472 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\ControlLib.dll', fileVersion: 1.0.64.0
+C:\WINDOWS\SYSTEM32\DEVOBJ.dll:DEVOBJ.dll (00007FFA5E260000), size: 192512 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\DEVOBJ.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\IntelControlLib.dll:IntelControlLib.dll (00007FFA55AE0000), size: 393216 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\IntelControlLib.dll', fileVersion: 1.0.64.0
+C:\WINDOWS\System32\WINTRUST.dll:WINTRUST.dll (00007FFA5E9F0000), size: 532480 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\WINTRUST.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\MSASN1.dll:MSASN1.dll (00007FFA5DDA0000), size: 77824 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\MSASN1.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\igdgmm64.dll:igdgmm64.dll (00007FFA54F70000), size: 3960832 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\igdgmm64.dll', fileVersion: 30.0.101.1371
+C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\igc64.dll:igc64.dll (00007FFA51750000), size: 56434688 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\DriverStore\FileRepository\iigd_dch.inf_amd64_08a52cf2f322ba79\igc64.dll', fileVersion: 30.0.101.1371
+C:\WINDOWS\System32\clbcatq.dll:clbcatq.dll (00007FFA5FDC0000), size: 716800 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\clbcatq.dll', fileVersion: 2001.12.10941.16384
+C:\WINDOWS\System32\MMDevApi.dll:MMDevApi.dll (00007FFA51230000), size: 679936 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\System32\MMDevApi.dll', fileVersion: 10.0.26100.9711
+C:\WINDOWS\SYSTEM32\AUDIOSES.DLL:AUDIOSES.DLL (00007FFA4FE60000), size: 1810432 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\AUDIOSES.DLL', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\resourcepolicyclient.dll:resourcepolicyclient.dll (00007FFA5ACF0000), size: 81920 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\resourcepolicyclient.dll', fileVersion: 10.0.26100.8115
+D:\��Ϸdemo\StarVortex\Builds\Probe\Probe_Data\Plugins\x86_64\lib_burst_generated.dll:lib_burst_generated.dll (00007FFA43220000), size: 290816 (result: 0), SymType: '-exported-', PDB: 'D:\��Ϸdemo\StarVortex\Builds\Probe\Probe_Data\Plugins\x86_64\lib_burst_generated.d'
+C:\WINDOWS\SYSTEM32\dbghelp.dll:dbghelp.dll (00007FFA5BAC0000), size: 2408448 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\dbghelp.dll', fileVersion: 10.0.26100.9549
+C:\WINDOWS\SYSTEM32\SspiCli.dll:SspiCli.dll (00007FFA5D610000), size: 303104 (result: 0), SymType: '-exported-', PDB: 'C:\WINDOWS\SYSTEM32\SspiCli.dll', fileVersion: 10.0.26100.9711
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBC33A89)
+0x00007FF9CBC33A89 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBC334A5)
+0x00007FF9CBC334A5 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CB980973)
+0x00007FF9CB980973 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBDFD3A7)
+0x00007FF9CBDFD3A7 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBE095AA)
+0x00007FF9CBE095AA (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBDF9A13)
+0x00007FF9CBDF9A13 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBDF9917)
+0x00007FF9CBDF9917 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBE2F1A8)
+0x00007FF9CBE2F1A8 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBDC3D6C)
+0x00007FF9CBDC3D6C (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBE3D762)
+0x00007FF9CBE3D762 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBE32029)
+0x00007FF9CBE32029 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBE3303C)
+0x00007FF9CBE3303C (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBC227D4)
+0x00007FF9CBC227D4 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBC24274)
+0x00007FF9CBC24274 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBC244AB)
+0x00007FF9CBC244AB (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBC23FB9)
+0x00007FF9CBC23FB9 (UnityPlayer) (function-name not available)
+  ERROR: SymGetSymFromAddr64, GetLastError: '试图访问无效的地址。
+' (Address: 00007FF9CBCFED1C)
+0x00007FF9CBCFED1C (UnityPlayer) (function-name not available)
+0x00007FFA5FAEDDA7 (KERNEL32) BaseThreadInitThunk
+0x00007FFA6157EE4C (ntdll) RtlUserThreadStart
+
+========== END OF STACKTRACE ===========
+
+A crash has been intercepted by the crash handler. For call stack and other details, see the latest crash report generated in:
+ * C:/Users/admin/AppData/Local/Temp/StarVortex/StarVortex Survivors/Crashes

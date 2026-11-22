@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e1e7e3ee4976cc4b877f18912e0350d, type: 3}
+  m_Name: Weapon_Sword
+  m_EditorClassIdentifier: 
+  kind: 0
+  displayName: "\u957F\u5251"
+  description: "\u4E09\u6BB5\u8FDE\u51FB\uFF0C\u672B\u6BB5\u51FB\u9000\u3002\u5F3A\u5316\u6811\uFF1A\u5251\u6C14\u51B2\u51FB\u6CE2
+    / \u5200\u53D8\u957F / \u65CB\u98CE\u65A9 / \u9707\u5730\u65A9 / \u8FDE\u51FB\u843D\u96F7
+    / \u8FDE\u51FB\u707C\u70E7 / \u55DC\u8840"
+  attackInterval: 0.35
+  attackDamageMul: 1
+  boonPool:
+  - sword_shockwave
+  - sword_long
+  - sword_whirlwind
+  - sword_quake_slam
+  - sword_lightning
+  - sword_lifesteal
+  - sword_combo_burn

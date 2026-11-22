@@ -24,6 +24,19 @@ namespace StarVortex.EditorTools
         /// 输出到 Builds/ 目录（已 gitignore）。
         /// </summary>
         [MenuItem("StarVortex/② 打包 Windows EXE", priority = 1)]
+        /// <summary>逐级创建目录（AssetDatabase.CreateFolder 不支持多级递归；partial 各文件共享）。</summary>
+        internal static void EnsureDir(string path)
+        {
+            var parts = path.Split('/');
+            var cur = parts[0];
+            for (int i = 1; i < parts.Length; i++)
+            {
+                var next = cur + "/" + parts[i];
+                if (!AssetDatabase.IsValidFolder(next)) AssetDatabase.CreateFolder(cur, parts[i]);
+                cur = next;
+            }
+        }
+
         public static void BuildWindowsExe()
         {
             const string outputDir = "Builds/Windows";
@@ -55,35 +68,134 @@ namespace StarVortex.EditorTools
             }
         }
 
+        /// <summary>
+        /// 批量校验 + 重建：先在编辑器里打开两个场景确认源头可加载（产物损坏时区分"源场景坏"还是"构建坏"），
+        /// 再补烘字体缺失字符（TMP 下划线渲染取 '_' 字形），最后重建 EXE。
+        /// 用法：Unity.exe -batchmode -quit -projectPath &lt;path&gt;
+        ///      -executeMethod StarVortex.EditorTools.DemoSceneBuilder.VerifyAndBuild
+        /// </summary>
+        [MenuItem("StarVortex/③ 校验场景并重建 EXE", priority = 2)]
+        public static void VerifyAndBuild()
+        {
+            foreach (string path in new[] { SceneMainMenu, "Assets/Scenes/Level1.unity", "Assets/Scenes/Level2.unity", "Assets/Scenes/Level3.unity" })
+            {
+                if (!File.Exists(Path.Combine(Directory.GetParent(Application.dataPath).FullName,
+                        path.Replace('/', Path.DirectorySeparatorChar))))
+                {
+                    Debug.LogWarning($"[Verify] 场景不存在（跳过）：{path}");
+                    continue;
+                }
+                var scene = UnityEditor.SceneManagement.EditorSceneManager.OpenScene(path,
+                    UnityEditor.SceneManagement.OpenSceneMode.Single);
+                Debug.Log($"[Verify] {path} 加载成功，根对象 {scene.rootCount} 个");
+            }
+
+            EnsureFontExtraChars();
+            BuildWindowsExe();
+        }
+
+        /// <summary>TMP 的下划线/删除线用 '_' 字形渲染，静态图集缺它只会打警告不影响运行；补烘后重新定格。</summary>
+        private static void EnsureFontExtraChars()
+        {
+            var fontAsset = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(CjkFontAssetPath);
+            if (fontAsset == null) return;
+
+            fontAsset.atlasPopulationMode = AtlasPopulationMode.Dynamic;
+            fontAsset.TryAddCharacters("_—…★", out string missing);
+            if (!string.IsNullOrEmpty(missing))
+                Debug.LogWarning($"[Font] 字体源不含以下字符：{missing}");
+
+            // 追加的字符同样要嵌入资产本体，否则打包后引用悬空（与 EnsureCjkFont 同一个坑）
+            if (fontAsset.atlasTextures != null)
+            {
+                foreach (var tex in fontAsset.atlasTextures)
+                {
+                    if (tex != null && string.IsNullOrEmpty(AssetDatabase.GetAssetPath(tex)))
+                        AssetDatabase.AddObjectToAsset(tex, fontAsset);
+                }
+            }
+            if (fontAsset.material != null && string.IsNullOrEmpty(AssetDatabase.GetAssetPath(fontAsset.material)))
+                AssetDatabase.AddObjectToAsset(fontAsset.material, fontAsset);
+
+            fontAsset.atlasPopulationMode = AtlasPopulationMode.Static;
+            EditorUtility.SetDirty(fontAsset);
+            AssetDatabase.SaveAssets();
+            Debug.Log("[Font] 补烘下划线字符完成");
+        }
+
+        /// <summary>Hifi 目录的 AI 成品贴图统一导入为 Sprite（每像素单位 100，与程序化图一致）。</summary>
+        private static void ImportHifiArt()
+        {
+            if (!AssetDatabase.IsValidFolder(HifiArtDir)) return;
+            bool changed = false;
+            foreach (var guid in AssetDatabase.FindAssets("t:Texture2D", new[] { HifiArtDir }))
+            {
+                string path = AssetDatabase.GUIDToAssetPath(guid);
+                var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+                if (importer == null) continue;
+                if (importer.textureType != TextureImporterType.Sprite || importer.spritePixelsPerUnit != 100f)
+                {
+                    importer.textureType = TextureImporterType.Sprite;
+                    importer.spriteImportMode = SpriteImportMode.Single;
+                    importer.spritePixelsPerUnit = 100f;
+                    importer.filterMode = FilterMode.Bilinear;
+                    importer.mipmapEnabled = false;
+                    importer.wrapMode = path.Contains("nebula") ? TextureWrapMode.Repeat : importer.wrapMode;
+                    importer.SaveAndReimport();
+                    changed = true;
+                }
+            }
+            if (changed) Debug.Log("[Hifi] AI 成品贴图导入为 Sprite 完成");
+        }
+
         [MenuItem("StarVortex/① 一键搭建 Demo", priority = 0)]
         public static void GenerateAll()
         {
-            Debug.Log("[Build] ========== 星涡幸存者 一键搭建开始 ==========");
-            EditorUtility.DisplayProgressBar("星涡幸存者", "生成美术资源...", 0.05f);
+            Debug.Log("[Build] ========== 勇者远征 一键搭建开始 ==========");
+            EditorUtility.DisplayProgressBar("勇者远征", "生成美术资源...", 0.05f);
             NeonArtGenerator.GenerateAll();
 
-            EditorUtility.DisplayProgressBar("星涡幸存者", "合成音效...", 0.3f);
+            // Hifi 目录（AI 成品贴图）必须显式导入为 Sprite——Unity 默认导入类型是
+            // Texture2D，LoadAssetAtPath<Sprite> 会全部拿 null，场景回退到程序化占位图
+            AssetDatabase.Refresh();
+            ImportHifiArt();
+
+            // 横版占位美术：勇者/怪物/平台/陷阱/弹丸
+            NeonArtGenerator.GenerateFantasy();
+
+            EditorUtility.DisplayProgressBar("勇者远征", "合成音效...", 0.3f);
             SfxSynth.GenerateAll();
 
-            EditorUtility.DisplayProgressBar("星涡幸存者", "烘焙中文字体...", 0.5f);
+            EditorUtility.DisplayProgressBar("勇者远征", "烘焙中文字体...", 0.5f);
             EnsureCjkFont();
 
-            EditorUtility.DisplayProgressBar("星涡幸存者", "创建数据资产与预制体...", 0.6f);
+            EditorUtility.DisplayProgressBar("勇者远征", "创建勇者资产...", 0.6f);
             AssetDatabase.Refresh();
-            CreateDataAssets();
-            CreatePrefabs();
+            CreateHeroAssets();
 
-            EditorUtility.DisplayProgressBar("星涡幸存者", "搭建场景与动画...", 0.8f);
+            EditorUtility.DisplayProgressBar("勇者远征", "搭建关卡场景...", 0.8f);
             SetupProjectSettings();
-            BuildScenes();
-            // 注：精灵图集（SpriteAtlas）API 依赖被裁剪的编辑器模块，此环境不可用；
-            // 精灵总量 <50，URP 动态合批足够。图集作为"进一步优化"记录在 INTERVIEW.md。
+            InvokeLevelBuilder();
 
             EditorUtility.ClearProgressBar();
             File.WriteAllText(Path.Combine(Directory.GetParent(Application.dataPath).FullName, MarkerFile),
                 System.DateTime.Now.ToString("F"));
             AssetDatabase.SaveAssets();
-            Debug.Log("[Build] ========== 搭建完成！按 Play 开始游戏 ==========");
+            Debug.Log("[Build] ========== 搭建完成！打开 MainMenu 开始游戏 ==========");
+        }
+
+        /// <summary>
+        /// 反射调用关卡构建器（关卡系统独立文件，反射解耦——它没落地时搭建流程照常走）。
+        /// </summary>
+        private static void InvokeLevelBuilder()
+        {
+            var type = System.Type.GetType("StarVortex.EditorTools.LevelBuilder, StarVortex.EditorTools");
+            var method = type?.GetMethod("BuildAllLevels",
+                System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+            if (method != null)
+                method.Invoke(null, null);
+            else
+                Debug.LogWarning("[Build] LevelBuilder.BuildAllLevels 尚未就绪，跳过关卡构建");
         }
 
         /// <summary>
@@ -100,8 +212,8 @@ namespace StarVortex.EditorTools
             {
                 string projectRoot = Directory.GetParent(Application.dataPath).FullName;
                 string marker = Path.Combine(projectRoot, MarkerFile);
-                string gameSceneFile = Path.Combine(projectRoot, SceneGame.Replace('/', Path.DirectorySeparatorChar));
-                if (File.Exists(marker) || File.Exists(gameSceneFile)) return;
+                string level1File = Path.Combine(projectRoot, "Assets/Scenes/Level1.unity".Replace('/', Path.DirectorySeparatorChar));
+                if (File.Exists(marker) || File.Exists(level1File)) return;
 
                 bool ok = EditorUtility.DisplayDialog(
                     "星涡幸存者 StarVortex",
@@ -185,9 +297,12 @@ namespace StarVortex.EditorTools
                 }
             }
 
-            // 末参是 AtlasPopulationMode（不是 bool）：动态模式才能在编辑器期烘焙字符
-            var fontAsset = TMP_FontAsset.CreateFontAsset(sourceFont, 72, 6, GlyphRenderMode.SDFAA,
-                1024, 1024, AtlasPopulationMode.Dynamic);
+            // 末参是 AtlasPopulationMode（不是 bool）：动态模式才能在编辑器期烘焙字符。
+            // 字号 48 + 2048² 单页：732 字全量字符集单页装下——超过单页容量会触发
+            // TMP 3.0.6 多页图集路径的 SetupNewAtlasTexture NRE（实测坑）
+            var fontAsset = TMP_FontAsset.CreateFontAsset(sourceFont, 48, 5, GlyphRenderMode.SDFAA,
+                2048, 2048, AtlasPopulationMode.Dynamic);
+            fontAsset.isMultiAtlasTexturesEnabled = true; // 兜底：即使溢出也允许新页
             if (fontAsset == null)
             {
                 Debug.LogError($"[Font] CreateFontAsset 返回 null（字体面加载失败：{fontProjectPath}）");

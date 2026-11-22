@@ -1,5 +1,4 @@
 using StarVortex.Core;
-using StarVortex.Data;
 using UnityEngine;
 
 namespace StarVortex.Gameplay
@@ -48,6 +47,8 @@ namespace StarVortex.Gameplay
 
         private void Update()
         {
+            // 场景切换过渡/菜单状态下不再飞行结算（池对象跨场景常驻，旧弹丸不应在新场景里乱飞）
+            if (GameManager.Instance == null || GameManager.Instance.State != GameState.Playing) return;
             _lifetime -= Time.deltaTime;
             if (_lifetime <= 0f) ReturnToPool();
         }

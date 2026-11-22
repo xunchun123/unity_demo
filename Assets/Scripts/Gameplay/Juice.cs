@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using StarVortex.Core;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace StarVortex.Gameplay
         /// <summary>停帧状态（防止嵌套触发：短停帧期间再触发不延长）。</summary>
         private bool _hitStopping;
         private float _pendingHitStop;
+        private float _nextHitStopAllowed; // unscaled 时间；高频命中的节流阀
 
         private void Awake()
         {
@@ -35,10 +37,16 @@ namespace StarVortex.Gameplay
 
         // ---------- 停帧（Hit-Stop） ----------
 
-        /// <summary>全局停帧：timeScale 瞬间压到 0.05 再恢复，重击感来源。playing 状态才生效。</summary>
+        /// <summary>
+        /// 全局停帧：timeScale 瞬间压到 0.05 再恢复，重击感来源。playing 状态才生效。
+        /// 带 0.15s 冷却：割草每秒几十次命中，每次都停帧会变成周期性"顿挫"——
+        /// 只让冷却外的最重一击生效（2026 game feel 共识：分级 + 节流，而非每次全冻结）。
+        /// </summary>
         public static void HitStop(float realSeconds)
         {
             if (Instance == null || GameManager.Instance.State != GameState.Playing) return;
+            if (Time.unscaledTime < Instance._nextHitStopAllowed) return;
+            Instance._nextHitStopAllowed = Time.unscaledTime + 0.15f;
             Instance._pendingHitStop = Mathf.Max(Instance._pendingHitStop, realSeconds);
             if (!Instance._hitStopping) Instance.StartCoroutine(Instance.HitStopRoutine());
         }
@@ -58,11 +66,11 @@ namespace StarVortex.Gameplay
         // ---------- 受击闪白 ----------
 
         /// <summary>
-        /// Sprite 闪白：换 _BaseColor 为高亮色 60ms 后还原。
-        /// 用 MaterialPropertyBlock 而不是改 material——不会实例化材质副本（省内存，池友好）。
+        /// Sprite 闪白：暂存原色 → 置为高亮色 60ms → 还原。
+        /// 注意直接改 sr.color：敌人精灵用 Sprites/Default（没有 _BaseColor 属性，
+        /// MaterialPropertyBlock 方案在这里是无声无息的无效操作），且 sr.color
+        /// 已被种族 tint 占用——暂存/还原原色，精英 tint 与池复用都不会串色。
         /// </summary>
-        private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
-
         public static void Flash(SpriteRenderer sr, Color flashColor, float duration = 0.06f)
         {
             if (sr == null || Instance == null) return;
@@ -71,13 +79,44 @@ namespace StarVortex.Gameplay
 
         private IEnumerator FlashRoutine(SpriteRenderer sr, Color flashColor, float duration)
         {
-            var mpb = new MaterialPropertyBlock();
-            sr.GetPropertyBlock(mpb);
-            mpb.SetColor(BaseColorId, flashColor);
-            sr.SetPropertyBlock(mpb);
+            Color original = sr.color;
+            sr.color = flashColor;
             yield return new WaitForSecondsRealtime(duration);
-            mpb.Clear();
-            sr.SetPropertyBlock(mpb); // 还原为材质默认色
+            if (sr != null) sr.color = original;
+        }
+
+        // ---------- 受击挤压（Squash & Stretch） ----------
+
+        private static readonly HashSet<Transform> _punching = new();
+
+        /// <summary>受击挤压：横向拉伸+纵向压缩再弹回（90-120ms）。正在动画中的目标跳过，防止连续命中漂移。</summary>
+        public static void PunchScale(Transform t, float amount, float duration = 0.1f)
+        {
+            if (t == null || Instance == null || !_punching.Add(t)) return;
+            Instance.StartCoroutine(Instance.PunchRoutine(t, amount, duration));
+        }
+
+        private IEnumerator PunchRoutine(Transform t, float amount, float duration)
+        {
+            Vector3 baseScale = t.localScale;
+            Vector3 peak = new Vector3(baseScale.x * (1f + amount), baseScale.y * (1f - amount), baseScale.z);
+            float half = duration * 0.4f, e = 0f;
+            while (e < half && t != null)
+            {
+                e += Time.unscaledDeltaTime;
+                t.localScale = Vector3.Lerp(baseScale, peak, e / half);
+                yield return null;
+            }
+            e = 0f;
+            float back = Mathf.Max(0.01f, duration - half);
+            while (e < back && t != null)
+            {
+                e += Time.unscaledDeltaTime;
+                t.localScale = Vector3.Lerp(peak, baseScale, e / back);
+                yield return null;
+            }
+            if (t != null) t.localScale = baseScale;
+            _punching.Remove(t);
         }
 
         // ---------- 粒子包装（带 EmitParams，避免为每次爆点实例化对象） ----------
@@ -129,6 +168,23 @@ namespace StarVortex.Gameplay
             if (Instance?._levelUpRing == null) return;
             Instance._levelUpRing.transform.position = pos;
             Instance._levelUpRing.Emit(24);
+        }
+
+        /// <summary>挥剑弧光：三段连击各一张程序化剑气贴图，按朝向翻转，淡出自毁。
+        /// 等级越高弧光越大——"每升一级攻击更华丽"的视觉锚点。</summary>
+        public static void SlashArc(Vector3 pos, bool facingRight, int stage, float levelScale = 1f)
+        {
+            var sprites = SpritePool.Slashes;
+            if (sprites == null || sprites.Length == 0) return;
+            var sprite = sprites[Mathf.Clamp(stage - 1, 0, sprites.Length - 1)];
+            var go = new GameObject("SlashArc");
+            go.transform.position = pos + Vector3.right * (facingRight ? 0.7f : -0.7f);
+            go.transform.localScale = Vector3.one * levelScale;
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = sprite;
+            sr.flipX = !facingRight;
+            sr.sortingOrder = 10;
+            go.AddComponent<FadeOutAndDie>().life = 0.18f;
         }
 
         // ---------- 供场景构建脚本注入粒子引用 ----------

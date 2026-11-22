@@ -14,8 +14,10 @@ namespace StarVortex.Gameplay
 
         [SerializeField] private Transform _followTarget;
         [SerializeField] private float followSmooth = 6f;
-        [SerializeField] private float maxShakeAngle = 8f;   // 最大旋转抖动（度）
-        [SerializeField] private float maxShakeOffset = 0.55f; // 最大位移抖动
+        // 2026 审美基准：小视野正交相机下，大幅长震屏是"上个时代的大甩屏"——
+        // 收敛到约 2.4% 画高 + 3.5°，且垂直分量再打 6 折（人对垂直晃动耐受差）
+        [SerializeField] private float maxShakeAngle = 3.5f;   // 最大旋转抖动（度）
+        [SerializeField] private float maxShakeOffset = 0.3f;  // 最大位移抖动（世界单位）
         [SerializeField] private float traumaDecay = 1.6f;   // 创伤衰减速度/秒
 
         private Camera _cam;
@@ -34,7 +36,7 @@ namespace StarVortex.Gameplay
 
         public void SetTarget(Transform t) => _followTarget = t;
 
-        public void AddTrauma(float amount) => _trauma = Mathf.Clamp01(_trauma + amount);
+        public void AddTrauma(float amount) => _trauma = Mathf.Clamp01(_trauma + Mathf.Min(amount, 0.3f));
 
         /// <summary>定向冲击（大事件用）：直接给一段创伤。</summary>
         public void Kick(float amount) => AddTrauma(amount);
@@ -52,9 +54,9 @@ namespace StarVortex.Gameplay
             float shake = _trauma * _trauma;
             if (shake > 0.001f)
             {
-                float t = Time.time * 25f;
+                float t = Time.time * 28f;
                 float offsetX = (Mathf.PerlinNoise(t, 0f) * 2f - 1f) * maxShakeOffset * shake;
-                float offsetY = (Mathf.PerlinNoise(0f, t) * 2f - 1f) * maxShakeOffset * shake;
+                float offsetY = (Mathf.PerlinNoise(0f, t) * 2f - 1f) * maxShakeOffset * shake * 0.6f;
                 float angle = (Mathf.PerlinNoise(t, t) * 2f - 1f) * maxShakeAngle * shake;
 
                 transform.position += new Vector3(offsetX, offsetY, 0f);

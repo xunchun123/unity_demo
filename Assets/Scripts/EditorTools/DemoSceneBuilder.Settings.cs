@@ -16,8 +16,8 @@ namespace StarVortex.EditorTools
         // ---------- 层常量（与运行时代码的 LayerMask.NameToLayer 一致） ----------
         public const int LayerPlayer = 6;
         public const int LayerEnemy = 7;
-        public const int LayerPlayerBullet = 8;
-        public const int LayerXpGem = 9;
+        public const int LayerGround = 8;
+        public const int LayerProjectile = 9;
 
         private static void SetupProjectSettings()
         {
@@ -29,7 +29,7 @@ namespace StarVortex.EditorTools
             SetupBuildScenes();
         }
 
-        /// <summary>注册自定义层（写入 TagManager 资产）。</summary>
+        /// <summary>注册自定义层（写入 TagManager 资产）。横版闯关版：8=Ground 地形层。</summary>
         private static void SetupLayersAndTags()
         {
             var assets = AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset");
@@ -39,23 +39,29 @@ namespace StarVortex.EditorTools
 
             SetLayer(layers, LayerPlayer, "Player");
             SetLayer(layers, LayerEnemy, "Enemy");
-            SetLayer(layers, LayerPlayerBullet, "PlayerBullet");
-            SetLayer(layers, LayerXpGem, "XPGem");
+            SetLayer(layers, LayerGround, "Ground");
+            SetLayer(layers, LayerProjectile, "Projectile");
             tagManager.ApplyModifiedProperties();
         }
 
         private static void SetLayer(SerializedProperty layers, int index, string name)
         {
             var prop = layers.GetArrayElementAtIndex(index);
-            if (string.IsNullOrEmpty(prop.stringValue) || prop.stringValue == name) prop.stringValue = name;
-            else if (prop.stringValue != name)
-                Debug.LogWarning($"[Setup] 层 {index} 已被占用：{prop.stringValue}，跳过 {name}");
+            // 6-9 层归本项目所有：旧版遗留名（PlayerBullet/XPGem）直接覆写为横版名（Ground/Projectile），
+            // 层号才是运行时代码（LayerMask.NameToLayer/数字掩码）真正依赖的东西
+            if (prop.stringValue != name)
+            {
+                if (!string.IsNullOrEmpty(prop.stringValue))
+                    Debug.LogWarning($"[Setup] 层 {index}: {prop.stringValue} → {name}（旧名覆写）");
+                prop.stringValue = name;
+            }
         }
 
         /// <summary>
-        /// 碰撞矩阵（最小碰撞面，帧率友好）：
-        /// Player↔Enemy（接触伤害）、Player↔XPGem（拾取磁吸）、Enemy↔PlayerBullet（命中判定）开启；
-        /// Enemy↔Enemy 关闭（敌人间距交给分离力算法，物理求解器零成本）。
+        /// 碰撞矩阵（横版闯关版，最小碰撞面）：
+        /// Player↔Ground（站立）、Enemy↔Ground（行走）、Player↔Enemy（接触伤害）开启；
+        /// Projectile↔Enemy（命中判定）开启；弹丸穿地形（命中判定走层掩码不走矩阵）；
+        /// Enemy↔Enemy 关闭（怪物互不推挤）。
         /// </summary>
         private static void SetupPhysicsMatrix()
         {
@@ -68,9 +74,10 @@ namespace StarVortex.EditorTools
             bool[,] on = new bool[n, n];
             // 对角线默认关（含 Default 层互撞关闭，场景里没有 Default 层的碰撞体）
             void Enable(int a, int b) { on[a, b] = true; on[b, a] = true; }
+            Enable(LayerPlayer, LayerGround);
+            Enable(LayerEnemy, LayerGround);
             Enable(LayerPlayer, LayerEnemy);
-            Enable(LayerPlayer, LayerXpGem);
-            Enable(LayerEnemy, LayerPlayerBullet);
+            Enable(LayerProjectile, LayerEnemy);
 
             // 位图编码：matrix[i] 的第 j 位表示 i 层与 j 层是否碰撞
             for (int i = 0; i < n; i++)
@@ -151,26 +158,30 @@ namespace StarVortex.EditorTools
         /// <summary>构建场景列表：MainMenu 在前（启动场景）。</summary>
         private static void SetupBuildScenes()
         {
+            // 横版闯关：主菜单 + 三关（LevelBuilder 建完场景后再跑一次会以文件存在为准）
             EditorBuildSettings.scenes = new[]
             {
                 new EditorBuildSettingsScene(SceneMainMenu, true),
-                new EditorBuildSettingsScene(SceneGame, true),
+                new EditorBuildSettingsScene("Assets/Scenes/Level1.unity", true),
+                new EditorBuildSettingsScene("Assets/Scenes/Level2.unity", true),
+                new EditorBuildSettingsScene("Assets/Scenes/Level3.unity", true),
             };
         }
 
         // ---------- 常量路径（partial 各文件共享） ----------
         public const string UrpAssetPath = "Assets/Settings/URP_Neon.asset";
         public const string UrpRendererPath = "Assets/Settings/Renderer2D_Neon.asset";
-        public const string SceneGame = "Assets/Scenes/GameScene.unity";
         public const string SceneMainMenu = "Assets/Scenes/MainMenu.unity";
         public const string ArtDir = "Assets/Art/Generated";
+        public const string HifiArtDir = "Assets/Art/Hifi";
         public const string AudioDir = "Assets/Audio/Generated";
         public const string DataDir = "Assets/Data/Generated";
         public const string PrefabDir = "Assets/Prefabs/Generated";
 
-        /// <summary>载入生成的精灵的快捷方法。</summary>
+        /// <summary>载入精灵：AI 成品（Hifi 目录，Python 管线产出）优先，程序化生成兜底。</summary>
         internal static Sprite Art(string name) =>
-            AssetDatabase.LoadAssetAtPath<Sprite>($"{ArtDir}/{name}.png");
+            AssetDatabase.LoadAssetAtPath<Sprite>($"{HifiArtDir}/{name}.png")
+            ?? AssetDatabase.LoadAssetAtPath<Sprite>($"{ArtDir}/{name}.png");
 
         internal static AudioClip Sfx(string name) =>
             AssetDatabase.LoadAssetAtPath<AudioClip>($"{AudioDir}/{name}.wav");

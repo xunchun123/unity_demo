@@ -1,0 +1,23 @@
+Mono path[0] = 'D:/游戏demo/StarVortex/Builds/Probe/Probe_Data/Managed'
+Mono config path = 'D:/游戏demo/StarVortex/Builds/Probe/MonoBleedingEdge/etc'
+Input System module state changed to: Initialized.
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+Initialize engine version: 2022.3.62f3c1 (1623fc0bbb97)
+[Subsystems] Discovering subsystems at path D:/游戏demo/StarVortex/Builds/Probe/Probe_Data/UnitySubsystems
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) UHD Graphics 730 (ID=0x4692)
+    Vendor:   Intel
+    VRAM:     8062 MB
+    Driver:   30.0.101.1371
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.197 seconds
+- Finished resetting the current domain, in  0.001 seconds
+[PhysX] Initialized MultithreadedTaskDispatcher with 8 workers.
+UnloadTime: 1.555800 ms
+NullReferenceException: Object reference not set to an instance of an object
+  at StarVortex.Gameplay.GameSceneBootstrap.Start () [0x00000] in <cd484eb4ab9544c2b9d9466503b8edaf>:0 
+
+The character with Unicode value \u2605 was not found in the [TMP_CJK] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [NewRecord].
+The character with Unicode value \u2605 was not found in the [TMP_CJK] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [NewRecord].

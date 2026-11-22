@@ -27,6 +27,19 @@ namespace StarVortex.Core
         public static event Action<int> KillCountChanged;
         /// <summary>游戏时间同步（每 0.25s 推一次，避免 UI 每帧刷新）。</summary>
         public static event Action<float> RunClockTick;
+        // ---------- 《勇者远征》横版闯关版新增 ----------
+        /// <summary>玩家蓝量变化（当前 / 上限）——火球术消耗与回复。</summary>
+        public static event Action<float, float> PlayerManaChanged;
+        /// <summary>天赋点变化（剩余可分配点数）。</summary>
+        public static event Action<int> TalentPointsChanged;
+        /// <summary>天赋属性变动（维度、最新值）——HUD/属性面板刷新。</summary>
+        public static event Action<TalentKind> TalentSpent;
+        /// <summary>获得爽点（爽点 ID）——战斗形态改变的广播。</summary>
+        public static event Action<string> BoonAcquired;
+        /// <summary>关卡阶段变化（关卡号、阶段描述：战斗中/目标达成/传送门开启）。</summary>
+        public static event Action<int, string> LevelPhaseChanged;
+        /// <summary>BOSS 血条变化（当前 / 上限）。</summary>
+        public static event Action<float, float> BossHpChanged;
 
         internal static void PublishGameStateChanged(GameState state) => GameStateChanged?.Invoke(state);
         internal static void PublishEnemyDied(int xp, UnityEngine.Vector3 pos) => EnemyDied?.Invoke(xp, pos);
@@ -37,6 +50,12 @@ namespace StarVortex.Core
         internal static void PublishPlayerHurt(UnityEngine.Vector2 from) => PlayerHurt?.Invoke(from);
         internal static void PublishKillCountChanged(int kills) => KillCountChanged?.Invoke(kills);
         internal static void PublishRunClockTick(float t) => RunClockTick?.Invoke(t);
+        internal static void PublishPlayerManaChanged(float cur, float max) => PlayerManaChanged?.Invoke(cur, max);
+        internal static void PublishTalentPointsChanged(int points) => TalentPointsChanged?.Invoke(points);
+        internal static void PublishTalentSpent(TalentKind kind) => TalentSpent?.Invoke(kind);
+        internal static void PublishBoonAcquired(string boonId) => BoonAcquired?.Invoke(boonId);
+        internal static void PublishLevelPhaseChanged(int level, string phase) => LevelPhaseChanged?.Invoke(level, phase);
+        internal static void PublishBossHpChanged(float cur, float max) => BossHpChanged?.Invoke(cur, max);
 
         /// <summary>场景卸载时清空所有订阅，防止跨场景引用残留对象（生命周期陷阱的经典来源）。</summary>
         public static void ClearAllSubscribers()
@@ -44,6 +63,8 @@ namespace StarVortex.Core
             GameStateChanged = null;
             EnemyDied = null; XpChanged = null; LevelUp = null; PlayerHpChanged = null;
             PlayerDied = null; PlayerHurt = null; KillCountChanged = null; RunClockTick = null;
+            PlayerManaChanged = null; TalentPointsChanged = null; TalentSpent = null;
+            BoonAcquired = null; LevelPhaseChanged = null; BossHpChanged = null;
         }
     }
 }

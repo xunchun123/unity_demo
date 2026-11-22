@@ -32,6 +32,34 @@ namespace StarVortex.Core
             if (Instance != null && Instance != this) { Destroy(gameObject); return; }
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // 编辑器期 BindClips 只序列化了 _clips/_musicSource；_indexed 与 _sfxSources 是运行时字段，
+            // 跨场景恢复后必须重建，否则打包版 IsBound 恒 false、整局无声
+            if (_bound && _indexed == null && _clips.Count > 0)
+            {
+                _indexed = _clips.ToArray();
+                _sfxSources.Clear();
+                foreach (var src in GetComponents<AudioSource>())
+                    if (src != _musicSource) _sfxSources.Add(src);
+                if (_sfxSources.Count == 0) CreateSfxSources(6);
+                if (_musicSource != null && _musicSource.clip != null)
+                {
+                    _musicSource.loop = true;
+                    _musicSource.volume = musicVolume;
+                    _musicSource.Play();
+                }
+            }
+        }
+
+        private void CreateSfxSources(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var src = gameObject.AddComponent<AudioSource>();
+                src.playOnAwake = false;
+                src.volume = sfxVolume;
+                _sfxSources.Add(src);
+            }
         }
 
         private void OnDestroy() { if (Instance == this) Instance = null; }
@@ -44,16 +72,10 @@ namespace StarVortex.Core
         {
             if (IsBound) return;
             _bound = true;
-            _clips.AddRange(clips);
+            if (_clips.Count == 0) _clips.AddRange(clips); // 场景里已序列化过就不再叠加（重入会错位索引）
             _indexed = _clips.ToArray();
             _sfxSources.Clear();
-            for (int i = 0; i < sourceCount; i++)
-            {
-                var src = gameObject.AddComponent<AudioSource>();
-                src.playOnAwake = false;
-                src.volume = sfxVolume;
-                _sfxSources.Add(src);
-            }
+            CreateSfxSources(sourceCount);
             if (music != null)
             {
                 _musicSource = gameObject.AddComponent<AudioSource>();
@@ -72,6 +94,18 @@ namespace StarVortex.Core
             var src = _sfxSources[_nextSource];
             _nextSource = (_nextSource + 1) % _sfxSources.Count;
             src.pitch = 1f + Random.Range(-pitchJitter, pitchJitter);
+            src.PlayOneShot(_indexed[idx]);
+        }
+
+        /// <summary>指定音高播放（拾取连击递增用）。下一次 Play 会重置轮换槽的 pitch。</summary>
+        public void PlayWithPitch(SfxId id, float pitch)
+        {
+            int idx = (int)id;
+            if (_indexed == null || idx < 0 || idx >= _indexed.Length || _indexed[idx] == null) return;
+
+            var src = _sfxSources[_nextSource];
+            _nextSource = (_nextSource + 1) % _sfxSources.Count;
+            src.pitch = pitch;
             src.PlayOneShot(_indexed[idx]);
         }
 
