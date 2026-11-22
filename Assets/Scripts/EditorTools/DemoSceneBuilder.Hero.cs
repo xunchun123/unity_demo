@@ -75,8 +75,9 @@ namespace StarVortex.EditorTools
             sr.sprite = Art("hero_idle_0"); // idle=收招站姿帧（与全套动画同批次，光影统一）
             sr.sortingOrder = 20;
             ApplyVisualFeet(visual.transform, sr.sprite, HeroTargetHeight);
-            var animator = go.AddComponent<Animator>();
-            animator.runtimeAnimatorController = BuildHeroAnimator();
+            // 不挂 Animator：自动试玩实证——程序化 PPtr 换帧曲线在 Player 端确实生效，但攻击状态
+            // 播完会卡在末帧持续覆盖 SpriteRenderer（"过一会儿变贴纸"的元凶）。勇者动画由
+            // HeroController.DriveFrameAnimation 代码驱动，单一数据源不留第二条写 sprite 的路
             var hero = go.AddComponent<HeroController>();
             go.AddComponent<ProceduralAnim>(); // 程序化动画：跑动弹跳/呼吸/跳跃拉伸落地压扁/攻击 punch
             go.AddComponent<DustPuff>();       // 灰尘：落地 5 粒/起跳 3 粒/跑动 0.15s 一粒/冲刺沿途
@@ -89,7 +90,6 @@ namespace StarVortex.EditorTools
             SetField(hero, "_rb", rb);
             SetField(hero, "_sr", sr); // 指向 Visual 子物体：无敌闪烁/残影都作用在它上面
             SetField(hero, "_attackOrigin", origin.transform);
-            SetField(hero, "_animator", animator);
             SetField(hero, "_fireballPrefab", LoadPrefabComp<Fireball>("proj_fireball"));
 
             // 真帧动画帧组（用户 AI 生图，代码驱动换帧——Animator PPtr 在 Player 端不生效的兜底，见 DriveFrameAnimation）

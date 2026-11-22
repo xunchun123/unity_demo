@@ -126,7 +126,6 @@ GameObject:
   - component: {fileID: 7260419631755277409}
   - component: {fileID: 7407346575220651474}
   - component: {fileID: 1514708473277797673}
-  - component: {fileID: 4814268680049587382}
   - component: {fileID: 322361278782985314}
   - component: {fileID: 4015111534652435738}
   - component: {fileID: 3760550297236659766}
@@ -216,27 +215,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.58}
   m_Size: {x: 0.55, y: 1.1}
   m_Direction: 0
---- !u!95 &4814268680049587382
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548083293959569051}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2dc7b5c725046024cb60abf35358f71e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &322361278782985314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,7 +230,7 @@ MonoBehaviour:
   _rb: {fileID: 7407346575220651474}
   _sr: {fileID: 4852716178513192820}
   _attackOrigin: {fileID: 3322587149866492557}
-  _animator: {fileID: 4814268680049587382}
+  _animator: {fileID: 0}
   _weaponKit: {fileID: 0}
   _idleFrames:
   - {fileID: 21300000, guid: 9a1781a54fcdc1f4ab46b95e6103f7c7, type: 3}
@@ -269,14 +247,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 640499f9e75bbc8449ba894867d7bf76, type: 3}
   - {fileID: 21300000, guid: c2c528211b0bc5941bad36aedd4db752, type: 3}
   - {fileID: 21300000, guid: a1dcd3e3f1d5a444cbe328d11adb7348, type: 3}
-  jumpVelocity: 11.5
+  jumpVelocity: 12.2
   coyoteTime: 0.1
   jumpBufferTime: 0.12
   groundMask:
     serializedVersion: 2
     m_Bits: 256
   fallMultiplier: 2.5
-  lowJumpMultiplier: 2
+  lowJumpMultiplier: 1.6
   apexMultiplier: 0.6
   dashSpeed: 15
   dashDuration: 0.15
@@ -286,6 +264,7 @@ MonoBehaviour:
   _fireballPrefab: {fileID: 738080510844136532, guid: 23b3ea7f8d2fd0c448cee7df5aec20c7, type: 3}
   invulnerableDuration: 0.8
   hurtColor: {r: 1, g: 0.3, b: 0.35, a: 1}
+  _demo: 1
 --- !u!114 &4015111534652435738
 MonoBehaviour:
   m_ObjectHideFlags: 0
