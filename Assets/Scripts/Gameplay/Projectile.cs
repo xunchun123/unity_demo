@@ -66,6 +66,11 @@ namespace StarVortex.Gameplay
             if (_pierceLeft <= 0) ReturnToPool();
         }
 
-        private void ReturnToPool() => PoolService.Instance.Despawn(gameObject);
+        private void ReturnToPool()
+        {
+            // 防重入：同一帧"命中耗尽穿透"和"寿命到期"可能同时触发，二次 Release 会抛池异常
+            if (!gameObject.activeSelf) return;
+            PoolService.Instance.Despawn(gameObject);
+        }
     }
 }

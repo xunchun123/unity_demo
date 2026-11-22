@@ -39,7 +39,9 @@ namespace StarVortex.Gameplay
 
         private void Update()
         {
-            if (_data == null || GameManager.Instance.State != GameState.Playing) return;
+            // 场景异步重载的过渡帧里 PoolService/玩家可能尚未就绪，守卫掉（否则 NRE 进日志污染测试）
+            if (_data == null || _stats == null || PoolService.Instance == null) return;
+            if (GameManager.Instance.State != GameState.Playing) return;
 
             // 索敌节流：每 0.1s 刷新一次最近目标
             _targetSearchTimer -= Time.deltaTime;
@@ -105,6 +107,12 @@ namespace StarVortex.Gameplay
 
         private void SpawnProjectile(Vector2 origin, Vector2 dir)
         {
+            if (_stats == null || _data == null || _projectilePrefab == null)
+            {
+                Debug.LogWarning($"[Weapon] SpawnProjectile 引用缺失 stats={_stats != null} data={_data != null} " +
+                                 $"prefab={_projectilePrefab != null} state={GameManager.Instance.State} frame={Time.frameCount}");
+                return;
+            }
             var go = PoolService.Instance.Spawn(_projectilePrefab.gameObject, origin, Quaternion.identity);
             var proj = go.GetComponent<Projectile>();
             bool crit = Random.value < _stats.critChance;

@@ -25,6 +25,7 @@ namespace StarVortex.Gameplay
 
         private Transform _player;
         private float _spawnAccumulator;
+        private float[] _weights; // 权重缓存数组（避免每次刷怪分配，保持零 GC 主循环）
 
         private readonly struct EnemyKind
         {
@@ -72,19 +73,20 @@ namespace StarVortex.Gameplay
 
         private void SpawnOne(float minutes)
         {
-            // 按曲线权重选怪种
+            // 按曲线权重选怪种（权重数组缓存在字段里，主循环零分配）
             float total = 0f;
-            float[] weights = new float[_kinds.Count];
+            if (_weights == null || _weights.Length != _kinds.Count)
+                _weights = new float[_kinds.Count];
             for (int i = 0; i < _kinds.Count; i++)
             {
-                weights[i] = Mathf.Max(0f, _kinds[i].Weight.Evaluate(minutes));
-                total += weights[i];
+                _weights[i] = Mathf.Max(0f, _kinds[i].Weight.Evaluate(minutes));
+                total += _weights[i];
             }
             float roll = Random.value * total;
             EnemyKind picked = _kinds[_kinds.Count - 1];
             for (int i = 0; i < _kinds.Count; i++)
             {
-                roll -= weights[i];
+                roll -= _weights[i];
                 if (roll <= 0f) { picked = _kinds[i]; break; }
             }
 

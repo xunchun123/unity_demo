@@ -16,16 +16,18 @@ namespace StarVortex.Gameplay
         [SerializeField] private CameraRig _cameraRig;
         [SerializeField] private PlayerController _player;
         [SerializeField] private PausePanel _pausePanel;
+        [SerializeField] private LevelUpPanel _levelUpPanel;
+        [SerializeField] private GameOverPanel _gameOverPanel;
         [SerializeField] private Canvas _hudCanvas;
 
         private void Start()
         {
-            PoolService.Instance.EnsureInitialized();
             _cameraRig.SetTarget(_player.transform);
-            _hudCanvas.worldCamera = _cameraRig.GetComponent<Camera>();
 
-            // 暂停面板显隐：由状态机事件驱动（面板自己是纯视图）
+            // 面板显隐统一由状态机事件驱动（面板自己是纯视图，避免 OnEnable 订阅死锁）
             _pausePanel.gameObject.SetActive(GameManager.Instance.State == GameState.Paused);
+            _levelUpPanel.gameObject.SetActive(GameManager.Instance.State == GameState.LevelUp);
+            _gameOverPanel.gameObject.SetActive(GameManager.Instance.State == GameState.GameOver);
             GameEvents.GameStateChanged += OnStateChanged;
         }
 
@@ -33,8 +35,15 @@ namespace StarVortex.Gameplay
 
         private void OnStateChanged(GameState state)
         {
-            bool show = state == GameState.Paused;
-            if (_pausePanel.gameObject.activeSelf != show) _pausePanel.gameObject.SetActive(show);
+            SetActiveIfChanged(_pausePanel, state == GameState.Paused);
+            SetActiveIfChanged(_levelUpPanel, state == GameState.LevelUp);
+            SetActiveIfChanged(_gameOverPanel, state == GameState.GameOver);
+        }
+
+        private static void SetActiveIfChanged(MonoBehaviour panel, bool show)
+        {
+            if (panel != null && panel.gameObject.activeSelf != show)
+                panel.gameObject.SetActive(show);
         }
     }
 }

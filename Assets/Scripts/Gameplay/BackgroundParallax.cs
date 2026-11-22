@@ -24,10 +24,16 @@ namespace StarVortex.Gameplay
         private void Start()
         {
             _cam = Camera.main.transform;
+            if (_cam == null) return;
             foreach (var layer in _layers)
             {
-                // 贴图 Repeat 包裹 + 缩放放大：让 UV 偏移在视野内平铺
-                layer.renderer.transform.localScale = new Vector3(layer.scale.x, layer.scale.y, 1f);
+                var sr = layer.renderer;
+                // 关键：视差层用"精灵原图 + Repeat 包裹"的独立材质，不能用图集
+                //（图集 UV 会被 offset 切到邻居精灵区域）。material getter 会自动实例化副本。
+                var mat = new Material(Shader.Find("Sprites/Default"));
+                mat.mainTexture = sr.sprite.texture;
+                sr.material = mat;
+                sr.transform.localScale = new Vector3(layer.scale.x, layer.scale.y, 1f);
             }
         }
 
@@ -38,9 +44,9 @@ namespace StarVortex.Gameplay
             foreach (var layer in _layers)
             {
                 if (layer.renderer == null) continue;
-                // 位置跟住相机（保证始终覆盖视野），UV 偏移承担视差滚动
                 var tr = layer.renderer.transform;
                 tr.position = new Vector3(camPos.x, camPos.y, tr.position.z);
+                // UV 偏移滚动：近层跟得紧、远层跟得松 → 纵深感
                 var mat = layer.renderer.material;
                 mat.mainTextureOffset = camPos * layer.followFactor / layer.scale;
             }

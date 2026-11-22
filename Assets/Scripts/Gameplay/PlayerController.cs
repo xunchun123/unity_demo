@@ -20,6 +20,8 @@ namespace StarVortex.Gameplay
         [SerializeField] private WeaponController _weapon;
         [Tooltip("拾取圈触发器（半径随升级实时变化）")]
         [SerializeField] private CircleCollider2D _pickupArea;
+        [Tooltip("角色动画控制器（Idle/Run 切换）")]
+        [SerializeField] private Animator _animator;
 
         [Header("受击表现")]
         [Tooltip("受伤无敌帧（秒）——防止同帧多次接触伤害直接秒杀")]
@@ -86,6 +88,14 @@ namespace StarVortex.Gameplay
             // 拾取圈半径跟随升级变化（引力线圈升级立刻生效的视觉反馈）
             if (_pickupArea != null && !Mathf.Approximately(_pickupArea.radius, Stats.PickupRadius))
                 _pickupArea.radius = Stats.PickupRadius;
+
+            // 动画状态：按实际速度驱动 Idle/Run 切换（阈值留死区防抖动）
+            if (_animator != null)
+            {
+                bool moving = _rb.velocity.sqrMagnitude > 0.3f;
+                if (_animator.GetBool("Moving") != moving)
+                    _animator.SetBool("Moving", moving);
+            }
         }
 
         private void FixedUpdate()

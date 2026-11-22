@@ -30,10 +30,16 @@ namespace StarVortex.Gameplay
             gem.Init(xp);
         }
 
+        /// <summary>从池中取出后的初始化（公开给测试与池使用）。</summary>
+        public void Init(int xp) => _xpValue = xp;
+
         private void Awake() => _bobPhase = Random.value * Mathf.PI * 2f;
 
         private void OnEnable()
         {
+            // 池对象复用必须全量重置状态（漏掉 _attracted 会让新宝石直线冲向旧目标）
+            _attracted = false;
+            _player = null;
             _speed = attractSpeedStart;
             _bobPhase = Random.value * Mathf.PI * 2f;
         }
