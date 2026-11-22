@@ -1,0 +1,19 @@
+{
+    "name": "StarVortex.Tests",
+    "rootNamespace": "StarVortex.Tests",
+    "references": [
+        "StarVortex.Runtime"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
