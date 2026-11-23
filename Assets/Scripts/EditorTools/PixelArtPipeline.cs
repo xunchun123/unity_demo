@@ -12,13 +12,16 @@ namespace StarVortex.EditorTools
     /// ① 全项目只有一个 PPU（32）——角色、怪物、特效同一像素密度，画面才不会出现"粗细不一的贴纸感"；
     /// ② Point 过滤 + 不压缩 + 无 Mipmap：双线性过滤会把像素边缘糊开，压缩会产生色块；
     /// ③ 角色 pivot 统一在脚底中心：帧已在离线脚本里按身体中线和脚底对齐，Unity 里不需要逐帧调 pivot，
-    ///    翻转（flipX）也以脚底为轴，转身时人物不会横跳；Fx 目录（弹丸、特效）pivot 在中心。
+    ///    翻转（flipX）也以脚底为轴，转身时人物不会横跳；Fx 目录（弹丸、特效）与 Env 目录（背景、地块）pivot 在中心；
+    /// ④ 地块用九宫格：同名 .border.txt 里写"左 下 右 上"四个像素边距，导入时写进 spriteBorder，
+    ///    SpriteRenderer 平铺模式下角不变形、边和中间平铺，任意长度的地面都能用同一张小图拼出来。
     /// </summary>
     public static class PixelArtPipeline
     {
         public const string ArtRoot = "Assets/Art/Pixel";
         public const float PixelsPerUnit = 32f;
         private const string FxFolder = ArtRoot + "/Fx/";
+        private const string EnvFolder = ArtRoot + "/Env/";
 
         public static bool IsPixelArt(string assetPath) =>
             assetPath.Replace('\\', '/').StartsWith(ArtRoot + "/", StringComparison.Ordinal);
@@ -38,7 +41,8 @@ namespace StarVortex.EditorTools
             var settings = new TextureImporterSettings();
             importer.ReadTextureSettings(settings);
             settings.spriteAlignment = (int)AlignmentFor(importer.assetPath);
-            settings.spriteMeshType = SpriteMeshType.FullRect; // 整矩形网格：紧凑网格会在帧间切换时裁出不同轮廓
+            settings.spriteMeshType = SpriteMeshType.FullRect; // 整矩形网格：紧凑网格会在帧间切换时裁出不同轮廓（平铺模式也要求它）
+            settings.spriteBorder = BorderFor(importer.assetPath);
             importer.SetTextureSettings(settings);
         }
 
@@ -94,13 +98,28 @@ namespace StarVortex.EditorTools
                 || importer.filterMode != FilterMode.Point
                 || importer.textureCompression != TextureImporterCompression.Uncompressed
                 || importer.mipmapEnabled
-                || settings.spriteAlignment != (int)AlignmentFor(importer.assetPath);
+                || settings.spriteAlignment != (int)AlignmentFor(importer.assetPath)
+                || settings.spriteBorder != BorderFor(importer.assetPath);
         }
 
-        private static SpriteAlignment AlignmentFor(string assetPath) =>
-            assetPath.Replace('\\', '/').StartsWith(FxFolder, StringComparison.Ordinal)
+        /// <summary>九宫格边距：读取同名 .border.txt（"左 下 右 上"，像素）；没有则为 0。</summary>
+        private static Vector4 BorderFor(string assetPath)
+        {
+            string file = Path.ChangeExtension(assetPath, null) + ".border.txt";
+            if (!File.Exists(file)) return Vector4.zero;
+            var parts = File.ReadAllText(file).Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length != 4) return Vector4.zero;
+            float Read(int i) => float.Parse(parts[i], System.Globalization.CultureInfo.InvariantCulture);
+            return new Vector4(Read(0), Read(1), Read(2), Read(3));
+        }
+
+        private static SpriteAlignment AlignmentFor(string assetPath)
+        {
+            string path = assetPath.Replace('\\', '/');
+            return path.StartsWith(FxFolder, StringComparison.Ordinal) || path.StartsWith(EnvFolder, StringComparison.Ordinal)
                 ? SpriteAlignment.Center
                 : SpriteAlignment.BottomCenter;
+        }
     }
 
     /// <summary>导入前回调：新放进 Assets/Art/Pixel 的帧自动套用像素导入规则，无需手动设置。</summary>

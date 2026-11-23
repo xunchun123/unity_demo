@@ -27,7 +27,6 @@ namespace StarVortex.EditorTools
         private const string HeroPrefabPath = "Assets/Prefabs/Hero/Hero.prefab";
         private const string MonsterPrefabDir = "Assets/Prefabs/Hero";
         private const string AudioDir = "Assets/Audio/Generated";
-        private const string FallbackSpritePath = "Assets/Art/Generated/level_fallback_white.png";
 
         // 层数字契约：与 DemoSceneBuilder.Settings.cs（Player=6/Enemy=7/Ground=8）及
         // HeroController.groundMask（1<<8）一致。用数字不用 LayerMask.NameToLayer——
@@ -35,7 +34,6 @@ namespace StarVortex.EditorTools
         private const int LayerPlayer = 6;
         private const int LayerGround = 8;
 
-        private static Sprite _fallbackWhite; // 编辑器会话内缓存（资产本体已落盘，引用可持久化）
 
         // ============================================================ 入口 ============================================================
 
@@ -238,14 +236,13 @@ namespace StarVortex.EditorTools
 
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
-            BuildCamera(spec);
-            BuildLighting(spec);
-            BuildBackdrop(spec);
-            BuildScenery(spec);            // 远景剪影 + 雾带氛围层（AI 背景之上、地形之下）
+            var look = PixelEnvironment.For(spec.levelIndex);
+            BuildCamera(spec, look);
+            BuildLighting(look);
+            PixelEnvironment.BuildParallax(look, spec.widthUnits, spec.baseGroundY); // 多层像素视差背景
             BuildManagers();
             BuildHero(spec);
-            BuildTerrain(spec);
-            BuildProps(spec);              // 平台装饰散植（草丛/花/蘑菇/石/树桩/藤）
+            BuildTerrain(spec, look);
             if (spec.levelIndex == 1) BuildTutorial(spec); // 新手教学牌只在第一关
             BuildDirector(spec);
 
@@ -282,7 +279,7 @@ namespace StarVortex.EditorTools
 
         // ---------- 场景组装 ----------
 
-        private static void BuildCamera(LevelSpec spec)
+        private static void BuildCamera(LevelSpec spec, PixelEnvironment.Look look)
         {
             var cameraGo = new GameObject("MainCamera", typeof(Camera), typeof(AudioListener));
             cameraGo.tag = "MainCamera";
@@ -290,7 +287,7 @@ namespace StarVortex.EditorTools
             cam.orthographic = true;
             cam.orthographicSize = 3.5f; // 比例网格：视口高 7u ≈ 勇者身高 1.25u 的 5.6 倍（人物占画面约 1/5 高）
             cam.clearFlags = CameraClearFlags.SolidColor;
-            cam.backgroundColor = spec.backdropColor;
+            cam.backgroundColor = look.Sky; // 与最远背景层顶部同色：震屏露边时看不出缝
             cam.cullingMask = ~0;
             cameraGo.transform.position = new Vector3(0f, spec.baseGroundY + 2.8f, -10f);
             cameraGo.AddComponent<SideCamera>(); // 横向跟随（Y 锁地面 + X 边界钳制 + CameraRig 兼容震屏）
@@ -318,36 +315,14 @@ namespace StarVortex.EditorTools
             go.transform.localScale = new Vector3(viewW / Mathf.Max(0.01f, bounds.x), viewH / Mathf.Max(0.01f, bounds.y), 1f);
         }
 
-        private static void BuildLighting(LevelSpec spec)
+        private static void BuildLighting(PixelEnvironment.Look look)
         {
             // URP 2D 渲染器下没有全局光精灵会全黑，每关必带一盏
             var lightGo = new GameObject("GlobalLight");
             var light = lightGo.AddComponent<Light2D>();
             light.lightType = Light2D.LightType.Global;
             light.intensity = 1f;
-            light.color = spec.lightColor;
-        }
-
-        private static void BuildBackdrop(LevelSpec spec)
-        {
-            // 静态大背景（旧占位星空/菜单底图都可用）：排序层压到最底，主题色由光照与背景色承担。
-            // 不再用 BackgroundParallax（旧太空玩法组件正在删除，且视差对静态底图是过度设计）。
-            var backdrop = TrySprite($"bg_level{spec.levelIndex}") ?? TrySprite("menu_bg");
-            if (backdrop == null)
-            {
-                Debug.LogWarning("[LevelBuilder] 背景精灵缺失（menu_bg/star_bg_0），用纯色方块兜底");
-                backdrop = FallbackWhite();
-            }
-            var go = new GameObject("Backdrop");
-            var sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = backdrop;
-            sr.color = new Color(0.4f, 0.42f, 0.45f, 1f); // 压暗，避免抢主体
-            sr.sortingOrder = -50;
-            var bounds = backdrop.bounds;
-            go.transform.position = new Vector3(spec.widthUnits * 0.5f, spec.baseGroundY + 4f, 0f);
-            go.transform.localScale = new Vector3(
-                (spec.widthUnits + 10f) / Mathf.Max(0.01f, bounds.size.x),
-                16f / Mathf.Max(0.01f, bounds.size.y), 1f);
+            light.color = look.Light;
         }
 
         private static void BuildManagers()
@@ -400,57 +375,36 @@ namespace StarVortex.EditorTools
             hero.AddComponent<HeroRespawn>(); // 坠落回收（y<-5 扣 20 血回落脚点）
         }
 
-        private static void BuildTerrain(LevelSpec spec)
+        /// <summary>
+        /// 地形：碰撞体与视觉分开——父物体上的 BoxCollider2D 顶面精确落在 groundY（物理契约不变），
+        /// 九宫格像素地块挂在子物体 Visual 上，草叶/石块凸起可以略高出碰撞面而不影响站立。
+        /// 同高相邻段先合并，平地上不会出现一段一道的侧边竖缝。
+        /// </summary>
+        private static void BuildTerrain(LevelSpec spec, PixelEnvironment.Look look)
         {
             var root = new GameObject("Terrain");
 
-            // 三关地形瓦片：platform_l1 灰烬森林 / platform_l2 坍塌矿洞 / platform_l3 深渊王座
-            //（TileArtGenerator 生成；Tiled 平铺模式要求纹理 Repeat 包裹；缺资产回退旧占位砖）
-            string tileName = $"platform_l{spec.levelIndex}";
-            var tile = TrySprite(tileName) ?? TrySprite("platform_tile");
-            if (tile != null) EnsureRepeat(tile.name);
-            var tileSprite = tile != null ? tile : FallbackWhite();
-            float tileH = tile != null ? tile.bounds.size.y : 2f; // 瓦片世界高度（256px@PPU100 → 2.56u）
-
-            // 地面段：BoxCollider2D 顶面精确落在 groundY（碰撞契约不动）；
-            // 视觉厚度取整张瓦片高——平铺恰好一整行，瓦片顶缘的草皮/描边必然露出地表
-            foreach (var s in spec.groundSegments)
+            foreach (var run in PixelEnvironment.MergeRuns(spec.groundSegments))
             {
-                float width = s.endX - s.startX;
-                if (width <= 0f) continue;
-                var go = new GameObject($"Ground_{s.startX:F0}_{s.endX:F0}");
+                float width = run.endX - run.startX;
+                float height = run.groundY - PixelEnvironment.TerrainBottomY;
+                var go = new GameObject($"Ground_{run.startX:F0}_{run.endX:F0}");
                 go.transform.SetParent(root.transform, false);
-                go.transform.position = new Vector3((s.startX + s.endX) * 0.5f, s.groundY - tileH * 0.5f, 0f); // 顶面=groundY
+                go.transform.position = new Vector3((run.startX + run.endX) * 0.5f, PixelEnvironment.TerrainBottomY + height * 0.5f, 0f);
                 go.layer = LayerGround;
-
-                var col = go.AddComponent<BoxCollider2D>();
-                col.size = new Vector2(width, 2f); // 碰撞仍厚 2（比视觉薄的部分埋在地下，运行时无感）
-
-                var sr = go.AddComponent<SpriteRenderer>();
-                sr.sprite = tileSprite;
-                sr.drawMode = SpriteDrawMode.Tiled;
-                sr.size = new Vector2(width, tileH);
-                sr.color = spec.groundTint;
-                sr.sortingOrder = 0;
+                go.AddComponent<BoxCollider2D>().size = new Vector2(width, height); // 顶面 = groundY
+                PixelEnvironment.AddGroundVisual(go.transform, look, run.startX, run.endX, run.groundY);
             }
 
-            // 悬浮平台：薄板（顶面精确落在 y）；Tiled 从上往下铺贴，顶缘草皮露出
+            // 悬浮平台：0.6u 厚的碰撞板，顶面精确落在 y
             foreach (var p in spec.platforms)
             {
                 var go = new GameObject($"Platform_{p.x:F0}");
                 go.transform.SetParent(root.transform, false);
                 go.transform.position = new Vector3(p.x + p.width * 0.5f, p.y - 0.3f, 0f);
                 go.layer = LayerGround;
-
-                var col = go.AddComponent<BoxCollider2D>();
-                col.size = new Vector2(p.width, 0.6f);
-
-                var sr = go.AddComponent<SpriteRenderer>();
-                sr.sprite = tileSprite;
-                sr.drawMode = SpriteDrawMode.Tiled;
-                sr.size = new Vector2(p.width, 0.6f);
-                sr.color = Color.Lerp(spec.groundTint, Color.white, 0.25f); // 平台略亮，与主地形区分
-                sr.sortingOrder = 0;
+                go.AddComponent<BoxCollider2D>().size = new Vector2(p.width, 0.6f);
+                PixelEnvironment.AddPlatformVisual(go.transform, look, p.x, p.width, p.y);
             }
 
             // 两端隐形墙：防止勇者走出关卡（左墙避开出生点 x=0，表面退到 -0.5）
@@ -465,234 +419,6 @@ namespace StarVortex.EditorTools
             go.transform.position = new Vector3(x, y, 0f);
             go.layer = LayerGround;
             go.AddComponent<BoxCollider2D>().size = new Vector2(w, h);
-        }
-
-        // ---------- 远景氛围层（剪影 + 雾带） ----------
-
-        /// <summary>
-        /// 远景剪影 + 雾带：AI 背景图之上、地形之下的氛围夹层（sortingOrder -46 ~ -40）。
-        /// 视差用 ParallaxScroller（父对象按 (1−factor)·camX 横移、纵向钉在地平线）——
-        /// 旧 BackgroundParallax 是"贴相机 XY + UV 偏移"的星空件，横版剪影必须钉世界高度，
-        /// 且逐株摆放比 UV 平铺更有机，故按任务书写简单跟随。
-        /// 两层剪影 + 两层雾（远/近不同系数、透明度、疏密）：错周期叠出非重复天际线。
-        /// </summary>
-        private static void BuildScenery(LevelSpec spec)
-        {
-            var tree = TrySprite("tree_far");
-            var fog = TrySprite("fog_strip");
-            if (tree == null) Debug.LogWarning("[LevelBuilder] 缺 tree_far.png，远景剪影层跳过（先跑一键搭建生成环境美术）");
-            if (fog == null) Debug.LogWarning("[LevelBuilder] 缺 fog_strip.png，雾带层跳过");
-            if (tree == null && fog == null) return;
-
-            float gy = spec.baseGroundY;
-            // 关卡氛围参数：L1 森林（暗绿剪影密两层 + 轻晨雾）/ L2 矿洞（冷灰矮影 + 浓冷雾）/ L3 深渊（紫黑枯影 + 紫雾）
-            Color treeTint, fogTint;
-            float treeAlphaFar, treeAlphaNear, treeScaleMin, treeScaleMax, treeGapMin, treeGapMax;
-            float fogAlphaMin, fogAlphaMax, fogGapMin, fogGapMax, fogScaleMin, fogScaleMax;
-            switch (spec.levelIndex)
-            {
-                case 2:
-                    treeTint = new Color(0.72f, 0.82f, 0.9f); treeAlphaFar = 0.5f; treeAlphaNear = 0.75f;
-                    treeScaleMin = 0.62f; treeScaleMax = 0.9f; treeGapMin = 3.6f; treeGapMax = 5.6f;
-                    fogTint = new Color(0.72f, 0.84f, 0.95f); fogAlphaMin = 0.55f; fogAlphaMax = 0.85f;
-                    fogGapMin = 2.6f; fogGapMax = 4.2f; fogScaleMin = 1.4f; fogScaleMax = 2.3f;
-                    break;
-                case 3:
-                    treeTint = new Color(0.5f, 0.42f, 0.62f); treeAlphaFar = 0.55f; treeAlphaNear = 0.85f;
-                    treeScaleMin = 0.8f; treeScaleMax = 1.15f; treeGapMin = 3.2f; treeGapMax = 5.2f;
-                    fogTint = new Color(0.78f, 0.66f, 0.95f); fogAlphaMin = 0.5f; fogAlphaMax = 0.8f;
-                    fogGapMin = 3.0f; fogGapMax = 4.8f; fogScaleMin = 1.3f; fogScaleMax = 2.2f;
-                    break;
-                default:
-                    treeTint = new Color(0.62f, 0.72f, 0.64f); treeAlphaFar = 0.5f; treeAlphaNear = 0.8f;
-                    treeScaleMin = 0.85f; treeScaleMax = 1.25f; treeGapMin = 2.6f; treeGapMax = 4.4f;
-                    fogTint = new Color(0.85f, 0.93f, 0.9f); fogAlphaMin = 0.45f; fogAlphaMax = 0.7f;
-                    fogGapMin = 3.4f; fogGapMax = 5.4f; fogScaleMin = 1.3f; fogScaleMax = 2.1f;
-                    break;
-            }
-
-            var sceneryRoot = new GameObject("Scenery");
-
-            if (tree != null)
-            {
-                var farTint = treeTint; farTint.a = treeAlphaFar;
-                BuildTreeBand(sceneryRoot.transform, spec, tree, "TreesFar", 0.26f, gy,
-                    treeScaleMin * 0.85f, treeScaleMax * 0.85f, treeGapMin * 1.2f, treeGapMax * 1.2f, farTint, -46, 4711);
-                var nearTint = treeTint; nearTint.a = treeAlphaNear;
-                BuildTreeBand(sceneryRoot.transform, spec, tree, "TreesNear", 0.36f, gy,
-                    treeScaleMin, treeScaleMax, treeGapMin, treeGapMax, nearTint, -42, 4712);
-            }
-
-            if (fog != null)
-            {
-                var fogLow = fogTint; fogLow.a = fogAlphaMin;
-                BuildFogBand(sceneryRoot.transform, spec, fog, "FogLow", 0.52f, gy + 0.85f,
-                    fogScaleMin, fogScaleMax, fogGapMin, fogGapMax, fogLow, -44, 8711);
-                var fogMid = fogTint; fogMid.a = fogAlphaMax;
-                BuildFogBand(sceneryRoot.transform, spec, fog, "FogMid", 0.62f, gy + 1.9f,
-                    fogScaleMin * 1.15f, fogScaleMax * 1.15f, fogGapMin * 1.15f, fogGapMax * 1.15f, fogMid, -40, 8712);
-            }
-        }
-
-        /// <summary>
-        /// 一条剪影带：按固定种子逐株撒 tree_far（随机缩放/镜像），覆盖域按视差推导——
-        /// 子物体世界 x = 设计 x0 + camX·(1−f)，可见 ⇔ x0 − camX·f ∈ [−半视宽, +半视宽]，
-        /// 故 x0 需覆盖 [−余量, 关卡宽·f + 余量]（余量 12u 吸收宽屏视口与震屏偏移）。
-        /// </summary>
-        private static void BuildTreeBand(Transform parent, LevelSpec spec, Sprite sprite, string name, float factor,
-            float baseY, float scaleMin, float scaleMax, float gapMin, float gapMax, Color tint, int sortingOrder, int seed)
-        {
-            var band = new GameObject(name);
-            band.transform.SetParent(parent, false);
-            band.transform.position = new Vector3(0f, baseY, 0f);
-            band.AddComponent<ParallaxScroller>().Configure(factor);
-
-            var rng = new System.Random(seed);
-            float halfH = sprite.bounds.extents.y;
-            float x = -12f;
-            float endX = spec.widthUnits * factor + 12f;
-            while (x < endX)
-            {
-                float s = scaleMin + (float)rng.NextDouble() * (scaleMax - scaleMin);
-                var go = new GameObject($"Tree_{x:F0}");
-                go.transform.SetParent(band.transform, false);
-                go.transform.localPosition = new Vector3(x, -halfH * s - 0.35f, 0f); // 纹理底缘沉入地表 0.35u
-                go.transform.localScale = new Vector3(s * (rng.Next(0, 2) == 0 ? 1f : -1f), s, 1f);
-                var sr = go.AddComponent<SpriteRenderer>();
-                sr.sprite = sprite;
-                sr.color = tint;
-                sr.sortingOrder = sortingOrder;
-                x += gapMin + (float)rng.NextDouble() * (gapMax - gapMin);
-            }
-        }
-
-        /// <summary>一条雾带：fog_strip 逐团散布（随机横向拉伸/高度抖动/透明度），贴地低雾与悬空中雾各一条。</summary>
-        private static void BuildFogBand(Transform parent, LevelSpec spec, Sprite sprite, string name, float factor,
-            float centerY, float scaleMin, float scaleMax, float gapMin, float gapMax, Color tint, int sortingOrder, int seed)
-        {
-            var band = new GameObject(name);
-            band.transform.SetParent(parent, false);
-            band.AddComponent<ParallaxScroller>().Configure(factor);
-
-            var rng = new System.Random(seed);
-            float x = -12f;
-            float endX = spec.widthUnits * factor + 12f;
-            while (x < endX)
-            {
-                float sx = scaleMin + (float)rng.NextDouble() * (scaleMax - scaleMin);
-                float sy = 0.75f + (float)rng.NextDouble() * 0.5f;
-                var go = new GameObject($"Fog_{x:F0}");
-                go.transform.SetParent(band.transform, false);
-                go.transform.localPosition = new Vector3(x, centerY + ((float)rng.NextDouble() - 0.5f) * 0.8f, 0f);
-                go.transform.localScale = new Vector3(sx, sy, 1f);
-                var c = tint;
-                c.a = tint.a * (0.7f + 0.5f * (float)rng.NextDouble());
-                var sr = go.AddComponent<SpriteRenderer>();
-                sr.sprite = sprite;
-                sr.color = c;
-                sr.sortingOrder = sortingOrder;
-                x += gapMin + (float)rng.NextDouble() * (gapMax - gapMin);
-            }
-        }
-
-        // ---------- 平台装饰散植 ----------
-
-        /// <summary>
-        /// 各关 prop 色板：同一批贴图按关卡主题染色（L1 自然色 / L2 矿洞冷色+荧光蘑菇 / L3 深渊紫黑）。
-        /// 数组内重复项即权重——草丛多、蘑菇树桩少，密度克制不遮挡战斗（纯视觉，sortingOrder=1）。
-        /// </summary>
-        private static readonly (string sprite, Color tint)[] PropPaletteL1 =
-        {
-            ("grass_tuft_0", Color.white), ("grass_tuft_1", Color.white), ("grass_tuft_2", Color.white),
-            ("grass_tuft_0", new Color(0.92f, 1f, 0.9f)), ("grass_tuft_1", new Color(0.95f, 1f, 0.88f)),
-            ("flower", Color.white), ("flower", new Color(1f, 0.95f, 0.85f)),
-            ("mushroom", new Color(0.95f, 0.85f, 0.8f)), ("stump", Color.white), ("rock", Color.white),
-        };
-
-        private static readonly (string sprite, Color tint)[] PropPaletteL2 =
-        {
-            ("rock", new Color(0.82f, 0.9f, 1f)), ("rock", new Color(0.75f, 0.85f, 0.95f)),
-            ("mushroom", new Color(0.45f, 1.05f, 1.15f)),  // 荧光蓝蘑菇（HDR 喂 Bloom）
-            ("mushroom", new Color(0.55f, 0.95f, 1.1f)),
-            ("grass_tuft_0", new Color(0.62f, 0.82f, 0.72f)), // 苔丛
-            ("grass_tuft_2", new Color(0.55f, 0.75f, 0.68f)),
-        };
-
-        private static readonly (string sprite, Color tint)[] PropPaletteL3 =
-        {
-            ("rock", new Color(0.62f, 0.55f, 0.8f)), ("rock", new Color(0.55f, 0.48f, 0.72f)),
-            ("mushroom", new Color(1.05f, 0.5f, 1.3f)),    // 深渊紫光蘑菇
-            ("grass_tuft_1", new Color(0.5f, 0.42f, 0.62f)), // 枯草
-            ("grass_tuft_2", new Color(0.45f, 0.4f, 0.58f)),
-        };
-
-        /// <summary>地表每段撒 1-3 株 + 悬浮平台顶面 0-1 株小装饰、底面垂 1-2 条藤蔓（固定种子可复现）。</summary>
-        private static void BuildProps(LevelSpec spec)
-        {
-            var palette = spec.levelIndex == 1 ? PropPaletteL1 : spec.levelIndex == 2 ? PropPaletteL2 : PropPaletteL3;
-            var propRoot = new GameObject("Props");
-            var rng = new System.Random(20261122 + spec.levelIndex * 7919);
-
-            foreach (var s in spec.groundSegments)
-            {
-                float width = s.endX - s.startX;
-                if (width < 2f) continue;
-                int count = 1 + rng.Next(0, 3);
-                for (int i = 0; i < count; i++)
-                {
-                    float x = s.startX + 0.7f + (float)rng.NextDouble() * (width - 1.4f);
-                    SpawnProp(propRoot.transform, palette[rng.Next(palette.Length)],
-                        new Vector2(x, s.groundY - 0.05f), rng);
-                }
-            }
-
-            Color vineTint = spec.levelIndex == 1 ? new Color(0.9f, 1f, 0.85f)
-                : spec.levelIndex == 2 ? new Color(0.6f, 0.9f, 0.85f)
-                : new Color(0.7f, 0.5f, 0.95f);
-            var vine = TrySprite("vine");
-            foreach (var p in spec.platforms)
-            {
-                // 平台顶面只放小型 prop（stump/rock 太重，重抽几次规避）
-                if (rng.Next(0, 2) == 1)
-                {
-                    var pick = palette[rng.Next(palette.Length)];
-                    for (int t = 0; t < 4 && (pick.sprite == "stump" || pick.sprite == "rock"); t++)
-                        pick = palette[rng.Next(palette.Length)];
-                    SpawnProp(propRoot.transform, pick,
-                        new Vector2(p.x + 0.8f + (float)rng.NextDouble() * (p.width - 1.6f), p.y - 0.05f), rng);
-                }
-                // 平台底缘垂藤：顶部贴平台底、向下垂落（竖长图按 bounds 对齐）
-                if (vine == null) continue;
-                int vines = 1 + rng.Next(0, 2);
-                for (int i = 0; i < vines; i++)
-                {
-                    float x = p.x + 0.6f + (float)rng.NextDouble() * (p.width - 1.2f);
-                    float scaleY = 1.4f + (float)rng.NextDouble() * 0.8f;
-                    var sr = SpawnProp(propRoot.transform, ("vine", vineTint), new Vector2(x, p.y - 0.6f), rng);
-                    if (sr == null) continue;
-                    float half = vine.bounds.extents.y * scaleY;
-                    sr.transform.localScale = new Vector3(sr.transform.localScale.x, scaleY, 1f);
-                    sr.transform.localPosition = new Vector3(x, p.y - 0.62f - half, 0f);
-                }
-            }
-        }
-
-        /// <summary>单株 prop：缺资产静默跳过（降级策略与全文件一致）；随机镜像 + 轻微缩放抖动出群感。</summary>
-        private static SpriteRenderer SpawnProp(Transform parent, (string sprite, Color tint) prop, Vector2 pos, System.Random rng)
-        {
-            var sprite = TrySprite(prop.sprite);
-            if (sprite == null) return null;
-            var go = new GameObject($"Prop_{prop.sprite}_{pos.x:F1}");
-            go.transform.SetParent(parent, false);
-            go.transform.position = pos;
-            var sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = sprite;
-            sr.color = prop.tint;
-            sr.sortingOrder = 1; // 压地形之上、全部玩法对象（尖刺 5/怪物视觉 15/勇者 20）之下
-            float flip = rng.Next(0, 2) == 0 ? 1f : -1f;
-            float s = 0.85f + (float)rng.NextDouble() * 0.35f;
-            go.transform.localScale = new Vector3(s * flip, s, 1f);
-            return sr;
         }
 
         // ---------- 新手教学（只在 Level1） ----------
@@ -852,56 +578,6 @@ namespace StarVortex.EditorTools
         {
             return AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Art/Hifi/{name}.png")
                 ?? AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/Art/Generated/{name}.png");
-        }
-
-        /// <summary>纯色方块兜底：生成 8×8 白 png 并导入为 Sprite（必须落盘成资产——内存 Sprite.Create 引用保存场景会悬空）。</summary>
-        private static Sprite FallbackWhite()
-        {
-            if (_fallbackWhite != null) return _fallbackWhite;
-            _fallbackWhite = AssetDatabase.LoadAssetAtPath<Sprite>(FallbackSpritePath);
-            if (_fallbackWhite != null) return _fallbackWhite;
-
-            var tex = new Texture2D(8, 8, TextureFormat.RGBA32, false);
-            var white = new Color32(255, 255, 255, 255);
-            var pixels = new Color32[8 * 8];
-            for (int i = 0; i < pixels.Length; i++) pixels[i] = white;
-            tex.SetPixels32(pixels);
-            tex.Apply();
-
-            // 写盘用绝对路径（相对路径依赖编辑器工作目录，batch 环境下不可靠）
-            string absPath = Path.Combine(Directory.GetParent(Application.dataPath).FullName,
-                FallbackSpritePath.Replace('/', Path.DirectorySeparatorChar));
-            File.WriteAllBytes(absPath, tex.EncodeToPNG());
-            AssetDatabase.ImportAsset(FallbackSpritePath);
-            var importer = AssetImporter.GetAtPath(FallbackSpritePath) as TextureImporter;
-            if (importer != null)
-            {
-                importer.textureType = TextureImporterType.Sprite;
-                importer.spriteImportMode = SpriteImportMode.Single;
-                importer.spritePixelsPerUnit = 100f; // 与项目其他精灵同一 PPU 契约
-                importer.mipmapEnabled = false;
-                importer.SaveAndReimport();
-            }
-            _fallbackWhite = AssetDatabase.LoadAssetAtPath<Sprite>(FallbackSpritePath);
-            Debug.LogWarning($"[LevelBuilder] 已生成纯色兜底精灵：{FallbackSpritePath}");
-            return _fallbackWhite;
-        }
-
-        /// <summary>Tiled 平铺前提：纹理包裹模式 Repeat（与 DemoSceneBuilder.EnsureTextureRepeat 同款做法）。</summary>
-        private static void EnsureRepeat(string spriteName)
-        {
-            foreach (string dir in new[] { "Assets/Art/Generated", "Assets/Art/Hifi" })
-            {
-                string path = $"{dir}/{spriteName}.png";
-                var importer = AssetImporter.GetAtPath(path) as TextureImporter;
-                if (importer == null) continue;
-                if (importer.wrapMode != TextureWrapMode.Repeat)
-                {
-                    importer.wrapMode = TextureWrapMode.Repeat;
-                    importer.SaveAndReimport();
-                }
-                return;
-            }
         }
 
         private static void EnsureDir(string dir)

@@ -25,6 +25,10 @@ namespace StarVortex.Gameplay.World
         [SerializeField] private float followSmooth = 5f;
         [Tooltip("相机高于锁定地面的抬升量：地面线落在画面下 1/3 的构图")]
         [SerializeField] private float groundLift = 2.8f;
+        [Tooltip("纵向死区：勇者脚底高出地面这么多以内，相机不动（跳跃不晃）；再高就抬镜头，高台不出画")]
+        [SerializeField] private float verticalDeadZone = 2.2f;
+        [Tooltip("纵向跟随的平滑时间（秒）：比横向慢，抬镜头时更稳")]
+        [SerializeField] private float verticalSmoothTime = 0.3f;
 
         [Header("内置震屏（无 CameraRig 时的兜底，参数对齐 CameraRig 基准）")]
         [SerializeField] private float maxShakeOffset = 0.3f;
@@ -41,6 +45,7 @@ namespace StarVortex.Gameplay.World
         private bool _hasBounds;
 
         private float _smoothVelocity;   // SmoothDamp 的速度记忆
+        private float _smoothVelocityY;
         private float _trauma;
         private float _z;
 
@@ -60,7 +65,8 @@ namespace StarVortex.Gameplay.World
         public void SnapToTarget()
         {
             _smoothVelocity = 0f;
-            float y = _hasBounds ? _groundY + groundLift : transform.position.y;
+            _smoothVelocityY = 0f;
+            float y = _hasBounds ? ComputeTargetY() : transform.position.y;
             transform.position = new Vector3(ComputeClampedTargetX(), y, _z);
         }
 
@@ -143,8 +149,22 @@ namespace StarVortex.Gameplay.World
             float smoothTime = Mathf.Max(0.01f, 1f / Mathf.Max(0.01f, followSmooth));
             float x = Mathf.SmoothDamp(transform.position.x, ComputeClampedTargetX(), ref _smoothVelocity, smoothTime, Mathf.Infinity, deltaTime);
 
-            float y = _hasBounds ? _groundY + groundLift : transform.position.y;
+            float y = _hasBounds
+                ? Mathf.SmoothDamp(transform.position.y, ComputeTargetY(), ref _smoothVelocityY, verticalSmoothTime, Mathf.Infinity, deltaTime)
+                : transform.position.y;
             return new Vector3(x, y, _z);
+        }
+
+        /// <summary>
+        /// 纵向取景：平时锁在地面构图（地面线在画面下 1/3）；勇者登上高台、脚底超出死区时，
+        /// 镜头只抬超出的那部分——普通跳跃不晃，高台也不会把人顶出画面。掉坑不往下追（坑底没东西可看）。
+        /// </summary>
+        private float ComputeTargetY()
+        {
+            float baseY = _groundY + groundLift;
+            if (_target == null) return baseY;
+            float excess = _target.position.y - (_groundY + verticalDeadZone);
+            return excess > 0f ? baseY + excess : baseY;
         }
     }
 }
