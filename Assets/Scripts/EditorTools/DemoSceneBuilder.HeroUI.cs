@@ -12,7 +12,8 @@ namespace StarVortex.EditorTools
 {
     /// <summary>
     /// 《勇者远征》UI 搭建（partial DemoSceneBuilder）：
-    /// 勇者 HUD（血/蓝/经验/天赋角标/BOSS 血条/操作提示/关卡目标）+ 选人面板 + 升级双栏面板 + 关卡结算面板。
+    /// 勇者 HUD（血/蓝/经验/天赋角标/BOSS 血条/操作提示/关卡目标）+ 选人面板 + 升级双栏面板 + 关卡结算面板
+    /// + 死亡结算面板 + 暂停面板。
     /// 武器 Kit SO 由 DemoSceneBuilder.Hero.cs 的 CreateWeaponKits 负责（本文件只消费）；
     /// 场景接入方式（两选一）：
     /// ① 关卡场景搭建脚本调用 BuildHeroHud / BuildWeaponSelectPanel / BuildHeroLevelUpPanel / BuildLevelClearPanel
@@ -410,6 +411,77 @@ namespace StarVortex.EditorTools
             return panel;
         }
 
+        // ============================ 死亡结算 / 暂停 ============================
+
+        /// <summary>死亡结算面板：标题 + 本局数据 + 新纪录提示 + 重新开始 / 回主菜单。</summary>
+        private static GameObject BuildGameOverPanel(Transform canvasRoot)
+        {
+            var panel = new GameObject("GameOverPanel", typeof(RectTransform), typeof(CanvasGroup), typeof(Image));
+            panel.transform.SetParent(canvasRoot, false);
+            Rect(panel, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            panel.GetComponent<Image>().color = new Color(0.08f, 0.01f, 0.02f, 0.78f); // 暗红底，半透明能看到倒地的勇者
+
+            var title = AddText(panel, "Title", "勇者倒下了", 72f, Palette.Red);
+            Rect(title.gameObject, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-500f, 120f), new Vector2(500f, 230f));
+            var stats = AddText(panel, "Stats", "第 1 关   击杀 0   用时 00:00   Lv.1", 32f, Palette.TextPrimary);
+            Rect(stats.gameObject, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-560f, 40f), new Vector2(560f, 100f));
+            var record = AddText(panel, "Record", "", 34f, Palette.TextHdrGold);
+            Rect(record.gameObject, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-400f, -20f), new Vector2(400f, 36f));
+
+            var restart = AddButton(panel, "重新开始", new Vector2(300f, 76f), Palette.Cyan);
+            Rect(restart.gameObject, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-340f, -150f), new Vector2(-40f, -74f));
+            var menu = AddButton(panel, "回主菜单", new Vector2(300f, 76f), Palette.TextDim);
+            Rect(menu.gameObject, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(40f, -150f), new Vector2(340f, -74f));
+            var hint = AddText(panel, "Hint", "Enter / R 重新开始 · Esc / M 回主菜单", 24f, Palette.TextDim);
+            Rect(hint.gameObject, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-460f, -220f), new Vector2(460f, -176f));
+
+            var script = panel.AddComponent<GameOverPanel>();
+            SetField(script, "_group", panel.GetComponent<CanvasGroup>());
+            SetField(script, "_titleLabel", title);
+            SetField(script, "_statsLabel", stats);
+            SetField(script, "_recordLabel", record);
+            SetField(script, "_restartButton", restart);
+            SetField(script, "_menuButton", menu);
+            panel.SetActive(false); // 运行时由 HeroGameBootstrap 按 GameOver 状态激活
+            return panel;
+        }
+
+        /// <summary>暂停面板：继续 / 重新开始 / 回主菜单 + 操作说明（暂停时顺便当按键说明页）。</summary>
+        private static GameObject BuildPausePanel(Transform canvasRoot)
+        {
+            var panel = new GameObject("PausePanel", typeof(RectTransform), typeof(CanvasGroup), typeof(Image));
+            panel.transform.SetParent(canvasRoot, false);
+            Rect(panel, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            panel.GetComponent<Image>().color = new Color(0.02f, 0.03f, 0.06f, 0.82f);
+
+            var title = AddText(panel, "Title", "暂停", 72f, Palette.TextPrimary);
+            Rect(title.gameObject, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-400f, 170f), new Vector2(400f, 270f));
+
+            string[] labels = { "继续", "重新开始", "回主菜单" };
+            Color[] accents = { Palette.Cyan, Palette.Orange, Palette.TextDim };
+            var buttons = new Button[3];
+            for (int i = 0; i < 3; i++)
+            {
+                buttons[i] = AddButton(panel, labels[i], new Vector2(320f, 72f), accents[i]);
+                float top = 120f - i * 92f;
+                Rect(buttons[i].gameObject, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-160f, top - 72f), new Vector2(160f, top));
+            }
+
+            var keys = AddText(panel, "Controls",
+                "Esc 继续 · R 重新开始 · M 回主菜单\nA / D 移动 · 空格 跳跃（可二段跳） · J 攻击 · K 特殊技 · L 冲刺",
+                24f, Palette.TextDim);
+            Rect(keys.gameObject, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(-560f, -260f), new Vector2(560f, -170f));
+
+            var script = panel.AddComponent<PausePanel>();
+            SetField(script, "_group", panel.GetComponent<CanvasGroup>());
+            SetField(script, "_titleLabel", title);
+            SetField(script, "_resumeButton", buttons[0]);
+            SetField(script, "_restartButton", buttons[1]);
+            SetField(script, "_menuButton", buttons[2]);
+            panel.SetActive(false);
+            return panel;
+        }
+
         // ============================ 场景接线 ============================
 
         /// <summary>
@@ -432,6 +504,8 @@ namespace StarVortex.EditorTools
             var weaponPanel = BuildWeaponSelectPanel(canvasGo.transform);
             var levelUpPanel = BuildHeroLevelUpPanel(canvasGo.transform);
             var levelClearPanel = BuildLevelClearPanel(canvasGo.transform);
+            var gameOverPanel = GameObject.Find("GameOverPanel") ?? BuildGameOverPanel(canvasGo.transform);
+            var pausePanel = GameObject.Find("PausePanel") ?? BuildPausePanel(canvasGo.transform);
 
             // 引导器：已存在就复用（重复执行菜单不叠加组件）
             var bootstrapGo = GameObject.Find("HeroGameBootstrap");
@@ -444,8 +518,8 @@ namespace StarVortex.EditorTools
             SetField(bootstrap, "_weaponSelectPanel", weaponPanel);
             SetField(bootstrap, "_levelUpPanel", levelUpPanel);
             SetField(bootstrap, "_levelClearPanel", levelClearPanel);
-            SetField(bootstrap, "_gameOverPanel", GameObject.Find("GameOverPanel")); // 旧场景已有则接上，没有留空
-            SetField(bootstrap, "_pausePanel", GameObject.Find("PausePanel"));
+            SetField(bootstrap, "_gameOverPanel", gameOverPanel);
+            SetField(bootstrap, "_pausePanel", pausePanel);
 
             if (FindSceneHero() == null)
                 Debug.LogWarning("[HeroUI] 场景里没有 HeroController——引导器 _hero 留空，运行时会自动查找（找不到则 HUD 初始值跳过）");
@@ -470,6 +544,8 @@ namespace StarVortex.EditorTools
             var weaponPanel = BuildWeaponSelectPanel(canvasRoot);
             var levelUpPanel = BuildHeroLevelUpPanel(canvasRoot);
             var levelClearPanel = BuildLevelClearPanel(canvasRoot);
+            var gameOverPanel = BuildGameOverPanel(canvasRoot);
+            var pausePanel = BuildPausePanel(canvasRoot);
 
             var bootstrapGo = new GameObject("HeroGameBootstrap");
             var bootstrap = bootstrapGo.AddComponent<HeroGameBootstrap>();
@@ -480,6 +556,8 @@ namespace StarVortex.EditorTools
             SetField(bootstrap, "_weaponSelectPanel", weaponPanel);
             SetField(bootstrap, "_levelUpPanel", levelUpPanel);
             SetField(bootstrap, "_levelClearPanel", levelClearPanel);
+            SetField(bootstrap, "_gameOverPanel", gameOverPanel);
+            SetField(bootstrap, "_pausePanel", pausePanel);
             return bootstrap;
         }
 

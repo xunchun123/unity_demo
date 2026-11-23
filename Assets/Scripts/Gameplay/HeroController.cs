@@ -209,6 +209,17 @@ namespace StarVortex.Gameplay
             }
         }
 
+#if UNITY_EDITOR
+        /// <summary>编辑器调试：立即死亡（Inspector 组件菜单可点；自动化试玩用它验证死亡结算流程）。</summary>
+        [ContextMenu("Debug/立即死亡")]
+        public void DebugKill()
+        {
+            _invulnTimer = 0f;
+            _dashTimer = 0f;
+            TakeDamage(new DamageInfo(CurrentHp + 1f, transform.position, false));
+        }
+#endif
+
         public void Heal(float amount)
         {
             if (IsDead) return;

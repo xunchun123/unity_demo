@@ -22,9 +22,9 @@ namespace StarVortex.Gameplay
         [SerializeField] private HeroController _hero;
 
         [Header("弹丸池（构建脚本注入 Assets/Prefabs/Hero/proj_*.prefab；空项跳过）")]
-        [SerializeField] private GameObject _fireballPrefab;   // 法杖奥术弹
+        [SerializeField] private GameObject _fireballPrefab;   // 气功波（复用火球弹体）
         [SerializeField] private GameObject _swordWavePrefab;  // 长剑剑气
-        [SerializeField] private GameObject _arrowPrefab;      // 弓箭
+        [SerializeField] private GameObject _arrowPrefab;      // 火铳子弹（池键沿用 Arrow）
 
         [Header("面板（构建脚本注入；按状态事件驱动显隐）")]
         [SerializeField] private GameObject _weaponSelectPanel;
