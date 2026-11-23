@@ -118,6 +118,13 @@ namespace StarVortex.Gameplay.World
         [SerializeField] private Sprite _portalSprite;
         [SerializeField] private Sprite _tileSprite;
 
+        [Header("像素机关表现（LevelBuilder 注入 Assets/Art/Pixel/Fx 的序列帧；空则走上面的旧精灵）")]
+        [SerializeField] private Sprite _ventSprite;      // 喷火口铁栅
+        [SerializeField] private Sprite _ventHotSprite;   // 预热：栅缝透出火光
+        [SerializeField] private Sprite[] _flameFrames;   // 火柱循环帧
+        [SerializeField] private Sprite[] _portalFrames;  // 传送门电光循环帧
+        [SerializeField] private Sprite[] _sparkFrames;   // 传送门火花
+
         /// <summary>key → prefab 的通用绑定（怪物与弹丸共用一种序列化结构）。</summary>
         [Serializable]
         public class PrefabBinding
@@ -183,6 +190,21 @@ namespace StarVortex.Gameplay.World
             _portalSprite = portal;
             _tileSprite = tile;
         }
+
+        /// <summary>注入像素机关表现（编辑器期调用）：地刺/落石单帧，火柱/传送门/火花为序列帧。</summary>
+        public void InjectPixelVisuals(Sprite spike, Sprite rock, Sprite vent, Sprite ventHot,
+            Sprite[] flame, Sprite[] portal, Sprite[] spark)
+        {
+            _spikeSprite = spike;
+            _rockSprite = rock;
+            _ventSprite = vent;
+            _ventHotSprite = ventHot;
+            _flameFrames = flame;
+            _portalFrames = portal;
+            _sparkFrames = spark;
+        }
+
+        private static bool Has(Sprite[] frames) => frames != null && frames.Length > 0;
 
         /// <summary>注入自定义布置委托（覆盖 LayoutFromSpec；用于测试或程序化变体关卡）。</summary>
         public void SetLayoutOverride(Action<LevelSpec> hook) => _layoutOverride = hook;
@@ -379,23 +401,45 @@ namespace StarVortex.Gameplay.World
             go.transform.position = pos;
             go.layer = GroundLayer;
 
+            bool pixel = _ventSprite != null && Has(_flameFrames);
+
             var ventGo = new GameObject("VentBase");
             ventGo.transform.SetParent(go.transform, false);
-            ventGo.transform.localPosition = new Vector3(0f, 0.17f, 0f);
             var ventSr = ventGo.AddComponent<SpriteRenderer>();
-            ventSr.sprite = _tileSprite != null ? _tileSprite : WhiteFallback();
-            ventSr.drawMode = SpriteDrawMode.Tiled;
-            ventSr.size = new Vector2(1f, 0.35f);
             ventSr.sortingOrder = 4;
-            ventSr.color = new Color(0.35f, 0.33f, 0.3f, 1f);
+            if (pixel)
+            {
+                // 像素铁栅：16px = 0.5u，底边贴地
+                ventSr.sprite = _ventSprite;
+                ventGo.transform.localPosition = new Vector3(0f, _ventSprite.bounds.extents.y, 0f);
+            }
+            else
+            {
+                ventGo.transform.localPosition = new Vector3(0f, 0.17f, 0f);
+                ventSr.sprite = _tileSprite != null ? _tileSprite : WhiteFallback();
+                ventSr.drawMode = SpriteDrawMode.Tiled;
+                ventSr.size = new Vector2(1f, 0.35f);
+                ventSr.color = new Color(0.35f, 0.33f, 0.3f, 1f);
+            }
 
             var flameGo = new GameObject("Flame");
             flameGo.transform.SetParent(go.transform, false);
-            flameGo.transform.localPosition = new Vector3(0f, 1.2f, 0f);
             var flameSr = flameGo.AddComponent<SpriteRenderer>();
-            flameSr.sprite = _flameSprite != null ? _flameSprite : WhiteFallback();
-            flameSr.color = new Color(1.15f, 0.6f, 0.18f, 0.9f); // HDR>1 喂 Bloom 发光
             flameSr.sortingOrder = 9;
+            if (pixel)
+            {
+                // 火柱底部压在铁栅顶上；颜色略超 1 给 Bloom 一点发光
+                float ventTop = _ventSprite.bounds.size.y;
+                flameGo.transform.localPosition = new Vector3(0f, ventTop + _flameFrames[0].bounds.extents.y - 0.1f, 0f);
+                flameSr.color = new Color(1.3f, 1.15f, 1.05f, 1f);
+                flameGo.AddComponent<SpriteLoop>().Configure(_flameFrames, 14f);
+            }
+            else
+            {
+                flameGo.transform.localPosition = new Vector3(0f, 1.2f, 0f);
+                flameSr.sprite = _flameSprite != null ? _flameSprite : WhiteFallback();
+                flameSr.color = new Color(1.15f, 0.6f, 0.18f, 0.9f); // HDR>1 喂 Bloom 发光
+            }
             flameGo.SetActive(false); // 初始休眠，喷发段才显示
 
             var col = go.AddComponent<BoxCollider2D>();
@@ -406,6 +450,8 @@ namespace StarVortex.Gameplay.World
             var vent = go.AddComponent<FlameVent>();
             vent.flameRenderer = flameSr;
             vent.ventRenderer = ventSr;
+            vent.pixelFrames = pixel;
+            vent.ventHotSprite = _ventHotSprite;
         }
 
         // ---------- 传送门阶段 ----------
@@ -429,11 +475,31 @@ namespace StarVortex.Gameplay.World
             go.transform.position = pos + new Vector2(0f, 2f); // 柱体中心抬到半高处
             go.layer = GroundLayer;
 
-            var sr = go.AddComponent<SpriteRenderer>();
-            _portalBaseColor = new Color(0.45f, 1.15f, 1.35f, 0.85f);
+            SpriteRenderer sr;
+            if (Has(_portalFrames))
+            {
+                // 像素电光：96px = 3u 高，内容底边在第 88 行——把内容底边放到地面上
+                var visual = new GameObject("Visual");
+                visual.transform.SetParent(go.transform, false);
+                var frame = _portalFrames[0];
+                float contentBottomFromCenter = (88f - frame.rect.height * 0.5f) / frame.pixelsPerUnit;
+                visual.transform.localPosition = new Vector3(0f, contentBottomFromCenter - 2f, 0f);
+                sr = visual.AddComponent<SpriteRenderer>();
+                visual.AddComponent<SpriteLoop>().Configure(_portalFrames, 10f);
+                _portalBaseColor = new Color(1.25f, 1.35f, 1.6f, 1f); // 略超 1：Bloom 下发蓝光
+            }
+            else
+            {
+                sr = go.AddComponent<SpriteRenderer>();
+                _portalBaseColor = new Color(0.45f, 1.15f, 1.35f, 0.85f);
+            }
             sr.color = _portalBaseColor;
             sr.sortingOrder = 10;
-            if (_portalSprite != null)
+            if (Has(_portalFrames))
+            {
+                // 视觉已在子物体上配好
+            }
+            else if (_portalSprite != null)
             {
                 sr.sprite = _portalSprite;
                 go.transform.localScale = new Vector3(1.3f, 2f, 1f); // 96×192 占位图 → 约 1.2×3.8 柱体
@@ -457,7 +523,7 @@ namespace StarVortex.Gameplay.World
         /// <summary>传送门闪烁：柱体正弦呼吸 + 每 0.5s 弹一枚 FadeOutAndDie 火花（一次性视觉淡出自毁）。</summary>
         private IEnumerator PortalBlinkRoutine()
         {
-            var sr = _portal != null ? _portal.GetComponent<SpriteRenderer>() : null;
+            var sr = _portal != null ? _portal.GetComponentInChildren<SpriteRenderer>() : null;
             while (_portal != null && CurrentPhase == Phase.PortalOpen)
             {
                 if (sr != null)
@@ -469,9 +535,14 @@ namespace StarVortex.Gameplay.World
                 var spark = new GameObject("PortalSpark");
                 spark.transform.position = _portal.transform.position + new Vector3(
                     UnityEngine.Random.Range(-0.5f, 0.5f), UnityEngine.Random.Range(-1.7f, 1.7f), 0f);
-                spark.transform.localScale = Vector3.one * 0.35f;
                 var sparkSr = spark.AddComponent<SpriteRenderer>();
-                sparkSr.sprite = _portalSprite != null ? _portalSprite : WhiteFallback();
+                if (Has(_sparkFrames))
+                    sparkSr.sprite = _sparkFrames[UnityEngine.Random.Range(0, _sparkFrames.Length)]; // 像素星芒，1 倍大小
+                else
+                {
+                    spark.transform.localScale = Vector3.one * 0.35f;
+                    sparkSr.sprite = _portalSprite != null ? _portalSprite : WhiteFallback();
+                }
                 sparkSr.color = new Color(0.7f, 1.4f, 1.6f, 0.85f);
                 sparkSr.sortingOrder = 11;
                 spark.AddComponent<FadeOutAndDie>().life = 0.4f;

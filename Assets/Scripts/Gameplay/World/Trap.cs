@@ -72,7 +72,7 @@ namespace StarVortex.Gameplay.World
         [Tooltip("石头在感应区根节点上方多少单位生成")]
         [SerializeField] private float spawnHeight = 4.4f;
         public Sprite rockSprite;
-        public Color rockColor = new Color(0.52f, 0.47f, 0.42f, 1f);
+        public Color rockColor = new Color(0.78f, 0.72f, 0.74f, 1f); // 像素石块自带明暗，只轻微压暗
 
         private float _rearmTimer;
 
@@ -196,6 +196,11 @@ namespace StarVortex.Gameplay.World
         [Header("视觉（LevelDirector 注入）")]
         public SpriteRenderer flameRenderer; // 火柱（喷发期显示）
         public SpriteRenderer ventRenderer;  // 火口底座（预热期变亮）
+        [Tooltip("火柱是序列帧（SpriteLoop 播放）：不再拉伸缩放，只做亮度闪烁")]
+        public bool pixelFrames;
+        [Tooltip("预热/喷发时底座换成这张（栅缝透出火光）；为空则底座按颜色变亮")]
+        public Sprite ventHotSprite;
+        private Sprite _ventIdleSprite;
 
         private Color _ventBaseColor = Color.gray;
         private float _t;
@@ -209,7 +214,11 @@ namespace StarVortex.Gameplay.World
         private void Start()
         {
             _flickerSeed = GetInstanceID();
-            if (ventRenderer != null) _ventBaseColor = ventRenderer.color;
+            if (ventRenderer != null)
+            {
+                _ventBaseColor = ventRenderer.color;
+                _ventIdleSprite = ventRenderer.sprite;
+            }
         }
 
         private void Update()
@@ -245,16 +254,25 @@ namespace StarVortex.Gameplay.World
                 {
                     // Perlin 闪烁：火苗高度/亮度抖动（Perlin 连续，比 Random 抖动自然）
                     float n = Mathf.PerlinNoise(Time.time * 18f, _flickerSeed * 0.01f);
-                    flameRenderer.transform.localScale = new Vector3(1.6f, 4.2f + n * 1.4f, 1f);
+                    // 像素帧自带动态，拉伸会让像素粗细不均；占位图才靠缩放模拟火苗
+                    if (!pixelFrames) flameRenderer.transform.localScale = new Vector3(1.6f, 4.2f + n * 1.4f, 1f);
                     var c = flameRenderer.color;
                     flameRenderer.color = new Color(c.r, c.g, c.b, 0.75f + n * 0.25f);
                 }
             }
             if (ventRenderer != null)
             {
-                // 预热提示：底座向橙红过渡
-                float k = Warning ? 0.75f : 0f;
-                ventRenderer.color = Color.Lerp(_ventBaseColor, new Color(1f, 0.45f, 0.15f), k);
+                if (ventHotSprite != null)
+                {
+                    // 像素版预热：栅缝亮起火光（喷发全程保持），比整体染色更像"火要出来了"
+                    ventRenderer.sprite = Warning || Erupting ? ventHotSprite : _ventIdleSprite;
+                }
+                else
+                {
+                    // 预热提示：底座向橙红过渡
+                    float k = Warning ? 0.75f : 0f;
+                    ventRenderer.color = Color.Lerp(_ventBaseColor, new Color(1f, 0.45f, 0.15f), k);
+                }
             }
         }
     }

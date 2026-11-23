@@ -568,6 +568,22 @@ namespace StarVortex.EditorTools
                 TrySprite("portal_vortex") ?? TrySprite("portal"),  // 传送门：多层紫蓝漩涡环
                 TrySprite(levelTile) ?? TrySprite("platform_tile")); // 火口底座
 
+            // 像素机关（Assets/Art/Pixel/Fx）：覆盖上面的旧占位精灵；缺帧时 LevelDirector 自动退回旧表现
+            Sprite First(string action)
+            {
+                var frames = PixelArtPipeline.LoadFrames("Fx", action);
+                return frames.Length > 0 ? frames[0] : null;
+            }
+            var vents = PixelArtPipeline.LoadFrames("Fx", "Vent");
+            director.InjectPixelVisuals(
+                First("Spike") ?? TrySprite("spikes_metal"),
+                First("Rock"),
+                vents.Length > 0 ? vents[0] : null,
+                vents.Length > 1 ? vents[1] : null,
+                PixelArtPipeline.LoadFrames("Fx", "Flame"),
+                PixelArtPipeline.LoadFrames("Fx", "Portal"),
+                PixelArtPipeline.LoadFrames("Fx", "Spark"));
+
             director.InjectForBuild(spec, monsterBindings, projectileBindings);
         }
 
