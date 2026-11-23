@@ -75,6 +75,7 @@ namespace StarVortex.Enemies
             transform.localScale = BaseScale;
             if (_sr != null) _sr.color = Color.white;
             _state = State.Walk;
+            AnimWindup(false);
         }
 
         protected override void Update()
@@ -119,12 +120,13 @@ namespace StarVortex.Enemies
                     _stateTimer -= Time.deltaTime;
                     float k = Mathf.Clamp01(1f - _stateTimer / Mathf.Max(0.01f, quakeWindup));
                     if (_sr != null) _sr.color = Color.Lerp(Color.white, WindupRed, k);
-                    transform.localScale = new Vector3(1f, 1f + 0.18f * k, 1f);
+                    transform.localScale = new Vector3(1f, 1f + 0.06f * k, 1f);
 
                     if (_stateTimer <= 0f)
                     {
                         transform.localScale = BaseScale;
                         if (_sr != null) _sr.color = Color.white;
+                        AnimWindup(false);
                         SpawnQuakeWaves();
                         _quakeCd = quakeCooldown;
                         _nextSkill = Skill.Charge; // 轮换：下一次优先冲锋
@@ -148,6 +150,7 @@ namespace StarVortex.Enemies
                         _chargeDist = 0f;
                         _chargeHitHero = false;
                         _state = State.Charging;
+                        AnimAttack(); // 冲锋：疾驰帧（之后速度够快一直走 Move）
                     }
                     break;
                 }
@@ -161,7 +164,7 @@ namespace StarVortex.Enemies
                     TryChargeHitHero();
 
                     // 撞墙探测：身体高度前方一小盒（探测不到地面层时由距离上限与碰撞回调兜底）
-                    var wallProbeCenter = (Vector2)transform.position + Vector2.up * 0.5f + _chargeDir * 0.55f;
+                    var wallProbeCenter = (Vector2)transform.position + Vector2.up * 0.5f + _chargeDir * (BodyHalfWidth + 0.2f);
                     bool wallAhead = Physics2D.OverlapBox(wallProbeCenter, new Vector2(0.35f, 0.5f), 0f, groundMask) != null;
                     if (wallAhead || _chargeDist >= chargeRange)
                     {
@@ -198,13 +201,15 @@ namespace StarVortex.Enemies
         {
             _state = State.QuakeWindup;
             _stateTimer = quakeWindup;
+            AnimWindup(true);
         }
 
         private void StartCharge()
         {
             _state = State.ChargeWindup;
             _stateTimer = chargeWindup;
-            Juice.PunchScale(transform, 0.16f, 0.35f); // 冲锋前摇挤压 telegraph（冲锋期间 Scale 无其他写入者，安全）
+            AnimWindup(true);
+            Juice.PunchScale(transform, 0.06f, 0.35f); // 冲锋前摇挤压 telegraph（冲锋期间 Scale 无其他写入者，安全）
             // 后退半步：与冲锋方向相反的一次小冲量（摩擦自然收住，读起来就是"蓄力后撤"）
             float toward = Mathf.Sign(_hero.position.x - transform.position.x);
             _rb.velocity = new Vector2(-toward * 3.5f, _rb.velocity.y);
@@ -216,8 +221,8 @@ namespace StarVortex.Enemies
             // 波盒贴在脚面高度（+0.1）：足够低像贴地冲击波，又保证与勇者下半身判定盒相交
             var center = (Vector2)transform.position + Vector2.up * 0.1f;
             float waveSpeed = quakeRange / Mathf.Max(0.01f, quakeDuration);
-            QuakeWave.Spawn(center + Vector2.right * 0.7f, Vector2.right, waveSpeed, quakeDamage, quakeDuration);
-            QuakeWave.Spawn(center + Vector2.left * 0.7f, Vector2.left, waveSpeed, quakeDamage, quakeDuration);
+            QuakeWave.Spawn(center + Vector2.right * BodyHalfWidth, Vector2.right, waveSpeed, quakeDamage, quakeDuration);
+            QuakeWave.Spawn(center + Vector2.left * BodyHalfWidth, Vector2.left, waveSpeed, quakeDamage, quakeDuration);
             AudioService.Instance?.PlayWithPitch(SfxId.CritHit, 0.6f);
             CameraRig.Instance?.AddTrauma(0.15f);
         }
@@ -226,8 +231,9 @@ namespace StarVortex.Enemies
         private void TryChargeHitHero()
         {
             if (_chargeHitHero) return;
-            var center = (Vector2)transform.position + _chargeDir * 0.6f;
-            foreach (var hit in Physics2D.OverlapBoxAll(center, new Vector2(0.9f, 1.1f), 0f))
+            // 判定盒贴在身体前沿（马头位置）：按碰撞体半宽摆，换体型不用改常数
+            var center = (Vector2)transform.position + Vector2.up * 0.7f + _chargeDir * (BodyHalfWidth + 0.1f);
+            foreach (var hit in Physics2D.OverlapBoxAll(center, new Vector2(0.9f, 1.4f), 0f))
             {
                 var hero = hit.GetComponentInParent<HeroController>();
                 if (hero == null || hero.IsDead) continue;

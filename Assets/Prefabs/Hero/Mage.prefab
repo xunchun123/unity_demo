@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1121529047537299849}
   - component: {fileID: 8154525964586501773}
+  - component: {fileID: 5669424239549648262}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -26,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 706912528021841878}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4827616730367895588}
@@ -73,17 +74,38 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 15
-  m_Sprite: {fileID: 21300000, guid: a0abeb31a2a91854bbecd8e0dd13397d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58b0bf08cf0e923449475e4d0a321e94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.88, y: 0.88}
+  m_Size: {x: 1.1875, y: 1.375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &5669424239549648262
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706912528021841878}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: cf6bf5e742112574cbd81a6caf6c1792, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1020571901126003117
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +202,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.45}
+  m_Offset: {x: 0, y: 0.55}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -191,7 +213,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.55, y: 0.9}
+  m_Size: {x: 0.55, y: 1.1}
   m_EdgeRadius: 0
 --- !u!61 &4451276347467575416
 BoxCollider2D:
@@ -225,7 +247,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.45}
+  m_Offset: {x: 0, y: 0.55}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -236,7 +258,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.605, y: 0.99}
+  m_Size: {x: 0.605, y: 1.21}
   m_EdgeRadius: 0
 --- !u!114 &4811152932901954107
 MonoBehaviour:
@@ -251,7 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverMode: 0
-  pixelArtMode: 0
+  pixelArtMode: 1
   runBounceAmplitude: 0.06
   leanAngle: 4
   groundMask:
@@ -259,7 +281,7 @@ MonoBehaviour:
     m_Bits: 256
   breathAmplitude: 0.02
   breathFrequency: 1.8
-  bobAmplitude: 0.045
+  bobAmplitude: 0
   bobFrequency: 2.2
   jumpStretch: {x: 0.85, y: 1.2}
   landSquash: {x: 1.25, y: 0.78}
@@ -280,9 +302,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb628e10247e2864584fd729bc6e7a08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 30
-  xpValue: 5
+  maxHp: 110
+  xpValue: 9
   contactDamage: 10
+  hpPerLevel: 0.3
+  staggerTime: 0.22
+  knockbackResist: 0
+  hpBarWidth: 0.8
+  _flatMaterial: {fileID: 2100000, guid: 5b24d19a2a59f974aad24f12d06153c0, type: 2}
+  _anim: {fileID: 5669424239549648262}
+  _deathFrames:
+  - {fileID: 21300000, guid: 3de7b63a87785a245b64ae703bafc259, type: 3}
+  - {fileID: 21300000, guid: bdf73dc7de6f1e9469b364ab13f93f16, type: 3}
+  - {fileID: 21300000, guid: 737a66213fcef5b49b758f05c6d9ea12, type: 3}
+  - {fileID: 21300000, guid: 3b890daf99e75ba47b4f0fcd0285bb0e, type: 3}
+  - {fileID: 21300000, guid: 4a3c2b0299cde2b4a9b67b7f00b64dad, type: 3}
+  - {fileID: 21300000, guid: 16f176c5776f2904b9fa4d597d12dcbc, type: 3}
+  - {fileID: 21300000, guid: 0cd222011d2a9bd4c99b4eaf809a205d, type: 3}
+  _deathFxScale: 1
   walkSpeed: 2
   keepMin: 4
   keepMax: 7
@@ -291,3 +328,5 @@ MonoBehaviour:
   castCooldown: 2.2
   boltSpeed: 7
   boltDamage: 12
+  _boltSprite: {fileID: 21300000, guid: 03e43b2cd4e753247a7912146b836478, type: 3}
+  castPoint: {x: 0.45, y: 0.95}

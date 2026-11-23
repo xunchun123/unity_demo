@@ -105,6 +105,7 @@ namespace StarVortex.EditorTools
             SetField(hero, "_rb", rb);
             SetField(hero, "_sr", sr); // 指向 Visual 子物体：无敌闪烁/残影都作用在它上面
             SetField(hero, "_animator", animator);
+            SetField(hero, "_flatMaterial", FlatUnlitMaterial());
             SetField(hero, "_attackOrigin", origin.transform);
             SetField(hero, "_fireballPrefab", LoadPrefabComp<Fireball>("proj_fireball"));
 
@@ -135,50 +136,69 @@ namespace StarVortex.EditorTools
 
         private static void CreateMonsterPrefabs()
         {
-            // 比例网格（勇者 1.25u）：史莱姆 0.8 / 蝙蝠 0.7 / 法师 1.1 / 精英 1.7 / BOSS 2.6
-            // 史莱姆：地面蹦跳，重力由 prefab 设置
-            var slime = BuildMonsterBase("Slime", "slime_0", new Vector2(0.6f, 0.5f), new Vector2(0f, 0.25f), 3.4f,
-                targetHeight: 0.8f);
-            slime.AddComponent<StarVortex.Enemies.Slime>();
+            EnemyAnimationBuilder.BuildAll();
+            var boltFrames = PixelArtPipeline.LoadFrames("Fx", "MageBolt");
+            var boltSprite = boltFrames.Length > 0 ? boltFrames[0] : null;
+
+            // 碰撞体按像素身体量（PPU 32：1u = 32px），脚底在根原点；视觉层 1 倍缩放，像素粗细与勇者一致
+            // 血量按"长剑几下打死"设计（勇者基础攻击 20，三连击 20/28/36）：
+            //   地狱犬 90 ≈ 一套三连 + 补一刀；幽灵 60 ≈ 3 下（会飞，难打中，血少一点）；
+            //   骷髅巫师 110 ≈ 4~5 下（远程，逼玩家贴脸）；梦魇马 420 ≈ 15 下；恶魔 1500 ≈ 50 下（三阶段）。
+            //   普通怪每深入一关 +30% 血量，跟上勇者升级与天赋的成长。
+            // 史莱姆 → 地狱犬：地面蹦跳，身体约 38×22px
+            var slime = BuildMonsterBase("Slime", "Hound", new Vector2(0.9f, 0.6f), new Vector2(0f, 0.3f), 3.4f);
+            var slimeAI = slime.AddComponent<StarVortex.Enemies.Slime>();
+            WireEnemyVisuals(slimeAI, maxHp: 90f, hpBarWidth: 0.8f);
+            SetField(slimeAI, "xpValue", 6);
             SavePrefab(slime, $"{HeroPrefabDir}/Slime.prefab");
 
-            // 蝙蝠：飞行怪，无重力（hover 模式：悬浮 bob + 两帧扑扇）
-            var bat = BuildMonsterBase("Bat", "bat_0", new Vector2(0.45f, 0.35f), Vector2.zero, 0f, hover: true,
-                targetHeight: 0.7f);
+            // 蝙蝠 → 幽灵：飞行怪，无重力（悬浮起伏由 Bat AI 的弹簧巡航负责）
+            var bat = BuildMonsterBase("Bat", "Ghost", new Vector2(0.55f, 0.9f), new Vector2(0f, 0.75f), 0f);
             var batAI = bat.AddComponent<StarVortex.Enemies.Bat>();
-            SetObjectField(batAI, "_frameB", Art("bat_1")); // 扑扇第二帧（缺图时 Bat 自己跳过切换）
+            WireEnemyVisuals(batAI, maxHp: 60f, hpBarWidth: 0.7f);
+            SetField(batAI, "xpValue", 6);
             SavePrefab(bat, $"{HeroPrefabDir}/Bat.prefab");
 
-            // 骷髅法师：远程施法
-            var mage = BuildMonsterBase("Mage", "mage_0", new Vector2(0.55f, 0.9f), new Vector2(0f, 0.45f), 3.4f,
-                targetHeight: 1.1f);
-            mage.AddComponent<StarVortex.Enemies.MageAI>();
+            // 骷髅法师 → 骷髅巫师：远程施法
+            var mage = BuildMonsterBase("Mage", "Wizard", new Vector2(0.55f, 1.1f), new Vector2(0f, 0.55f), 3.4f);
+            var mageAI = mage.AddComponent<StarVortex.Enemies.MageAI>();
+            WireEnemyVisuals(mageAI, maxHp: 110f, hpBarWidth: 0.8f);
+            SetField(mageAI, "xpValue", 9);
+            SetField(mageAI, "_boltSprite", boltSprite);
             SavePrefab(mage, $"{HeroPrefabDir}/Mage.prefab");
 
-            // 精英·石像卫士
-            var elite = BuildMonsterBase("EliteGuard", "elite_0", new Vector2(0.8f, 1.5f), new Vector2(0f, 0.75f), 3.4f,
-                targetHeight: 1.7f);
+            // 精英 → 梦魇马：身体约 70×55px（不含鬃毛火焰）
+            var elite = BuildMonsterBase("EliteGuard", "Nightmare", new Vector2(1.9f, 1.6f), new Vector2(0f, 0.8f), 3.4f);
             var eliteAI = elite.AddComponent<StarVortex.Enemies.EliteGuard>();
-            SetField(eliteAI, "maxHp", 150f);
+            // 霸体：不硬直、难推动，只闪光抖动——精英的威胁来自"打不断"
+            WireEnemyVisuals(eliteAI, maxHp: 420f, hpBarWidth: 1.6f, staggerTime: 0f, knockbackResist: 0.8f, deathFxScale: 1.6f);
             SetField(eliteAI, "xpValue", 30);
             SetField(eliteAI, "contactDamage", 18f);
             SavePrefab(elite, $"{HeroPrefabDir}/EliteGuard.prefab");
 
-            // BOSS·深渊魔王
-            var boss = BuildMonsterBase("BossKing", "boss_0", new Vector2(1.1f, 2.3f), new Vector2(0f, 1.15f), 3.4f,
-                targetHeight: 2.6f);
+            // BOSS → 恶魔：斗篷身体约 50×85px，翅膀与吐息不计入碰撞
+            var boss = BuildMonsterBase("BossKing", "Demon", new Vector2(1.6f, 2.6f), new Vector2(0f, 1.3f), 3.4f);
             var bossAI = boss.AddComponent<StarVortex.Enemies.BossKing>();
-            SetField(bossAI, "maxHp", 600f);
+            // BOSS 血条在屏幕顶部（HUD），头顶不再画小血条；血量单独设计，不随关卡缩放
+            WireEnemyVisuals(bossAI, maxHp: 1500f, hpBarWidth: 0f, staggerTime: 0f, knockbackResist: 0.95f,
+                deathFxScale: 2.4f, hpPerLevel: 0f);
             SetField(bossAI, "xpValue", 100);
             SetField(bossAI, "contactDamage", 20f);
+            SetField(bossAI, "comboReach", 2.4f);                       // 吐息从嘴部向前喷约 3u
+            SetVector2Field(bossAI, "comboBoxSize", new Vector2(3f, 1.8f));
+            SetField(bossAI, "_boltSprite", boltSprite);
             var slimePrefab = AssetDatabase.LoadAssetAtPath<GameObject>($"{HeroPrefabDir}/Slime.prefab");
             if (slimePrefab != null)
                 SetField(bossAI, "slimePrefab", slimePrefab.GetComponent<StarVortex.Enemies.Slime>());
             SavePrefab(boss, $"{HeroPrefabDir}/BossKing.prefab");
         }
 
-        private static GameObject BuildMonsterBase(string name, string spriteName, Vector2 colSize,
-            Vector2 colOffset, float gravity, bool hover = false, float targetHeight = 1f)
+        /// <summary>
+        /// 怪物通用骨架：根上放物理（刚体 + 实体碰撞体 + 接触伤害 Trigger），
+        /// Visual 子物体放 SpriteRenderer + Animator（像素帧，pivot 在脚底，1 倍缩放）。
+        /// </summary>
+        private static GameObject BuildMonsterBase(string name, string character, Vector2 colSize,
+            Vector2 colOffset, float gravity)
         {
             var go = new GameObject(name);
             go.layer = LayerEnemy; // 怪物挂 Enemy 层：勇者近战掩码(1<<7)与弹丸矩阵(Projectile↔Enemy)都依赖它
@@ -189,23 +209,65 @@ namespace StarVortex.EditorTools
             col.size = colSize;
             col.offset = colOffset;
             // 接触伤害传感器（Trigger）：实体 collider 用于地面站立，Trigger 用于基类 OnTriggerStay2D
-            //（两个实体 collider 之间不产生触发事件——怪物 AI 代理报告的集成风险 #1）
+            //（两个实体 collider 之间不产生触发事件）
             var touch = go.AddComponent<BoxCollider2D>();
             touch.size = colSize * 1.1f;
             touch.offset = colOffset;
             touch.isTrigger = true;
-            // 视觉子物体：ProceduralAnim 只捏这个 transform；各怪 AI 在根 transform 上写的
-            // 压扁/拉伸 telegraph（蓄力/瞄准/眩晕）与之相乘互不覆盖，怪也告别"贴纸平移"
+
             var visual = new GameObject("Visual");
             visual.transform.SetParent(go.transform, false);
             var sr = visual.AddComponent<SpriteRenderer>();
-            sr.sprite = Art(spriteName);
+            sr.sprite = EnemyAnimationBuilder.PreviewSprite(character);
             sr.sortingOrder = 15;
-            ApplyVisualFeet(visual.transform, sr.sprite, targetHeight); // 比例网格：按目标身高缩放+脚底钉根原点
-            // 程序化动画：地面怪跑动弹跳+呼吸+空中拉伸，飞行怪（hover）悬浮 bob
+            var animator = visual.AddComponent<Animator>();
+            animator.runtimeAnimatorController = EnemyAnimationBuilder.ControllerFor(character);
+
+            // 程序化动画只保留落地/受击的轻微形变（像素帧已经有呼吸与步态）
             var pa = go.AddComponent<StarVortex.Gameplay.ProceduralAnim>();
-            pa.hoverMode = hover;
+            pa.pixelArtMode = true;
+            pa.hoverMode = gravity == 0f;
+            pa.bobAmplitude = 0f; // 飞行怪的起伏由 AI 的弹簧巡航负责，不叠第二层
             return go;
+        }
+
+        /// <summary>给怪物 AI 接上 EnemyBase 的表现与数值字段：Animator、死亡爆散帧、血量、受击手感、血条。</summary>
+        private static void WireEnemyVisuals(StarVortex.Enemies.EnemyBase ai, float maxHp, float hpBarWidth,
+            float staggerTime = 0.22f, float knockbackResist = 0f, float deathFxScale = 1f, float hpPerLevel = 0.3f)
+        {
+            SetField(ai, "_anim", ai.GetComponentInChildren<Animator>());
+            SetObjectArrayField(ai, "_deathFrames", PixelArtPipeline.LoadFrames("Fx", "Death"));
+            SetField(ai, "_deathFxScale", deathFxScale);
+            SetField(ai, "_flatMaterial", FlatUnlitMaterial());
+            SetField(ai, "maxHp", maxHp);
+            SetField(ai, "hpBarWidth", hpBarWidth);
+            SetField(ai, "staggerTime", staggerTime);
+            SetField(ai, "knockbackResist", knockbackResist);
+            SetField(ai, "hpPerLevel", hpPerLevel);
+        }
+
+        /// <summary>
+        /// 纯色剪影材质（GUI/Text Shader：只用贴图 alpha，颜色取顶点色，不受 2D 灯光影响）。
+        /// 落盘成资产再引用：运行时 Shader.Find 找的着色器不一定被打进包，被材质引用的一定会。
+        /// </summary>
+        private static Material FlatUnlitMaterial()
+        {
+            const string path = "Assets/Materials/FlatUnlit.mat";
+            var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (mat != null) return mat;
+            EnsureDir("Assets/Materials");
+            mat = new Material(Shader.Find("GUI/Text Shader")) { name = "FlatUnlit" };
+            AssetDatabase.CreateAsset(mat, path);
+            return mat;
+        }
+
+        private static void SetVector2Field(Object target, string fieldName, Vector2 value)
+        {
+            var so = new SerializedObject(target);
+            var prop = so.FindProperty(fieldName);
+            if (prop == null) { Debug.LogError($"[Setup] {target.GetType().Name} 上找不到字段 {fieldName}"); return; }
+            prop.vector2Value = value;
+            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         // ---------- 弹丸三件套 ----------

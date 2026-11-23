@@ -5,7 +5,7 @@ using UnityEngine;
 namespace StarVortex.Enemies
 {
     /// <summary>
-    /// 骷髅法师：远程施法怪。
+    /// 骷髅法师（外观：骷髅巫师）：远程施法怪。
     /// 行为环：与勇者保持 4-7 格走位（太近后退/太远靠近）→ 施法前摇 0.6s（法杖顶红光渐变）→
     /// 直线火球射向勇者当前位置 → 冷却 2.2s。
     /// 面试点：远程怪的威胁感来自"弹道可读"——火球永远直线飞向出手瞬间的位置，
@@ -24,6 +24,8 @@ namespace StarVortex.Enemies
         [SerializeField] private float castCooldown = 2.2f; // 冷却
         [SerializeField] private float boltSpeed = 7f;      // 火球飞行速度
         [SerializeField] private float boltDamage = 12f;    // 火球伤害
+        [SerializeField] private Sprite _boltSprite;        // 火球贴图（构建器注入素材火球帧）
+        [SerializeField] private Vector2 castPoint = new Vector2(0.45f, 0.95f); // 出手点（朝右时相对脚底：掌心高度）
 
         private enum State { Reposition, Windup }
         private State _state = State.Reposition;
@@ -55,6 +57,7 @@ namespace StarVortex.Enemies
             if (_rb != null) _rb.velocity = Vector2.zero;
             if (_sr != null) _sr.color = Color.white;
             _state = State.Reposition;
+            AnimWindup(false);
         }
 
         protected override void Update()
@@ -91,7 +94,8 @@ namespace StarVortex.Enemies
                     {
                         _state = State.Windup;
                         _stateTimer = castWindup;
-                        Juice.PunchScale(transform, 0.14f, 0.3f); // 前摇起手挤压 telegraph：看得清"要挨打了"
+                        Juice.PunchScale(transform, 0.06f, 0.3f); // 前摇起手挤压 telegraph：看得清"要挨打了"
+                        AnimWindup(true); // 掌心聚火
                     }
                     break;
                 }
@@ -107,6 +111,7 @@ namespace StarVortex.Enemies
                     if (_stateTimer <= 0f)
                     {
                         if (_sr != null) _sr.color = _baseColor;
+                        AnimAttack(); // 甩出火球
                         FireBolt();
                         _castCdTimer = castCooldown;
                         _state = State.Reposition;
@@ -121,10 +126,10 @@ namespace StarVortex.Enemies
         {
             if (_hero == null) return;
             var origin = (Vector2)transform.position
-                         + Vector2.up * 0.7f
-                         + Vector2.right * (_facingRight ? 0.4f : -0.4f); // 法杖顶
+                         + Vector2.up * castPoint.y
+                         + Vector2.right * (_facingRight ? castPoint.x : -castPoint.x); // 掌心
             var dir = ((Vector2)_hero.position - origin).normalized;
-            MageBolt.Spawn(origin, dir, boltSpeed, boltDamage, _sr != null ? _sr.sprite : null);
+            MageBolt.Spawn(origin, dir, boltSpeed, boltDamage, _boltSprite);
             AudioService.Instance?.PlayWithPitch(SfxId.Shoot, 0.7f); // 低音高的敌方法师弹道
         }
 
@@ -180,7 +185,9 @@ namespace StarVortex.Enemies
 
             var sr = go.AddComponent<SpriteRenderer>();
             sr.sprite = visual != null ? visual : SpritePool.GlowDisc; // 没贴图就用光晕盘兜底
-            sr.color = BoltColor;
+            // 像素火球自带颜色，只轻微提亮喂 Bloom；光晕盘兜底时才整体染橙
+            sr.color = visual != null ? new Color(1.35f, 1.2f, 1.1f) : BoltColor;
+            if (visual != null) go.transform.right = dir; // 火球帧尾焰朝后：贴图朝右，旋到飞行方向
             sr.sortingOrder = 12;
 
             var bolt = go.AddComponent<MageBolt>();

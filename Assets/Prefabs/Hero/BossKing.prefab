@@ -96,7 +96,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.15}
+  m_Offset: {x: 0, y: 1.3}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -107,7 +107,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1, y: 2.3}
+  m_Size: {x: 1.6, y: 2.6}
   m_EdgeRadius: 0
 --- !u!61 &277051583220572089
 BoxCollider2D:
@@ -141,7 +141,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.15}
+  m_Offset: {x: 0, y: 1.3}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -152,7 +152,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.21, y: 2.53}
+  m_Size: {x: 1.7600001, y: 2.86}
   m_EdgeRadius: 0
 --- !u!114 &5503364651594098945
 MonoBehaviour:
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverMode: 0
-  pixelArtMode: 0
+  pixelArtMode: 1
   runBounceAmplitude: 0.06
   leanAngle: 4
   groundMask:
@@ -175,7 +175,7 @@ MonoBehaviour:
     m_Bits: 256
   breathAmplitude: 0.02
   breathFrequency: 1.8
-  bobAmplitude: 0.045
+  bobAmplitude: 0
   bobFrequency: 2.2
   jumpStretch: {x: 0.85, y: 1.2}
   landSquash: {x: 1.25, y: 0.78}
@@ -196,9 +196,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1dfb18c87ae7ca4ebd37079183d287a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 600
+  maxHp: 1500
   xpValue: 100
   contactDamage: 20
+  hpPerLevel: 0
+  staggerTime: 0
+  knockbackResist: 0.95
+  hpBarWidth: 0
+  _flatMaterial: {fileID: 2100000, guid: 5b24d19a2a59f974aad24f12d06153c0, type: 2}
+  _anim: {fileID: 902572474466135894}
+  _deathFrames:
+  - {fileID: 21300000, guid: 3de7b63a87785a245b64ae703bafc259, type: 3}
+  - {fileID: 21300000, guid: bdf73dc7de6f1e9469b364ab13f93f16, type: 3}
+  - {fileID: 21300000, guid: 737a66213fcef5b49b758f05c6d9ea12, type: 3}
+  - {fileID: 21300000, guid: 3b890daf99e75ba47b4f0fcd0285bb0e, type: 3}
+  - {fileID: 21300000, guid: 4a3c2b0299cde2b4a9b67b7f00b64dad, type: 3}
+  - {fileID: 21300000, guid: 16f176c5776f2904b9fa4d597d12dcbc, type: 3}
+  - {fileID: 21300000, guid: 0cd222011d2a9bd4c99b4eaf809a205d, type: 3}
+  _deathFxScale: 2.4
   chaseSpeed: 2.2
   enragedSpeed: 3.5
   enragedTelegraphMul: 0.7
@@ -206,7 +221,8 @@ MonoBehaviour:
   comboSwingGap: 0.3
   comboDamage: 15
   comboCooldown: 2
-  comboBoxSize: {x: 2, y: 2}
+  comboBoxSize: {x: 3, y: 1.8}
+  comboReach: 2.4
   spikeWindup: 1.2
   spikeCount: 6
   spikeGap: 0.15
@@ -222,6 +238,7 @@ MonoBehaviour:
   novaBoltSpeed: 7
   novaBoltDamage: 12
   novaCooldown: 5
+  _boltSprite: {fileID: 21300000, guid: 03e43b2cd4e753247a7912146b836478, type: 3}
 --- !u!1 &7497781623834039614
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,6 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5151857745824892829}
   - component: {fileID: 8860586127319115750}
+  - component: {fileID: 902572474466135894}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -248,8 +266,8 @@ Transform:
   m_GameObject: {fileID: 7497781623834039614}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.3, z: 0}
-  m_LocalScale: {x: 1.7333332, y: 1.7333332, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3255605866042034586}
@@ -295,14 +313,35 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 15
-  m_Sprite: {fileID: 21300000, guid: 304bd948c120ea2489be40ea890d9c95, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d68078d6881adc14ba840bffb54f31e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.5, y: 1.5}
+  m_Size: {x: 5, y: 3.96875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &902572474466135894
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7497781623834039614}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: c3eab9cf69ba6d54a81d9b070f75e34a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

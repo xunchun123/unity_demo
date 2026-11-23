@@ -74,6 +74,9 @@ namespace StarVortex.Gameplay
         private float _bounceAmp;    // 平滑后的弹跳幅度（接地状态切换时淡入淡出）
         private float _lean;         // 平滑后的前倾角
         private bool _grounded;
+        private float _hitTimer;     // 受击抖动剩余时间
+        private float _hitSide;      // 受击方向（被推开的一侧）
+        private const float HitShakeDuration = 0.16f;
 
         private void Awake()
         {
@@ -127,12 +130,29 @@ namespace StarVortex.Gameplay
             _scaleVel += new Vector2(7f, -9f) * (attackPunch * (pixelArtMode ? PixelAttackPunchScale : 1f));
         }
 
+        /// <summary>受击：视觉层向被推开的方向抖两下（像素级位移，根上的物理体不动）。</summary>
+        public void NotifyHit(float side)
+        {
+            _hitTimer = HitShakeDuration;
+            _hitSide = side;
+            _scaleVel += new Vector2(-4f, 5f); // 轻微缩一下，读起来是"被打得一缩"
+        }
+
         // ---------- 主驱动 ----------
 
         /// <summary>LateUpdate 驱动：晚于 Animator 求值，同一 transform 上本组件说了算。</summary>
         private void LateUpdate()
         {
             float dt = Mathf.Clamp(Time.deltaTime, 0f, 0.05f);
+            // 受击抖动走真实时间：命中停帧期间也要看到这一下
+            float hitX = 0f;
+            if (_hitTimer > 0f)
+            {
+                _hitTimer -= Time.unscaledDeltaTime;
+                float k = Mathf.Clamp01(_hitTimer / HitShakeDuration);
+                hitX = _hitSide * k * 0.1f * (Mathf.Sin((1f - k) * 40f) * 0.5f + 0.5f);
+                if (dt <= 0f) { _vis.localPosition = _basePos + new Vector3(hitX, 0f, 0f); return; }
+            }
             if (dt <= 0f) return; // 暂停/停帧期间不推进（世界冻结时动画也冻结才对）
 
             Vector2 vel = _rb != null ? _rb.velocity : Vector2.zero;
@@ -168,7 +188,7 @@ namespace StarVortex.Gameplay
             float breath = pixelArtMode ? 1f : 1f + Mathf.Sin(Time.time * breathFrequency) * breathAmplitude;
 
             // 6) 写回视觉 transform（显式构造 Vector3，规避 Vector2/3 混算二义）
-            _vis.localPosition = _basePos + new Vector3(0f, bounceY + bobY, 0f);
+            _vis.localPosition = _basePos + new Vector3(hitX, bounceY + bobY, 0f);
             float sx = (1f + _scaleOff.x) * breath;
             float syFinal = (1f + _scaleOff.y) * breath;
             _vis.localScale = new Vector3(_baseScale.x * sx, _baseScale.y * syFinal, _baseScale.z);

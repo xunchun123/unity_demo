@@ -4,7 +4,7 @@ using UnityEngine;
 namespace StarVortex.Enemies
 {
     /// <summary>
-    /// 蝙蝠：飞行骚扰怪。
+    /// 蝙蝠（外观：幽灵）：飞行骚扰怪。
     /// 行为环：悬浮正弦漂浮 → 勇者进入 8 格 → 悬停瞄准 0.5s（翅膀抖动）→ 直线俯冲（冲过即止）→ 拉高回巡航高度 → 循环。
     /// 面试点：飞行怪 gravityScale=0 全程速度自控——漂浮用"目标点弹簧"而不是直接挪 transform，
     /// 击退/冻结都表现为对 velocity 的扰动，弹簧会自然把它拉回巡航点，不需要额外的状态修复。
@@ -22,10 +22,6 @@ namespace StarVortex.Enemies
         [SerializeField] private float diveSpeed = 9f;        // 俯冲速度
         [SerializeField] private float maxDiveDist = 12f;     // 俯冲最长距离（冲过目标即止的保险丝）
 
-        [Header("扑扇帧动画")]
-        [SerializeField] private Sprite _frameB;              // 第二帧（构建器注入 bat_1；缺图时跳过切换）
-        [SerializeField] private float flapInterval = 0.12f;  // 扑扇切换间隔
-
         /// <summary>行为状态机：巡航 → 瞄准 → 俯冲 → 拉高。</summary>
         private enum State { Cruise, Aim, Dive, Recover }
         private State _state = State.Cruise;
@@ -37,9 +33,6 @@ namespace StarVortex.Enemies
         private float _diveDist;
         private Vector3 _baseScale = Vector3.one;
         private float _frozenTimer;     // 冻结契约（SetFrozen）：>0 时跳过行为、velocity 清零
-        private Sprite _frameA;         // 第一帧（Init 时从当前 sprite 捕获）
-        private float _flapTimer;
-        private bool _flapAlt;
 
         public override void Init(Transform hero)
         {
@@ -54,12 +47,6 @@ namespace StarVortex.Enemies
             _baseScale = transform.localScale;
             if (_sr != null) _sr.flipX = false;
             if (_rb != null) _rb.velocity = Vector2.zero;
-            // 扑扇循环复位：首次 Init 捕获第一帧（prefab 出图 bat_0），
-            // 之后每次 Init 先切回第一帧再清计时（池化复用可能停在第二帧，不能把 bat_1 误当 frameA）
-            if (_frameA == null) _frameA = _sr != null ? _sr.sprite : null;
-            else if (_sr != null && _frameA != null) _sr.sprite = _frameA;
-            _flapTimer = 0f;
-            _flapAlt = false;
         }
 
         /// <summary>冻结：冻结期间悬停原地（gravityScale=0 不会坠落），解冻回巡航。</summary>
@@ -69,6 +56,7 @@ namespace StarVortex.Enemies
             if (_rb != null) _rb.velocity = Vector2.zero;
             transform.localScale = _baseScale;
             _state = State.Cruise;
+            AnimWindup(false);
         }
 
         protected override void Update()
@@ -87,19 +75,6 @@ namespace StarVortex.Enemies
             if (_rb == null) return;
             if (_sr != null) _sr.flipX = !_facingRight;
 
-            // 两帧扑扇循环（frameA↔frameB 每 0.12s 切换）——"怪物贴纸平移"的主要修因：
-            // 此前只有一张 bat_0 静图，飞起来像贴纸。缺第二帧图时静默跳过。
-            if (_sr != null && _frameB != null)
-            {
-                _flapTimer -= Time.deltaTime;
-                if (_flapTimer <= 0f)
-                {
-                    _flapTimer = flapInterval;
-                    _flapAlt = !_flapAlt;
-                    _sr.sprite = _flapAlt ? _frameB : (_frameA != null ? _frameA : _frameB);
-                }
-            }
-
             switch (_state)
             {
                 case State.Cruise:
@@ -114,6 +89,7 @@ namespace StarVortex.Enemies
                     {
                         _state = State.Aim;
                         _stateTimer = aimTime;
+                        AnimWindup(true); // 尖啸张臂：俯冲预告，俯冲全程保持
                     }
                     break;
                 }
@@ -156,7 +132,10 @@ namespace StarVortex.Enemies
                     // 拉高回巡航高度：回锚点弹簧，到位后重新进入漂浮循环
                     _rb.velocity = (_anchor - (Vector2)transform.position) * hoverStiffness * 0.8f;
                     if (((Vector2)transform.position - _anchor).sqrMagnitude < 0.25f)
+                    {
                         _state = State.Cruise;
+                        AnimWindup(false);
+                    }
                     break;
                 }
             }

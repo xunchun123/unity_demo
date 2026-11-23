@@ -76,6 +76,9 @@ namespace StarVortex.Gameplay
         [Tooltip("受伤无敌帧——GitHub 两仓库共同值 0.8-1.0s")]
         [SerializeField] private float invulnerableDuration = 0.8f;
         [SerializeField] private Color hurtColor = new Color(1f, 0.3f, 0.35f, 1f);
+        [Tooltip("纯色剪影材质（GUI/Text Shader）：受伤瞬间闪一下白色剪影，构建器注入")]
+        [SerializeField] private Material _flatMaterial;
+        private SpriteFlash _flash;
 
         public HeroStats Stats { get; } = new();
         public BoonInventory Boons { get; } = new();
@@ -141,6 +144,7 @@ namespace StarVortex.Gameplay
             _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
             _pa = GetComponent<ProceduralAnim>();
             _dust = GetComponent<DustPuff>();
+            _flash = SpriteFlash.Attach(_sr, _flatMaterial);
             CurrentHp = Stats.MaxHp;
             CurrentMana = Stats.MaxMana;
         }
@@ -186,9 +190,12 @@ namespace StarVortex.Gameplay
             GameEvents.PublishPlayerHpChanged(CurrentHp, Stats.MaxHp);
             GameEvents.PublishPlayerHurt(damage.SourcePosition);
 
-            Juice.HitStop(0.05f);
+            Juice.HitStop(0.07f);
             CameraRig.Instance?.AddTrauma(0.3f);
             AudioService.Instance?.Play(SfxId.PlayerHurt);
+            _flash?.Play(new Color(1f, 0.85f, 0.85f, 1f), 0.12f); // 先闪白，之后无敌帧红色闪烁接上
+            DamagePop.Spawn(transform.position + Vector3.up * 1.4f, Mathf.RoundToInt(damage.Amount), false);
+            _pa?.NotifyHit(Mathf.Sign(transform.position.x - damage.SourcePosition.x));
             if (_animator != null) _animator.SetTrigger(AnimHurt);
 
             // 受击小击退（背向伤害来源）

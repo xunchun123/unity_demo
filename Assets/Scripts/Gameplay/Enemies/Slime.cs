@@ -4,7 +4,7 @@ using UnityEngine;
 namespace StarVortex.Enemies
 {
     /// <summary>
-    /// 史莱姆：地面蹦跳型小怪。
+    /// 史莱姆（外观：地狱犬）：地面蹦跳型小怪。
     /// 行为环：待机 → 勇者进入 6 格视野 → 蓄力 0.4s（压扁）→ 朝勇者方向跳起 → 落地缓冲 0.8s → 循环。
     /// 面试点：所有攻击都带"可读"的前摇——压扁蹲伏就是起跳预告，玩家看到蓄力就知道该走位，
     /// 怪物数值强不强不重要，"能被预判"才有对抗乐趣；接触伤害复用基类 OnTriggerStay2D。
@@ -26,8 +26,9 @@ namespace StarVortex.Enemies
         private float _airTime;         // 滞空计时：地面探测失灵时的兜底，绝不卡在空中
         private float _frozenTimer;     // 冻结契约（SetFrozen）：>0 时跳过行为、velocity 清零
 
-        private static readonly Vector3 SquashScale = new Vector3(1.25f, 0.6f, 1f);   // 压扁姿态（蓄力前摇 & 落地共用）
-        private static readonly Vector3 StretchScale = new Vector3(0.78f, 1.3f, 1f);  // 起跳瞬间拉伸姿态
+        // 像素帧本身已有蹲伏/腾空姿势，程序化形变只留一点弹性（大幅缩放会让像素粗细不均）
+        private static readonly Vector3 SquashScale = new Vector3(1.08f, 0.9f, 1f);   // 压扁姿态（蓄力前摇 & 落地共用）
+        private static readonly Vector3 StretchScale = new Vector3(0.95f, 1.06f, 1f); // 起跳瞬间拉伸姿态
         private static readonly Vector3 BaseScale = Vector3.one;
 
         public override void Init(Transform hero)
@@ -50,6 +51,7 @@ namespace StarVortex.Enemies
             if (_rb != null) _rb.velocity = Vector2.zero;
             transform.localScale = BaseScale;
             _state = State.Idle;
+            AnimWindup(false);
         }
 
         protected override void Update()
@@ -80,6 +82,7 @@ namespace StarVortex.Enemies
                     {
                         _state = State.Windup;
                         _stateTimer = windupTime;
+                        AnimWindup(true); // 蹲伏蓄力
                     }
                     break;
 
@@ -95,6 +98,7 @@ namespace StarVortex.Enemies
                         var dir = new Vector2(_facingRight ? 1f : -1f, 0f);
                         _rb.velocity = dir * jumpForward + Vector2.up * jumpUp;
                         transform.localScale = StretchScale; // 蓄力压扁→起跳拉伸：一鼓一收，弹感翻倍
+                        AnimAttack(); // 扑咬腾空
                         _state = State.Airborne;
                         _airTime = 0f;
                     }

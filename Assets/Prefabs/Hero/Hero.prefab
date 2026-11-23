@@ -271,6 +271,7 @@ MonoBehaviour:
   _fireballPrefab: {fileID: 738080510844136532, guid: 23b3ea7f8d2fd0c448cee7df5aec20c7, type: 3}
   invulnerableDuration: 0.8
   hurtColor: {r: 1, g: 0.3, b: 0.35, a: 1}
+  _flatMaterial: {fileID: 2100000, guid: 5b24d19a2a59f974aad24f12d06153c0, type: 2}
 --- !u!114 &4015111534652435738
 MonoBehaviour:
   m_ObjectHideFlags: 0

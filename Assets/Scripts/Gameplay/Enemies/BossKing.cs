@@ -26,6 +26,7 @@ namespace StarVortex.Enemies
         [SerializeField] private float comboDamage = 15f;         // 单次挥砍伤害
         [SerializeField] private float comboCooldown = 2f;        // 冷却
         [SerializeField] private Vector2 comboBoxSize = new Vector2(2f, 2f); // 判定盒
+        [SerializeField] private float comboReach = 1.2f;         // 判定盒中心到身体中线的水平距离（吐息覆盖范围）
 
         [Header("技能：地面尖刺阵（阶段 2+）")]
         [SerializeField] private float spikeWindup = 1.2f;        // 前摇——全屏类招式给到甜点区上限附近
@@ -47,6 +48,7 @@ namespace StarVortex.Enemies
         [SerializeField] private float novaBoltSpeed = 7f;        // 弹幕速度（与法师火球同速）
         [SerializeField] private float novaBoltDamage = 12f;      // 弹幕伤害
         [SerializeField] private float novaCooldown = 5f;
+        [SerializeField] private Sprite _boltSprite;              // 弹幕贴图（与骷髅巫师同款火球）
 
         private enum Phase { One = 1, Two = 2, Three = 3 }
         private enum State { Chase, Windup, Combo, Spiking }
@@ -106,6 +108,7 @@ namespace StarVortex.Enemies
             transform.localScale = BaseScale;
             if (_sr != null) _sr.color = Color.white;
             _state = State.Chase;
+            AnimWindup(false);
         }
 
         protected override void Update()
@@ -160,6 +163,7 @@ namespace StarVortex.Enemies
             _windupTimer = 0f;
             transform.localScale = BaseScale;
             if (_sr != null) _sr.color = Color.white;
+            AnimWindup(false);
         }
 
         // ---------- 行为主体 ----------
@@ -287,8 +291,9 @@ namespace StarVortex.Enemies
             _windupTotal = _phase == Phase.Three ? baseWindup * enragedTelegraphMul : baseWindup;
             _windupTimer = _windupTotal;
             _state = State.Windup;
+            AnimWindup(true); // 收翼蓄力
             // 出招前摇起手挤压 telegraph（PunchScale 与前摇的变色闪烁叠加，可读性翻倍）
-            Juice.PunchScale(transform, 0.18f, Mathf.Min(0.4f, _windupTotal));
+            Juice.PunchScale(transform, 0.06f, Mathf.Min(0.4f, _windupTotal));
         }
 
         /// <summary>前摇视觉：三连砍红光闪烁 3 次，其余渐变到技能主题色。</summary>
@@ -310,6 +315,7 @@ namespace StarVortex.Enemies
 
         private void ExecuteSkill(Skill skill)
         {
+            AnimAttack(); // 所有技能共用一个出手动作（吐息）
             switch (skill)
             {
                 case Skill.Combo:
@@ -345,8 +351,8 @@ namespace StarVortex.Enemies
         private void DoSwing(int step)
         {
             var center = (Vector2)transform.position
-                         + Vector2.up * 0.6f
-                         + Vector2.right * (_facingRight ? 1.2f : -1.2f);
+                         + Vector2.up * (comboBoxSize.y * 0.5f)
+                         + Vector2.right * (_facingRight ? comboReach : -comboReach);
             foreach (var hit in Physics2D.OverlapBoxAll(center, comboBoxSize, 0f))
             {
                 var hero = hit.GetComponentInParent<HeroController>();
@@ -354,7 +360,7 @@ namespace StarVortex.Enemies
                 hero.TakeDamage(new DamageInfo(comboDamage, transform.position, false));
                 Juice.HitSpark(hero.transform.position, WindupRed);
             }
-            Juice.SlashArc(transform.position, _facingRight, step + 1);
+            Juice.SlashArc(center, _facingRight, step + 1);
             AudioService.Instance?.PlayWithPitch(SfxId.Hit, 0.7f + step * 0.08f);
         }
 
@@ -388,12 +394,12 @@ namespace StarVortex.Enemies
         /// <summary>环形弹幕：以 BOSS 为中心均匀 12 向发射 MageBolt（速度/伤害与法师火球一致）。</summary>
         private void DoNova()
         {
-            var center = (Vector2)transform.position + Vector2.up * 0.8f;
+            var center = BodyCenter;
             for (int i = 0; i < novaCount; i++)
             {
                 float ang = 360f * i / Mathf.Max(1, novaCount);
                 var dir = Quaternion.Euler(0f, 0f, ang) * Vector2.right;
-                MageBolt.Spawn(center, dir, novaBoltSpeed, novaBoltDamage);
+                MageBolt.Spawn(center, dir, novaBoltSpeed, novaBoltDamage, _boltSprite);
             }
             AudioService.Instance?.PlayWithPitch(SfxId.CritHit, 0.55f);
             CameraRig.Instance?.AddTrauma(0.2f);
