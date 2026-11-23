@@ -3,7 +3,11 @@ using UnityEngine;
 
 namespace StarVortex.Core
 {
-    /// <summary>初始武器类型（选人界面三选一，强化树互相独立不污染）。</summary>
+    /// <summary>
+    /// 初始武器类型（选人界面三选一，强化树互相独立不污染）。
+    /// 显示名：Sword=长剑、Staff=气功、Bow=火铳（见 WeaponKit.displayName）。
+    /// 枚举名与爽点 ID 保持原样：它们是序列化数据（资产、存档）的键，改名会让已有数据对不上。
+    /// </summary>
     public enum WeaponKind { Sword, Staff, Bow }
 
     /// <summary>

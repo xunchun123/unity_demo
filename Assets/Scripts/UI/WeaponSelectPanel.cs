@@ -33,8 +33,8 @@ namespace StarVortex.UI
 
         private bool _starting; // 防连点：一帧内双卡同选会注入两次
 
-        /// <summary>当前版本只开放长剑（用户要求：其余武器先标"未解锁"，爽点列表不上明面）。</summary>
-        private const int UnlockedCount = 1;
+        /// <summary>开放的职业数：三个职业都有了完整的像素帧动画，全部开放（改回 1 即只开放长剑）。</summary>
+        private const int UnlockedCount = 3;
 
         private void Awake()
         {
@@ -97,14 +97,14 @@ namespace StarVortex.UI
             }
         }
 
-        /// <summary>攻击形态标签：把"这武器手感如何"压缩成一行（法斯特意注明普攻免费，蓝只供新星）。</summary>
+        /// <summary>攻击形态标签：把"这武器手感如何"压缩成一行（气功特意注明普攻免费，蓝只供新星）。</summary>
         private static string StatTag(WeaponKit kit)
         {
             switch (kit.kind)
             {
                 case WeaponKind.Sword: return "近战连击 · 攻速 0.35s";
-                case WeaponKind.Staff: return "远程奥术弹 0.45s · 普攻免费，蓝供 K 新星";
-                case WeaponKind.Bow: return "远程射击 0.5s · 可蓄力";
+                case WeaponKind.Staff: return "远程气功波 0.45s · 普攻免费，蓝供 K 新星";
+                case WeaponKind.Bow: return "远程点射 0.5s · 可蓄力";
                 default: return kit.attackInterval.ToString("0.00") + "s";
             }
         }

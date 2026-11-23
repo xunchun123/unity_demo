@@ -113,23 +113,13 @@ namespace StarVortex.Gameplay
         // ---------- WeaponKit 注入（选人界面调用） ----------
 
         /// <summary>
-        /// 把武器 Kit 注入勇者：HeroController._weaponKit 是契约私有序列化字段（约定不改动它），
-        /// 这里反射写入并缓存到 CurrentKit，升级面板据此抽"专属池 + 通用池"。
+        /// 把武器 Kit 装备给勇者（同时切换职业外观），并缓存到 CurrentKit，升级面板据此抽"专属池 + 通用池"。
         /// </summary>
         public static void InjectWeaponKit(HeroController hero, WeaponKit kit)
         {
             if (hero == null || kit == null) return;
-            const string fieldName = "_weaponKit";
-            var field = typeof(HeroController).GetField(fieldName,
-                BindingFlags.Instance | BindingFlags.NonPublic);
-            if (field == null)
-            {
-                Debug.LogError($"[HeroBootstrap] HeroController 上找不到字段 {fieldName}，武器注入失败");
-                return;
-            }
-            field.SetValue(hero, kit);
+            hero.EquipKit(kit);
             CurrentKit = kit;
-            Debug.Log($"[HeroBootstrap] WeaponKit 注入成功：{kit.displayName}（主攻击间隔 {kit.attackInterval:0.00}s）");
         }
 
         /// <summary>勇者引用兜底喂给 LevelDirector（它 Init 时自查为主，这里只在它还没找到时补注）。</summary>

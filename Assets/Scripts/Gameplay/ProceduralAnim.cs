@@ -16,6 +16,9 @@ namespace StarVortex.Gameplay
         [Header("模式")]
         [Tooltip("悬浮模式（飞行怪）：只做悬浮 bob + 呼吸，跳过跑动弹跳/空中压缩/接地探测")]
         public bool hoverMode = false;
+        [Tooltip("像素帧动画模式：角色由 Animator 逐帧驱动时打开。帧动画本身已经画了呼吸、跑动起伏和身体前倾，"
+            + "再叠加程序化变形会让像素被拉伸、显得像橡皮贴纸，所以只保留轻微的起跳/落地形变和攻击顿挫")]
+        public bool pixelArtMode = false;
 
         [Header("跑动")]
         [Tooltip("跑动弹跳幅度（世界单位）")]
@@ -48,6 +51,11 @@ namespace StarVortex.Gameplay
         public float airStretchFactor = 0.02f;
         [Tooltip("空中缩放变化上限")]
         public float airStretchMax = 0.16f;
+
+        // 像素模式的形变幅度：控制在 ±8% 以内，肉眼能感到"落地有分量"，但看不出像素被拉变形
+        private static readonly Vector2 PixelJumpStretch = new Vector2(0.96f, 1.05f);
+        private static readonly Vector2 PixelLandSquash = new Vector2(1.08f, 0.93f);
+        private const float PixelAttackPunchScale = 0.4f;
 
         [Header("弹簧恢复")]
         [Tooltip("缩放弹簧刚度（越大回弹越快）")]
@@ -100,21 +108,23 @@ namespace StarVortex.Gameplay
         /// <summary>起跳瞬间：纵向拉伸（先蓄后弹的反差让起跳更"弹"，二段跳同样生效）。</summary>
         public void NotifyJump()
         {
-            _scaleOff = new Vector2(jumpStretch.x - 1f, jumpStretch.y - 1f);
+            Vector2 pose = pixelArtMode ? PixelJumpStretch : jumpStretch;
+            _scaleOff = new Vector2(pose.x - 1f, pose.y - 1f);
             _scaleVel = Vector2.zero;
         }
 
         /// <summary>落地瞬间：横向压扁（含二段跳与空中落地）。</summary>
         public void NotifyLand()
         {
-            _scaleOff = new Vector2(landSquash.x - 1f, landSquash.y - 1f);
+            Vector2 pose = pixelArtMode ? PixelLandSquash : landSquash;
+            _scaleOff = new Vector2(pose.x - 1f, pose.y - 1f);
             _scaleVel = Vector2.zero;
         }
 
         /// <summary>攻击瞬间：轻 punch（横向扩 + 纵向收，弹簧带回弹）。</summary>
         public void NotifyAttack()
         {
-            _scaleVel += new Vector2(7f, -9f) * attackPunch;
+            _scaleVel += new Vector2(7f, -9f) * (attackPunch * (pixelArtMode ? PixelAttackPunchScale : 1f));
         }
 
         // ---------- 主驱动 ----------
@@ -131,7 +141,7 @@ namespace StarVortex.Gameplay
 
             // 1) 缩放弹簧：目标 = 空中按垂直速度拉伸/压缩，接地/悬浮回正
             Vector2 target = Vector2.zero;
-            if (!hoverMode && _rb != null && !_grounded)
+            if (!hoverMode && !pixelArtMode && _rb != null && !_grounded)
             {
                 // 上升拉伸、下落随速度渐压；横向反向补偿近似体积守恒
                 float sy = Mathf.Clamp(vel.y * airStretchFactor, -airStretchMax, airStretchMax);
@@ -142,7 +152,7 @@ namespace StarVortex.Gameplay
             _scaleOff += _scaleVel * dt;
 
             // 2) 跑动弹跳：|sin| 波形（每一步一个小跳），幅度随接地状态平滑淡入淡出
-            float targetAmp = running ? runBounceAmplitude : 0f;
+            float targetAmp = running && !pixelArtMode ? runBounceAmplitude : 0f;
             _bounceAmp = Mathf.MoveTowards(_bounceAmp, targetAmp, runBounceAmplitude * dt * 8f);
             if (running) _bouncePhase += dt * Mathf.Max(7f, Mathf.Abs(vel.x) * 3.4f);
             float bounceY = Mathf.Abs(Mathf.Sin(_bouncePhase)) * _bounceAmp;
@@ -151,11 +161,11 @@ namespace StarVortex.Gameplay
             float bobY = hoverMode ? Mathf.Sin(Time.time * bobFrequency) * bobAmplitude : 0f;
 
             // 4) 前倾：接地移动时朝移动方向压 leanAngle 度，指数平滑不抖
-            float targetLean = running ? -leanAngle * Mathf.Sign(vel.x) : 0f;
+            float targetLean = running && !pixelArtMode ? -leanAngle * Mathf.Sign(vel.x) : 0f;
             _lean += (targetLean - _lean) * (1f - Mathf.Exp(-12f * dt));
 
             // 5) 呼吸：全局正弦微缩放
-            float breath = 1f + Mathf.Sin(Time.time * breathFrequency) * breathAmplitude;
+            float breath = pixelArtMode ? 1f : 1f + Mathf.Sin(Time.time * breathFrequency) * breathAmplitude;
 
             // 6) 写回视觉 transform（显式构造 Vector3，规避 Vector2/3 混算二义）
             _vis.localPosition = _basePos + new Vector3(0f, bounceY + bobY, 0f);

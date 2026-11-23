@@ -27,3 +27,5 @@ MonoBehaviour:
   - sword_lightning
   - sword_lifesteal
   - sword_combo_burn
+  heroAnimator: {fileID: 9100000, guid: 51e28b65bdb2ee14e83993d95a87ecec, type: 2}
+  attackOrigin: {x: 0.55, y: 0.75}

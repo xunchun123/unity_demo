@@ -21,5 +21,12 @@ namespace StarVortex.Core
 
         [Header("该武器的爽点卡池（不含通用池）")]
         public string[] boonPool;
+
+        [Header("角色外观")]
+        [Tooltip("选择该武器时勇者使用的动画控制器：同一张状态机，每个职业一个 Override")]
+        public RuntimeAnimatorController heroAnimator;
+
+        [Tooltip("攻击判定 / 弹丸出生点（相对脚底，朝右时的本地坐标，单位 u）：剑刃、拳头、枪口高度各不相同")]
+        public Vector2 attackOrigin = new Vector2(0.55f, 0.6f);
     }
 }

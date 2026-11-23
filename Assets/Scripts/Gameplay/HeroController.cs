@@ -1,6 +1,5 @@
 using StarVortex.Core;
 using StarVortex.Enemies;
-using StarVortex.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,21 +19,35 @@ namespace StarVortex.Gameplay
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private SpriteRenderer _sr;
         [SerializeField] private Transform _attackOrigin; // 攻击判定锚点（身体前侧）
-        [Tooltip("动画状态机（Idle/Run 切换，由构建器程序化创建）")]
+        [Tooltip("挂在 Visual 子物体上的 Animator：sprite 的唯一写入者，本脚本只写参数")]
         [SerializeField] private Animator _animator;
 
         [Header("武器（选人界面注入）")]
         [SerializeField] private WeaponKit _weaponKit;
         public WeaponKind Kind => _weaponKit != null ? _weaponKit.kind : WeaponKind.Sword;
 
-        [Header("帧动画（用户 AI 生图帧，代码驱动换帧——Animator PPtr 曲线在 Player 端不生效的兜底）")]
-        [SerializeField] private Sprite[] _idleFrames;    // 站姿单帧
-        [SerializeField] private Sprite[] _runFrames;     // 迈步→收拢→迈步→收拢 四拍循环
-        [SerializeField] private Sprite[] _jumpFrames;    // 上升收腿
-        [SerializeField] private Sprite[] _fallFrames;    // 下落展腿
-        [SerializeField] private Sprite[] _attackFrames;  // 蓄力→突刺→收招
-        private float _runFrameTimer;
-        private int _runFrameIndex;
+        /// <summary>
+        /// 装备武器：切换攻击形态，同时把 Animator 换成该职业的控制器
+        /// （三个职业共用一张状态机，只换剪辑，见 HeroAnimationBuilder）。
+        /// </summary>
+        public void EquipKit(WeaponKit kit)
+        {
+            _weaponKit = kit;
+            if (kit != null && kit.heroAnimator != null && _animator != null)
+                _animator.runtimeAnimatorController = kit.heroAnimator;
+            if (kit != null) _attackOriginLocal = kit.attackOrigin;
+            ApplyAttackOrigin();
+        }
+
+        // 攻击出生点（朝右时的本地坐标）：转身时镜像 x，否则朝左开火子弹会从背后飞出
+        private Vector2 _attackOriginLocal = new Vector2(0.55f, 0.6f);
+
+        private void ApplyAttackOrigin()
+        {
+            if (_attackOrigin == null) return;
+            _attackOrigin.localPosition = new Vector3(
+                _facingRight ? _attackOriginLocal.x : -_attackOriginLocal.x, _attackOriginLocal.y, 0f);
+        }
 
         [Header("平台参数")]
         [SerializeField] private float jumpVelocity = 12.2f; // 满跳峰值 ≈2.23u（台阶每级 1u：点按跳 1.4u 也能上，按住跳更从容）
@@ -55,7 +68,7 @@ namespace StarVortex.Gameplay
         [SerializeField] private float dashCooldown = 1.2f;
         [SerializeField] private float dashInvuln = 0.25f;
 
-        [Header("火球（法杖）")]
+        [Header("气功波（气功职业，弹体复用火球）")]
         [SerializeField] private float fireballManaCost = 25f;
         [SerializeField] private Fireball _fireballPrefab;
 
@@ -71,6 +84,14 @@ namespace StarVortex.Gameplay
         public bool IsDead => CurrentHp <= 0f;
         public bool DashReady => _dashCdTimer <= 0f;
 
+        // Animator 参数（与 EditorTools/HeroAnimationBuilder 同名；预先哈希，避免每帧按字符串查找）
+        private static readonly int AnimSpeed = Animator.StringToHash("Speed");
+        private static readonly int AnimVelY = Animator.StringToHash("VelY");
+        private static readonly int AnimGrounded = Animator.StringToHash("Grounded");
+        private static readonly int AnimAttack = Animator.StringToHash("Attack");
+        private static readonly int AnimHurt = Animator.StringToHash("Hurt");
+        private static readonly int AnimDead = Animator.StringToHash("Dead");
+
         // 朝向：写入时同步翻转贴图——此前是自动属性，全工程没有任何代码碰过 flipX，
         // "向左移动人物不面向左"的根因（素材原生面右，flipX=false=朝右）
         private bool _facingRight = true;
@@ -82,6 +103,7 @@ namespace StarVortex.Gameplay
                 if (_facingRight == value) return;
                 _facingRight = value;
                 if (_sr != null) _sr.flipX = !value;
+                ApplyAttackOrigin();
             }
         }
 
@@ -89,139 +111,6 @@ namespace StarVortex.Gameplay
         private Collider2D _col;
         private float _coyoteTimer;
 
-        // ===== TEMP-DEMO 自动试玩（全链路验收用，验证完删除）=====
-        [SerializeField] public bool _demo = true; // 默认开：诊断构建自动从头玩到尾
-        private float _demoMove;
-        private float _demoClock;
-        private float _demoStepT;
-        private int _demoStep;
-        private bool _demoJumpQueued;
-        private bool _demoAttackQueued;
-        private bool _demoDashQueued;
-        private float _demoLogT;
-        private float _demoAttackTimer;
-        private bool _demoHoldJump;      // TEMP-DEMO：模拟按住空格（可变跳跃高度不被砍）
-        private float _demoHoldT;        // TEMP-DEMO：按住时长
-        private float _demoLastX;        // TEMP-DEMO：卡墙检测
-        private float _demoWallT;        // TEMP-DEMO：卡墙计时
-        private float _demoWallHop;      // TEMP-DEMO：卡墙补跳倒计时
-        private WeaponSelectPanel _demoWeaponPanel;
-        private LevelUpPanel _demoLevelPanel;
-
-        /// <summary>脚本化试玩大脑：选武器→走→跳→连击→冲刺→自动选卡过关，全程日志渲染帧与状态。</summary>
-        private void DemoTick()
-        {
-            _demoClock += Time.unscaledDeltaTime;
-            _demoLogT -= Time.unscaledDeltaTime;
-
-            // UI 状态自动推进（鼠标/键盘都不用碰）
-            var state = GameManager.Instance.State;
-            if (state == GameState.WeaponSelect)
-            {
-                if (_demoWeaponPanel == null) _demoWeaponPanel = FindFirstObjectByType<WeaponSelectPanel>();
-                if (_demoWeaponPanel != null && _demoClock > 1.5f)
-                {
-                    Debug.Log("[Demo] 自动选择长剑");
-                    _demoWeaponPanel.Select(0);
-                }
-                return;
-            }
-            if (state == GameState.LevelUp)
-            {
-                if (_demoLevelPanel == null) _demoLevelPanel = FindFirstObjectByType<LevelUpPanel>();
-                if (_demoLevelPanel != null && _demoClock > 0.8f)
-                {
-                    Debug.Log("[Demo] 自动升级：选爽点0 + 继续");
-                    _demoLevelPanel.OnBoonPicked(0);
-                    _demoLevelPanel.OnContinueClicked();
-                    _demoLevelPanel = null;
-                }
-                return;
-            }
-            if (state == GameState.LevelClear)
-            {
-                Debug.Log("[Demo] 过关，自动进下一关");
-                GameManager.Instance.ContinueToNextLevel();
-                return;
-            }
-            if (state != GameState.Playing) return;
-
-            // 战斗脚本：走2.5s→跳→二段跳→走1.5s→三连击→走1s→冲刺，循环
-            _demoStepT -= Time.deltaTime;
-            if (_demoStepT <= 0f)
-            {
-                _demoStep = (_demoStep + 1) % 7;
-                _demoStepT = _demoStep switch
-                {
-                    0 => 2.5f,  // 走
-                    1 => 0.1f,  // 起跳
-                    2 => 0.45f, // 二段跳
-                    3 => 1.5f,  // 走（落地）
-                    4 => 1.3f,  // 三连击窗口
-                    5 => 1.0f,  // 走
-                    _ => 2.0f,  // 冲刺+走
-                };
-                switch (_demoStep)
-                {
-                    case 1: _demoJumpQueued = true; Debug.Log("[Demo] 跳"); break;
-                    case 2: _demoJumpQueued = true; Debug.Log("[Demo] 二段跳"); break;
-                    case 4: Debug.Log("[Demo] 三连击开始"); break;
-                    case 6: _demoDashQueued = true; Debug.Log("[Demo] 冲刺"); break;
-                }
-            }
-            _demoMove = 1f; // 全程向右推进关卡
-            if (_demoStep == 4)
-            {
-                _demoAttackTimer -= Time.deltaTime;
-                if (_demoAttackTimer <= 0f) { _demoAttackTimer = 0.38f; _demoAttackQueued = true; }
-            }
-            if (_demoJumpQueued) { _jumpBufferTimer = jumpBufferTime; _demoJumpQueued = false; _demoHoldT = 0.55f; }
-
-            // 按住跳模拟：起跳后 0.55s 内视为按住（可变跳跃高度不吃低跳惩罚）
-            if (_demoHoldT > 0f) { _demoHoldT -= Time.deltaTime; _demoHoldJump = true; }
-            else _demoHoldJump = false;
-
-            // 卡墙自愈：1.5s 位移 < 0.5u → 立即跳+快速二段跳（模拟玩家"撞墙就跳"）
-            if (Mathf.Abs(transform.position.x - _demoLastX) > 0.5f)
-            {
-                _demoLastX = transform.position.x;
-                _demoWallT = 0f;
-            }
-            else if (IsGrounded())
-            {
-                _demoWallT += Time.deltaTime;
-                if (_demoWallT > 1.5f)
-                {
-                    _demoWallT = 0f;
-                    _jumpBufferTimer = jumpBufferTime;
-                    _demoHoldT = 0.55f;
-                    _demoWallHop = 0.35f; // 0.35s 后补一次二段跳
-                    Debug.Log("[Demo] 卡墙，自动跳+二段跳");
-                }
-            }
-            if (_demoWallHop > 0f)
-            {
-                _demoWallHop -= Time.deltaTime;
-                if (_demoWallHop <= 0f && !IsGrounded()) { _jumpBufferTimer = jumpBufferTime; _demoHoldT = 0.5f; }
-            }
-
-            // 高频日志：抓"过一段时间变贴纸"的现场
-            if (_demoLogT <= 0f)
-            {
-                _demoLogT = 0.25f;
-                Debug.Log("[Demo] t=" + _demoClock.ToString("F1")
-                    + " sprite=" + (_sr.sprite != null ? _sr.sprite.name : "null")
-                    + " atkTimer=" + _attackTimer.ToString("F2")
-                    + " combo=" + _comboStage
-                    + " grounded=" + IsGrounded()
-                    + " tScale=" + Time.timeScale.ToString("F2")
-                    + " facing=" + (_facingRight ? "R" : "L")
-                    + " hp=" + CurrentHp.ToString("F0")
-                    + " x=" + transform.position.x.ToString("F0")
-                    + " y=" + transform.position.y.ToString("F1"));
-            }
-        }
-        // ===== TEMP-DEMO END =====
         private float _jumpBufferTimer;
         private float _invulnTimer;
         private float _dashTimer;
@@ -300,6 +189,7 @@ namespace StarVortex.Gameplay
             Juice.HitStop(0.05f);
             CameraRig.Instance?.AddTrauma(0.3f);
             AudioService.Instance?.Play(SfxId.PlayerHurt);
+            if (_animator != null) _animator.SetTrigger(AnimHurt);
 
             // 受击小击退（背向伤害来源）
             _rb.velocity = new Vector2(
@@ -308,6 +198,12 @@ namespace StarVortex.Gameplay
             if (CurrentHp <= 0f)
             {
                 CurrentHp = 0f;
+                if (_animator != null)
+                {
+                    // 死亡时 GameManager 会把 timeScale 置 0：倒地动作改走真实时间，否则会冻在第一帧
+                    _animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+                    _animator.SetBool(AnimDead, true);
+                }
                 GameEvents.PublishPlayerHpChanged(0f, Stats.MaxHp);
                 GameManager.Instance.HandlePlayerDeath();
             }
@@ -324,11 +220,10 @@ namespace StarVortex.Gameplay
 
         private void Update()
         {
-            if (_demo) DemoTick(); // TEMP-DEMO（在 Playing 门外运行：选武器/升级/结算状态也要自动推进）
+            // 放在状态门之前：选武器/暂停时也同步接地状态，否则 Animator 会停在默认的"未接地→下落"姿势
+            UpdateAnimatorParams();
             if (GameManager.Instance.State != GameState.Playing) return;
             var kb = Keyboard.current;
-
-            DriveFrameAnimation();
 
             // 无敌帧闪烁
             if (_invulnTimer > 0f)
@@ -352,21 +247,6 @@ namespace StarVortex.Gameplay
                 GameEvents.PublishPlayerManaChanged(CurrentMana, manaMax);
             }
 
-            // 动画状态：Idle/Run（Moving）+ Jump/Fall（Airborne+Falling），五态真帧动画，状态机见构建器
-            if (_animator != null)
-            {
-                bool moving = IsGrounded() && Mathf.Abs(_rb.velocity.x) > 0.3f;
-                if (_animator.GetBool("Moving") != moving)
-                    _animator.SetBool("Moving", moving);
-                bool airborne = !IsGrounded();
-                if (_animator.GetBool("Airborne") != airborne)
-                    _animator.SetBool("Airborne", airborne);
-                // 上升/下落分开驱动：起跳收腿帧与下落展腿帧切换（帧图来自用户 AI 生图批次二）
-                bool falling = airborne && _rb.velocity.y < -0.5f;
-                if (_animator.GetBool("Falling") != falling)
-                    _animator.SetBool("Falling", falling);
-            }
-
             // 灰尘：接地移动时跑动扬尘（DustPuff 内部 0.15s 节流）
             if (_dust != null)
                 _dust.SetRunning(IsGrounded() && Mathf.Abs(_rb.velocity.x) > 0.5f);
@@ -379,10 +259,8 @@ namespace StarVortex.Gameplay
             if (DashReady && kb != null && kb.lKey.wasPressedThisFrame)
                 TryDash();
 
-            // 攻击（J）：按武器分派（TEMP-DEMO：自动试玩接管攻击/冲刺输入）
-            if (_demo && _demoAttackQueued) { _demoAttackQueued = false; TrySwordSwing(); }
-            else if (_demo) { if (_demoDashQueued) { _demoDashQueued = false; TryDash(); } }
-            else ReadWeaponInput(kb);
+            // 攻击（J）：按武器分派
+            ReadWeaponInput(kb);
 
             // 特殊技（K）
             if (kb != null && kb.kKey.wasPressedThisFrame) TrySpecial();
@@ -403,17 +281,13 @@ namespace StarVortex.Gameplay
 
             var kb = Keyboard.current;
             float move = 0f;
-            if (_demo) move = _demoMove; // TEMP-DEMO：自动试玩接管移动（验证完删除）
-            else
+            if (kb != null)
             {
-                if (kb != null)
-                {
-                    if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) move -= 1f;
-                    if (kb.dKey.isPressed || kb.rightArrowKey.isPressed) move += 1f;
-                }
-                var pad = Gamepad.current;
-                if (pad != null && Mathf.Abs(pad.leftStick.x.value) > 0.15f) move = pad.leftStick.x.value;
+                if (kb.aKey.isPressed || kb.leftArrowKey.isPressed) move -= 1f;
+                if (kb.dKey.isPressed || kb.rightArrowKey.isPressed) move += 1f;
             }
+            var pad = Gamepad.current;
+            if (pad != null && Mathf.Abs(pad.leftStick.x.value) > 0.15f) move = pad.leftStick.x.value;
 
             if (move != 0f) FacingRight = move > 0f;
             _rb.velocity = new Vector2(move * Stats.MoveSpeed, _rb.velocity.y);
@@ -459,7 +333,7 @@ namespace StarVortex.Gameplay
             // 可变跳跃高度 + apex 悬停（只在空中生效；冲刺激活时 y≈0 会被 apex 误触，无碍）
             if (!IsGrounded())
             {
-                bool spaceHeld = _demo ? _demoHoldJump : (kb != null && kb.spaceKey.isPressed); // TEMP-DEMO：模拟按住空格
+                bool spaceHeld = kb != null && kb.spaceKey.isPressed;
                 if (_rb.velocity.y < -0.1f)
                     _rb.velocity += Vector2.up * (Physics2D.gravity.y * (fallMultiplier - 1f) * Time.fixedDeltaTime);
                 else if (_rb.velocity.y > 1f && !spaceHeld)
@@ -469,54 +343,24 @@ namespace StarVortex.Gameplay
             }
         }
 
-        /// <summary>
-        /// 代码驱动换帧（真帧动画的唯一执行者）：按 攻击动作 > 空中升降 > 跑步循环 > 站姿
-        /// 的优先级选帧组写入 _sr。为何不用 Animator：自动试玩实证——程序化 PPtr 换帧曲线在
-        /// Player 端虽生效，但攻击状态播完会卡在末帧持续覆盖（"过一会儿变贴纸"的元凶），
-        /// 且与代码驱动形成双写竞争。预制体已不挂 Animator，朝向翻转由 FacingRight 写 _sr.flipX。
-        /// </summary>
-        private void DriveFrameAnimation()
+        /// <summary>每帧把物理状态同步给 Animator：只写参数，切哪个状态由状态机的过渡条件决定。</summary>
+        private void UpdateAnimatorParams()
         {
-            if (_sr == null || _runFrames == null || _runFrames.Length == 0) return; // 帧未注入（旧预制体）→ 不干预
-
-            // 攻击动作（0.3s 内按攻击进度播 蓄力→突刺→收招；法杖/弓箭锁定中无需分武器）
-            float atkInterval = _weaponKit != null ? _weaponKit.attackInterval : 0.4f;
-            if (_attackFrames != null && _attackFrames.Length > 0 && _attackTimer > atkInterval - 0.3f)
-            {
-                float p = Mathf.Clamp01((atkInterval - _attackTimer) / 0.3f);
-                _sr.sprite = _attackFrames[Mathf.Min((int)(p * _attackFrames.Length), _attackFrames.Length - 1)];
-                _runFrameIndex = 0;
-                return;
-            }
-
-            if (!IsGrounded())
-            {
-                var air = Pick(_rb.velocity.y < -0.5f ? _fallFrames : _jumpFrames);
-                if (air != null) _sr.sprite = air;
-                _runFrameIndex = 0;
-                return;
-            }
-
-            if (Mathf.Abs(_rb.velocity.x) > 0.3f)
-            {
-                // 跑步四拍循环：0.12s/帧（0→1→2→1→…），速度只影响节奏不影响帧序
-                _runFrameTimer -= Time.deltaTime;
-                if (_runFrameTimer <= 0f)
-                {
-                    _runFrameTimer = 0.12f;
-                    _runFrameIndex = (_runFrameIndex + 1) % _runFrames.Length;
-                }
-                _sr.sprite = _runFrames[_runFrameIndex];
-                return;
-            }
-
-            var idle = Pick(_idleFrames);
-            if (idle != null) _sr.sprite = idle;
-            _runFrameIndex = 0;
+            if (_animator == null) return;
+            _animator.SetFloat(AnimSpeed, Mathf.Abs(_rb.velocity.x));
+            _animator.SetFloat(AnimVelY, _rb.velocity.y);
+            _animator.SetBool(AnimGrounded, IsGrounded());
         }
 
-        private static Sprite Pick(Sprite[] frames) =>
-            frames != null && frames.Length > 0 ? frames[0] : null;
+        /// <summary>
+        /// 触发攻击动作（地面/空中由状态机按 Grounded 分流）。
+        /// 注意不用 _animator?.SetTrigger：?. 绕过了 UnityEngine.Object 重载的 == null，
+        /// 组件被销毁后仍会调用并抛 MissingReferenceException。
+        /// </summary>
+        private void PlayAttackAnimation()
+        {
+            if (_animator != null) _animator.SetTrigger(AnimAttack);
+        }
 
         private bool IsGrounded()
         {
@@ -527,7 +371,8 @@ namespace StarVortex.Gameplay
             // 无视 Trigger：教学牌/传送门挂在 Ground(8) 层的触发盒——空中穿过教学牌光柱会被误判
             // "接地"，二段跳计数被空中重置 = 无限跳（用户实测复现的 bug 根因）。
             // Enemy(7) 层的实体碰撞体也算"可站立"：踩在怪头上不算悬空（否则跳不起步、动画锁空中帧）
-            foreach (var hit in Physics2D.OverlapBoxAll(origin, new Vector2(0.5f, 0.24f), 0f, groundMask | (1 << 7)))
+            var hits = Physics2D.OverlapBoxAll(origin, new Vector2(0.5f, 0.24f), 0f, groundMask | (1 << 7));
+            foreach (var hit in hits)
                 if (!hit.isTrigger) return true;
             return false;
         }
@@ -613,7 +458,7 @@ namespace StarVortex.Gameplay
             // 弧光：尺寸 = 等级成长 × SwordLong 强化（1.4 倍），颜色/角度/加色/层级都在 Juice 内处理
             float arcScale = (1f + Level * 0.05f) * (Boons.Has(BoonIds.SwordLong) ? 1.4f : 1f);
             Juice.SlashArc(_attackOrigin.position, FacingRight, _comboStage, arcScale);
-            _animator?.SetTrigger("Attack");
+            PlayAttackAnimation();
             AudioService.Instance?.PlayWithPitch(SfxId.Hit, 0.9f + _comboStage * 0.08f);
             if (_comboStage == 3)
             {
@@ -637,6 +482,7 @@ namespace StarVortex.Gameplay
             // 否则没蓝时法杖会彻底哑火（普攻不能被资源锁死）
             _attackTimer = _weaponKit != null ? _weaponKit.attackInterval : 0.4f;
             _pa?.NotifyAttack(); // 施法 punch：轻一顿的后坐反馈
+            PlayAttackAnimation();
             LaunchFireball(1f);
             if (Boons.Has(BoonIds.StaffTwinBolt)) LaunchFireball(0.75f);
             AudioService.Instance?.PlayWithPitch(SfxId.Shoot, 1.25f);
@@ -656,6 +502,7 @@ namespace StarVortex.Gameplay
             _attackTimer = _weaponKit != null ? _weaponKit.attackInterval : 0.45f;
             _bowChargeTimer = 0f;
             _pa?.NotifyAttack(); // 开弓 punch：撒放瞬间的身体反馈
+            PlayAttackAnimation();
 
             float dmg = Stats.Attack * (charged ? 2.5f : 1f) * (_weaponKit != null ? _weaponKit.attackDamageMul : 1f);
             int pierce = 1 + (Boons.Has(BoonIds.BowPiercePlus) ? 1 : 0);

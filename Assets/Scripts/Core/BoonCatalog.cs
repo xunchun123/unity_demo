@@ -32,20 +32,20 @@ namespace StarVortex.Core
             [BoonIds.SwordComboBurn]       = new Entry { id = BoonIds.SwordComboBurn, name = "烈焰连斩", desc = "三段连击的收尾斩点燃敌人，附加持续灼烧" },
 
             // ---------- 法杖池（奥术弹形态，蓝仅供 K 秘法新星） ----------
-            [BoonIds.StaffFireballSplit]   = new Entry { id = BoonIds.StaffFireballSplit, name = "烈焰分裂", desc = "奥术弹命中后炸裂成 3 颗小火球" },
-            [BoonIds.StaffBurningGround]   = new Entry { id = BoonIds.StaffBurningGround, name = "焦土术", desc = "奥术弹落地留下燃烧地面，灼烧踏入的敌人" },
-            [BoonIds.StaffTwinBolt]        = new Entry { id = BoonIds.StaffTwinBolt, name = "双生法弹", desc = "每次射击附带一发 75% 伤害的副弹" },
-            [BoonIds.StaffBigBurst]        = new Entry { id = BoonIds.StaffBigBurst, name = "爆裂扩容", desc = "爆炸范围 +60%，清群更痛快" },
-            [BoonIds.StaffFrostNova]       = new Entry { id = BoonIds.StaffFrostNova, name = "冰霜新星", desc = "K 秘法新星附带冰霜，冻结周围敌人 1.5 秒" },
-            [BoonIds.StaffArcaneFlow]      = new Entry { id = BoonIds.StaffArcaneFlow, name = "奥术回流", desc = "击杀敌人回复 6 点蓝量，新星转得更勤" },
+            [BoonIds.StaffFireballSplit]   = new Entry { id = BoonIds.StaffFireballSplit, name = "气劲分裂", desc = "气功波命中后炸裂成 3 颗小气弹" },
+            [BoonIds.StaffBurningGround]   = new Entry { id = BoonIds.StaffBurningGround, name = "焦土气劲", desc = "气功波落地留下燃烧地面，灼烧踏入的敌人" },
+            [BoonIds.StaffTwinBolt]        = new Entry { id = BoonIds.StaffTwinBolt, name = "双发气功", desc = "每次出招附带一发 75% 伤害的副弹" },
+            [BoonIds.StaffBigBurst]        = new Entry { id = BoonIds.StaffBigBurst, name = "爆气扩容", desc = "爆炸范围 +60%，清群更痛快" },
+            [BoonIds.StaffFrostNova]       = new Entry { id = BoonIds.StaffFrostNova, name = "冰霜新星", desc = "K 气爆新星附带冰霜，冻结周围敌人 1.5 秒" },
+            [BoonIds.StaffArcaneFlow]      = new Entry { id = BoonIds.StaffArcaneFlow, name = "调息回气", desc = "击杀敌人回复 6 点蓝量，新星放得更勤" },
 
             // ---------- 弓箭池（射击形态） ----------
-            [BoonIds.BowPiercePlus]        = new Entry { id = BoonIds.BowPiercePlus, name = "穿云箭", desc = "箭矢穿透 +1 名敌人，排成串打" },
-            [BoonIds.BowMultishot]         = new Entry { id = BoonIds.BowMultishot, name = "分裂箭袋", desc = "同时射出 2 支箭（小角度散射）" },
+            [BoonIds.BowPiercePlus]        = new Entry { id = BoonIds.BowPiercePlus, name = "穿甲弹", desc = "子弹穿透 +1 名敌人，排成串打" },
+            [BoonIds.BowMultishot]         = new Entry { id = BoonIds.BowMultishot, name = "双管齐射", desc = "同时射出 2 发子弹（小角度散射）" },
             [BoonIds.BowPowerShot]         = new Entry { id = BoonIds.BowPowerShot, name = "蓄力狙击", desc = "按住 J 蓄力 0.5 秒，伤害 ×2.5" },
-            [BoonIds.BowArrowRain]         = new Entry { id = BoonIds.BowArrowRain, name = "箭雨风暴", desc = "按 K 在面前区域天降箭雨" },
-            [BoonIds.BowBackstep]          = new Entry { id = BoonIds.BowBackstep, name = "箭舞后撤", desc = "射击自动后撤小跳，走 A 风筝更丝滑" },
-            [BoonIds.BowExplosive]         = new Entry { id = BoonIds.BowExplosive, name = "爆裂箭头", desc = "箭矢命中引发小范围溅射爆炸" },
+            [BoonIds.BowArrowRain]         = new Entry { id = BoonIds.BowArrowRain, name = "弹雨压制", desc = "按 K 在面前区域降下一片弹雨" },
+            [BoonIds.BowBackstep]          = new Entry { id = BoonIds.BowBackstep, name = "后坐跃步", desc = "开火时借后坐力向后小跳，边退边打更丝滑" },
+            [BoonIds.BowExplosive]         = new Entry { id = BoonIds.BowExplosive, name = "爆裂弹头", desc = "子弹命中引发小范围溅射爆炸" },
 
             // ---------- 通用池（任何武器都能刷到） ----------
             [BoonIds.UniversalDashMaster]  = new Entry { id = BoonIds.UniversalDashMaster, name = "疾风步", desc = "冲刺冷却 -40%" },

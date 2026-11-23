@@ -18,12 +18,6 @@ namespace StarVortex.EditorTools
     {
         private const string MarkerFile = "Library/StarVortex_Built.marker";
 
-        /// <summary>
-        /// 打包 Windows EXE（64 位 Mono）。
-        /// 面试点：会打包是"完整交付"的基本功——场景列表来自 BuildSettings，
-        /// 输出到 Builds/ 目录（已 gitignore）。
-        /// </summary>
-        [MenuItem("StarVortex/② 打包 Windows EXE", priority = 1)]
         /// <summary>逐级创建目录（AssetDatabase.CreateFolder 不支持多级递归；partial 各文件共享）。</summary>
         internal static void EnsureDir(string path)
         {
@@ -37,6 +31,12 @@ namespace StarVortex.EditorTools
             }
         }
 
+        /// <summary>
+        /// 打包 Windows EXE（64 位 Mono）。
+        /// 面试点：会打包是"完整交付"的基本功——场景列表来自 BuildSettings，
+        /// 输出到 Builds/ 目录（已 gitignore）。
+        /// </summary>
+        [MenuItem("StarVortex/② 打包 Windows EXE", priority = 1)]
         public static void BuildWindowsExe()
         {
             const string outputDir = "Builds/Windows";
@@ -238,9 +238,16 @@ namespace StarVortex.EditorTools
 
         private static void EnsureCjkFont()
         {
-            // 幂等：资产已存在直接复用
+            // 字表 = 手工字表 ∪ 脚本里的全部中文文案：改了文案不会漏字
+            string charset = GameTextCharset.Collect(ChineseChars);
+
+            // 资产已存在：只补烘新出现的字（原地追加，资产 GUID 不变，场景里的字体引用不会断）
             _cjkFont = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(CjkFontAssetPath);
-            if (_cjkFont != null) return;
+            if (_cjkFont != null)
+            {
+                BakeMissingCharacters(_cjkFont, charset);
+                return;
+            }
 
             EnsureDir("Assets/Fonts");
 
@@ -315,24 +322,10 @@ namespace StarVortex.EditorTools
             AssetDatabase.CreateAsset(fontAsset, CjkFontAssetPath);
 
             // 烘焙项目内全部用到的字符（含标点）
-            fontAsset.TryAddCharacters(ChineseChars, out string missing);
+            fontAsset.TryAddCharacters(charset, out string missing);
             if (!string.IsNullOrEmpty(missing))
                 Debug.LogWarning($"[Font] 以下字符不在字体中：{missing}");
-
-            // 动态烘焙产生的图集纹理与材质都是内存对象，必须全部嵌入资产本体（子资产），
-            // 否则资产重载后引用变成悬空 guid（表现为中文全部显示方块）
-            if (fontAsset.atlasTextures != null)
-            {
-                foreach (var tex in fontAsset.atlasTextures)
-                {
-                    if (tex != null && string.IsNullOrEmpty(AssetDatabase.GetAssetPath(tex)))
-                        AssetDatabase.AddObjectToAsset(tex, fontAsset);
-                }
-            }
-            if (fontAsset.material != null && string.IsNullOrEmpty(AssetDatabase.GetAssetPath(fontAsset.material)))
-            {
-                AssetDatabase.AddObjectToAsset(fontAsset.material, fontAsset);
-            }
+            EmbedFontSubAssets(fontAsset);
 
             fontAsset.atlasPopulationMode = AtlasPopulationMode.Static; // 烘完定格，打包自包含
             EditorUtility.SetDirty(fontAsset);
@@ -342,6 +335,45 @@ namespace StarVortex.EditorTools
             // 构建器给每个 TMP 文本显式赋字体（AddText / DamagePop 预制体统一走 _cjkFont）
             AssetDatabase.SaveAssets();
             Debug.Log("[Font] CJK 字体烘焙完成：Assets/Fonts/TMP_CJK.asset");
+        }
+
+        /// <summary>
+        /// 给已烘焙的静态字体补字：临时切回动态模式追加缺失字符，再定格为静态。
+        /// 比删掉重建好在资产 GUID 不变，所有场景和预制体里的字体引用继续有效。
+        /// </summary>
+        private static void BakeMissingCharacters(TMP_FontAsset font, string charset)
+        {
+            if (font.HasCharacters(charset, out List<char> missingChars) || missingChars == null || missingChars.Count == 0)
+                return;
+
+            font.atlasPopulationMode = AtlasPopulationMode.Dynamic;
+            font.TryAddCharacters(new string(missingChars.ToArray()), out string notInFont);
+            EmbedFontSubAssets(font);
+            font.atlasPopulationMode = AtlasPopulationMode.Static;
+            EditorUtility.SetDirty(font);
+            AssetDatabase.SaveAssets();
+
+            if (!string.IsNullOrEmpty(notInFont))
+                Debug.LogWarning($"[Font] 以下字符不在字体中：{notInFont}");
+        }
+
+        /// <summary>
+        /// 动态烘焙产生的图集纹理与材质都是内存对象，必须全部嵌入字体资产本体（子资产），
+        /// 否则资产重载后引用变成悬空 guid（表现为中文全部显示方块）。
+        /// </summary>
+        private static void EmbedFontSubAssets(TMP_FontAsset font)
+        {
+            if (font.atlasTextures != null)
+            {
+                foreach (var tex in font.atlasTextures)
+                {
+                    if (tex == null) continue;
+                    if (string.IsNullOrEmpty(AssetDatabase.GetAssetPath(tex))) AssetDatabase.AddObjectToAsset(tex, font);
+                    EditorUtility.SetDirty(tex); // 追加字形会改写已有图集页，同样要标脏才会落盘
+                }
+            }
+            if (font.material != null && string.IsNullOrEmpty(AssetDatabase.GetAssetPath(font.material)))
+                AssetDatabase.AddObjectToAsset(font.material, font);
         }
 
         /// <summary>反射注入 serialized 字段（搭建脚本里大量接线用，比手写 SerializedObject 简洁）。</summary>

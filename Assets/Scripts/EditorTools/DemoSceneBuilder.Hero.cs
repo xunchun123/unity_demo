@@ -26,6 +26,7 @@ namespace StarVortex.EditorTools
         {
             EnsureDir(HeroPrefabDir);
             EnsureDir(HeroDataDir);
+            HeroAnimationBuilder.BuildAll(); // 像素帧 → 剪辑 → 状态机，预制体和武器 Kit 都要引用它
             CreateHeroPrefab();
             CreateMonsterPrefabs();
             CreateProjectilePrefabs();
@@ -35,9 +36,6 @@ namespace StarVortex.EditorTools
         }
 
         // ---------- 勇者 ----------
-
-        /// <summary>比例网格基准：勇者目标身高（世界单位）。怪物按 0.7~2.6u 分档，相机视口 7u。</summary>
-        internal const float HeroTargetHeight = 1.25f;
 
         /// <summary>
         /// 把视觉子物体缩放到目标身高并把"脚底"钉在根原点：精灵 pivot 是中心（脚在 sprite 下缘），
@@ -55,6 +53,19 @@ namespace StarVortex.EditorTools
             visual.localPosition = new Vector3(0f, b.extents.y * s, 0f); // feet → y=0
         }
 
+        /// <summary>勇者零摩擦材质：必须落盘成资产（内存材质保存预制体会悬空引用，Player 端丢失）。</summary>
+        private static PhysicsMaterial2D HeroSlipMaterial()
+        {
+            const string matPath = "Assets/Physics/Hero_Slip.physicsMaterial2D";
+            var mat = AssetDatabase.LoadAssetAtPath<PhysicsMaterial2D>(matPath);
+            if (mat != null) return mat;
+            EnsureDir("Assets/Physics");
+            // Box2D 摩擦混合 = √(fA×fB)：勇者摩擦 0 时与任何地面相乘结果都是 0（无需合并模式属性）
+            mat = new PhysicsMaterial2D("Hero_Slip") { friction = 0f, bounciness = 0f };
+            AssetDatabase.CreateAsset(mat, matPath);
+            return mat;
+        }
+
         private static void CreateHeroPrefab()
         {
             string path = $"{HeroPrefabDir}/Hero.prefab";
@@ -67,19 +78,23 @@ namespace StarVortex.EditorTools
             var col = go.AddComponent<CapsuleCollider2D>();
             col.size = new Vector2(0.55f, 1.1f);
             col.offset = new Vector2(0f, 0.58f);
-            // 视觉子物体：ProceduralAnim 的 squash/stretch/前倾只捏这个 transform 的 scale/rotation/局部位置，
-            // 根上的 Rigidbody2D/碰撞体不受影响（直接缩放根会连物理体一起捏变形）
+            // 零摩擦材质：自动试玩实证——持续推墙时墙壁摩擦力会把勇者"粘"在半空（静摩擦平衡，
+            // vy=0 悬停不掉落），脚底探测又摸不到侧壁 → 接地失效+跳不起。零摩擦让推墙即下滑落地
+            col.sharedMaterial = HeroSlipMaterial();
+            // 视觉子物体：Animator / SpriteRenderer / 程序化形变都只作用在这里，根上的物理体不受影响
+            // 像素美术：PPU 统一 32、pivot 在脚底中心，视觉层保持 1 倍缩放（非整数缩放会让像素粗细不均）。
+            // 骑士身体约 40px = 1.25u，正好对上胶囊碰撞体高度
             var visual = new GameObject("Visual");
             visual.transform.SetParent(go.transform, false);
             var sr = visual.AddComponent<SpriteRenderer>();
-            sr.sprite = Art("hero_idle_0"); // idle=收招站姿帧（与全套动画同批次，光影统一）
+            sr.sprite = HeroAnimationBuilder.PreviewSprite(WeaponKind.Sword);
             sr.sortingOrder = 20;
-            ApplyVisualFeet(visual.transform, sr.sprite, HeroTargetHeight);
-            // 不挂 Animator：自动试玩实证——程序化 PPtr 换帧曲线在 Player 端确实生效，但攻击状态
-            // 播完会卡在末帧持续覆盖 SpriteRenderer（"过一会儿变贴纸"的元凶）。勇者动画由
-            // HeroController.DriveFrameAnimation 代码驱动，单一数据源不留第二条写 sprite 的路
+            var animator = visual.AddComponent<Animator>();
+            animator.runtimeAnimatorController = HeroAnimationBuilder.ControllerFor(WeaponKind.Sword);
+
             var hero = go.AddComponent<HeroController>();
-            go.AddComponent<ProceduralAnim>(); // 程序化动画：跑动弹跳/呼吸/跳跃拉伸落地压扁/攻击 punch
+            var pa = go.AddComponent<ProceduralAnim>();
+            pa.pixelArtMode = true; // 帧动画已有呼吸/跑动起伏，程序化层只留轻微落地形变
             go.AddComponent<DustPuff>();       // 灰尘：落地 5 粒/起跳 3 粒/跑动 0.15s 一粒/冲刺沿途
             go.layer = LayerPlayer; // 近战掩码 1<<7 找的是 Enemy 层；勇者必须挂 Player 层（矩阵 Player↔Enemy 开）
 
@@ -89,137 +104,11 @@ namespace StarVortex.EditorTools
 
             SetField(hero, "_rb", rb);
             SetField(hero, "_sr", sr); // 指向 Visual 子物体：无敌闪烁/残影都作用在它上面
+            SetField(hero, "_animator", animator);
             SetField(hero, "_attackOrigin", origin.transform);
             SetField(hero, "_fireballPrefab", LoadPrefabComp<Fireball>("proj_fireball"));
 
-            // 真帧动画帧组（用户 AI 生图，代码驱动换帧——Animator PPtr 在 Player 端不生效的兜底，见 DriveFrameAnimation）
-            SetObjectArrayField(hero, "_idleFrames", new Object[] { Art("hero_idle_0") });
-            SetObjectArrayField(hero, "_runFrames", new Object[]
-            {
-                Art("hero_run_0"), Art("hero_run_1"), Art("hero_run_2"), Art("hero_run_1"),
-            });
-            SetObjectArrayField(hero, "_jumpFrames", new Object[] { Art("hero_jump_0") });
-            SetObjectArrayField(hero, "_fallFrames", new Object[] { Art("hero_jump_1") });
-            SetObjectArrayField(hero, "_attackFrames", new Object[]
-            {
-                Art("hero_attack_0"), Art("hero_attack_1"), Art("hero_attack_2"),
-            });
-
             SavePrefab(go, path);
-        }
-
-        /// <summary>
-        /// 勇者动画状态机（程序化创建，Animator 系统）——真帧动画版：
-        /// 用户 AI 生图批次二提供 9 帧（跑步三帧+攻击三帧+跳跃两帧+站姿），按 0.12s/帧换帧：
-        /// Idle=站姿单帧（呼吸由 ProceduralAnim 叠加）→ Run=迈步A→收拢→迈步B→收拢 四拍循环；
-        /// Jump（上升收腿）/Fall（下落展腿）由 Airborne+Falling 双 bool 驱动；Attack=蓄力→突刺→收招。
-        /// 换帧曲线绑定 "Visual" 子物体的 SpriteRenderer.m_Sprite——根上的物理体不受影响；
-        /// squash/stretch/前倾继续由 ProceduralAnim 在 LateUpdate 叠加（两套驱动互补）。
-        /// </summary>
-        private static RuntimeAnimatorController BuildHeroAnimator()
-        {
-            var controller = UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPath(
-                $"{HeroPrefabDir}/Hero.controller");
-            controller.AddParameter("Moving", AnimatorControllerParameterType.Bool);
-            controller.AddParameter("Airborne", AnimatorControllerParameterType.Bool);
-            controller.AddParameter("Falling", AnimatorControllerParameterType.Bool);
-            controller.AddParameter("Attack", AnimatorControllerParameterType.Trigger);
-            var root = controller.layers[0].stateMachine;
-
-            const float frameTime = 0.12f;
-            var idleClip = SpriteSwapClip("HeroIdle", new[] { "hero_idle_0" }, new[] { 0f, 1f }, loop: true);
-            var runClip = SpriteSwapClip("HeroRun",
-                new[] { "hero_run_0", "hero_run_1", "hero_run_2", "hero_run_1" },
-                new[] { 0f, frameTime, frameTime * 2, frameTime * 3, frameTime * 4 }, loop: true);
-            var jumpClip = SpriteSwapClip("HeroJump", new[] { "hero_jump_0" }, new[] { 0f, 0.5f }, loop: true);
-            var fallClip = SpriteSwapClip("HeroFall", new[] { "hero_jump_1" }, new[] { 0f, 0.5f }, loop: true);
-            // 攻击三帧：蓄力 0.12s → 突刺 0.12s → 收招停留到 0.4s（与 0.35s 攻击间隔基本对齐）
-            var atkClip = SpriteSwapClip("HeroAttack",
-                new[] { "hero_attack_0", "hero_attack_1", "hero_attack_2", "hero_attack_2" },
-                new[] { 0f, frameTime, frameTime * 2, 0.4f }, loop: false);
-
-            AssetDatabase.AddObjectToAsset(idleClip, controller);
-            AssetDatabase.AddObjectToAsset(runClip, controller);
-            AssetDatabase.AddObjectToAsset(jumpClip, controller);
-            AssetDatabase.AddObjectToAsset(fallClip, controller);
-            AssetDatabase.AddObjectToAsset(atkClip, controller);
-
-            var idle = root.AddState("Idle");
-            idle.motion = idleClip;
-            var run = root.AddState("Run");
-            run.motion = runClip;
-            var jump = root.AddState("Jump");
-            jump.motion = jumpClip;
-            var fall = root.AddState("Fall");
-            fall.motion = fallClip;
-            var atk = root.AddState("Attack");
-            atk.motion = atkClip;
-            root.defaultState = idle;
-
-            // Attack 触发过渡最先添加（同帧多条件满足时 Unity 按添加顺序取第一个命中的）
-            foreach (var state in new[] { idle, run, jump, fall })
-            {
-                var toAtk = state.AddTransition(atk);
-                toAtk.AddCondition(UnityEditor.Animations.AnimatorConditionMode.If, 0, "Attack");
-                toAtk.duration = 0f;
-            }
-            atk.AddExitTransition().duration = 0.08f;
-
-            // 地面两态互换
-            LinkStates(idle, run, "Moving", UnityEditor.Animations.AnimatorConditionMode.If, 0.1f);
-            LinkStates(run, idle, "Moving", UnityEditor.Animations.AnimatorConditionMode.IfNot, 0.1f);
-
-            // 地面 → 空中（起跳收腿 / 直接下落展腿）
-            foreach (var state in new[] { idle, run })
-            {
-                LinkStates(state, jump, "Airborne", UnityEditor.Animations.AnimatorConditionMode.If, 0.05f,
-                    ("Falling", UnityEditor.Animations.AnimatorConditionMode.IfNot));
-                LinkStates(state, fall, "Airborne", UnityEditor.Animations.AnimatorConditionMode.If, 0.05f,
-                    ("Falling", UnityEditor.Animations.AnimatorConditionMode.If));
-            }
-
-            // 空中升降互换
-            LinkStates(jump, fall, "Falling", UnityEditor.Animations.AnimatorConditionMode.If, 0.05f);
-            LinkStates(fall, jump, "Falling", UnityEditor.Animations.AnimatorConditionMode.IfNot, 0.05f);
-
-            // 落地回地面态（Airborne=false 后按 Moving 分流）
-            foreach (var air in new[] { jump, fall })
-            {
-                LinkStates(air, idle, "Airborne", UnityEditor.Animations.AnimatorConditionMode.IfNot, 0.1f,
-                    ("Moving", UnityEditor.Animations.AnimatorConditionMode.IfNot));
-                LinkStates(air, run, "Airborne", UnityEditor.Animations.AnimatorConditionMode.IfNot, 0.1f,
-                    ("Moving", UnityEditor.Animations.AnimatorConditionMode.If));
-            }
-
-            AssetDatabase.SaveAssets();
-            return controller;
-        }
-
-        /// <summary>换帧剪辑：ObjectReference 曲线驱动 SpriteRenderer.m_Sprite（times 末位=剪辑总长，非循环靠它停留末帧）。</summary>
-        private static AnimationClip SpriteSwapClip(string name, string[] sprites, float[] times, bool loop)
-        {
-            var clip = new AnimationClip { name = name };
-            var settings = AnimationUtility.GetAnimationClipSettings(clip);
-            settings.loopTime = loop;
-            AnimationUtility.SetAnimationClipSettings(clip, settings);
-
-            var frames = new ObjectReferenceKeyframe[sprites.Length];
-            for (int i = 0; i < sprites.Length; i++)
-                frames[i] = new ObjectReferenceKeyframe { time = times[i], value = Art(sprites[i]) };
-            AnimationUtility.SetObjectReferenceCurve(clip,
-                EditorCurveBinding.PPtrCurve("Visual", typeof(SpriteRenderer), "m_Sprite"), frames);
-            return clip;
-        }
-
-        /// <summary>状态过渡接线（支持两个条件：主条件 + 可选附加条件）。</summary>
-        private static void LinkStates(UnityEditor.Animations.AnimatorState from,
-            UnityEditor.Animations.AnimatorState to, string param, UnityEditor.Animations.AnimatorConditionMode mode,
-            float duration, (string name, UnityEditor.Animations.AnimatorConditionMode mode)? extra = null)
-        {
-            var t = from.AddTransition(to);
-            t.AddCondition(mode, 0, param);
-            if (extra.HasValue) t.AddCondition(extra.Value.mode, 0, extra.Value.name);
-            t.duration = duration;
         }
 
         /// <summary>注入 float 序列化字段（怪物数值 maxHp/contactDamage 用）。</summary>
@@ -339,8 +228,10 @@ namespace StarVortex.EditorTools
             SetField(fb, "_rb", fRb);
             SavePrefab(fireball, $"{HeroPrefabDir}/proj_fireball.prefab");
 
-            // 箭（通用 Projectile 组件）
+            // 火铳子弹（通用 Projectile 组件）：池键沿用 proj_arrow，贴图换成猎人素材自带的弹丸帧
             var arrow = BuildGenericProjectile("proj_arrow", "proj_arrow", new Vector2(0.5f, 0.1f));
+            var bulletFrames = PixelArtPipeline.LoadFrames("Fx", "Bullet");
+            if (bulletFrames.Length > 0) arrow.GetComponent<SpriteRenderer>().sprite = bulletFrames[0];
             SavePrefab(arrow, $"{HeroPrefabDir}/proj_arrow.prefab");
 
             // 剑气波
@@ -382,7 +273,9 @@ namespace StarVortex.EditorTools
             NewHeroAsset<WeaponKit>("Weapon_Sword", kit =>
             {
                 kit.kind = WeaponKind.Sword;
+                kit.heroAnimator = HeroAnimationBuilder.ControllerFor(WeaponKind.Sword);
                 kit.displayName = "长剑";
+                kit.attackOrigin = new Vector2(0.55f, 0.75f); // 剑刃挥砍高度
                 kit.description = "三段连击，末段击退。强化树：剑气冲击波 / 刀变长 / 旋风斩 / 震地斩 / 连击落雷 / 连击灼烧 / 嗜血";
                 kit.attackInterval = 0.35f;
                 kit.attackDamageMul = 1f;
@@ -397,8 +290,10 @@ namespace StarVortex.EditorTools
             NewHeroAsset<WeaponKit>("Weapon_Staff", kit =>
             {
                 kit.kind = WeaponKind.Staff;
-                kit.displayName = "法杖";
-                kit.description = "奥术弹免费连射，K 秘法新星耗蓝。强化树：火球分裂 / 燃烧地面 / 双生火球 / 爆裂范围 / 冰霜新星 / 奥术涌流";
+                kit.heroAnimator = HeroAnimationBuilder.ControllerFor(WeaponKind.Staff);
+                kit.displayName = "气功";
+                kit.attackOrigin = new Vector2(1.1f, 0.9f);   // 出拳拳峰（Attack 第 2-4 帧量得）
+                kit.description = "气功波免费连发，K 气爆新星耗蓝。强化树：气劲分裂 / 焦土气劲 / 双发气功 / 爆气扩容 / 冰霜新星 / 调息回气";
                 kit.attackInterval = 0.45f;
                 kit.attackDamageMul = 1.1f;
                 kit.boonPool = new[]
@@ -411,8 +306,10 @@ namespace StarVortex.EditorTools
             NewHeroAsset<WeaponKit>("Weapon_Bow", kit =>
             {
                 kit.kind = WeaponKind.Bow;
-                kit.displayName = "弓箭";
-                kit.description = "射箭可蓄力（爽点解锁狙击）。强化树：穿透+1 / 多重箭 / 蓄力狙击 / 箭雨 / 后撤步 / 爆裂箭头";
+                kit.heroAnimator = HeroAnimationBuilder.ControllerFor(WeaponKind.Bow);
+                kit.displayName = "火铳";
+                kit.attackOrigin = new Vector2(0.8f, 1.2f);   // 枪口（Attack 帧最右像素）
+                kit.description = "火铳点射可蓄力（强化解锁狙击）。强化树：穿甲弹 / 双管齐射 / 蓄力狙击 / 弹雨压制 / 后坐跃步 / 爆裂弹头";
                 kit.attackInterval = 0.5f;
                 kit.attackDamageMul = 0.9f;
                 kit.boonPool = new[]

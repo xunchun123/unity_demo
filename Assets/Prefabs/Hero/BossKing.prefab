@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverMode: 0
+  pixelArtMode: 0
   runBounceAmplitude: 0.06
   leanAngle: 4
   groundMask:

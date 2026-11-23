@@ -22,7 +22,7 @@ namespace StarVortex.UI
         [SerializeField] private Image _hpGhostFill; // 白色残影：延迟跟随，掉血反馈更"疼"
         [SerializeField] private TMP_Text _hpLabel;
 
-        [Header("蓝条（血条下方细条：火球消耗与回复——法杖普攻免费，蓝供 K 秘法新星）")]
+        [Header("蓝条（血条下方细条：气功普攻免费，蓝供 K 气爆新星）")]
         [SerializeField] private Image _manaFill;
 
         [Header("天赋点角标（pendingTalentPoints>0 时显示，呼吸提醒去升级面板加点）")]

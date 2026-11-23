@@ -758,6 +758,9 @@ namespace StarVortex.EditorTools
             foreach (var m in messages) sb.Append(m);
             sb.Append(' '); // 空格字形兜底
 
+            // 已全部烘焙过就不再动图集：TMP 3.0.6 在"没有新字可加"时也返回 false 并把整串当成缺失，会刷出误报警告
+            if (font.HasCharacters(sb.ToString())) return messages;
+
             font.atlasPopulationMode = AtlasPopulationMode.Dynamic;
             font.TryAddCharacters(sb.ToString(), out string missing);
             if (!string.IsNullOrEmpty(missing))
