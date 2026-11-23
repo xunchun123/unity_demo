@@ -1,137 +1,100 @@
-# 星涡幸存者 StarVortex
+# 勇者远征 Hero of StarVortex
 
-> 一款 Unity 2D 霓虹矢量风"幸存者割草"小游戏：在蜂拥而至的怪物潮中活过 10 分钟，边割边升级，构筑自己的成长路线。
-> 由个人开发者 AI 辅助开发独立完成——零外部素材、零外部插件，全部资源由 Editor 脚本程序化生成。
+> Unity 2D 横版动作闯关 Demo：三选一职业，闯过雾林、熔岩洞窟、古堡内殿三关，击败三阶段 BOSS。
+> 个人开发，AI 辅助编码 + 人工审查验证。美术用 CC0 像素素材，动画、场景、预制体、音效、字体由 Editor 脚本一键生成。
 
-## 游戏截图
+![主菜单](docs/screenshots/01_menu.png)
 
-<!-- 截图占位：运行 Unity 后按 Play 截图补充，建议 3 张（主菜单 / 战斗中 HUD / 升级三选一） -->
+| 选择职业 | 第 1 关 · 灰烬森林 |
+| --- | --- |
+| ![](docs/screenshots/02_weapon_select.png) | ![](docs/screenshots/03_level1_forest.png) |
+| **升级：天赋 + 强化三选一** | **第 2 关 · 坍塌矿洞** |
+| ![](docs/screenshots/04_levelup.png) | ![](docs/screenshots/05_level2_cavern.png) |
+| **第 3 关 · 深渊王座（BOSS 战）** | **死亡结算** |
+| ![](docs/screenshots/06_level3_boss.png) | ![](docs/screenshots/07_gameover.png) |
 
-| 主菜单 | 战斗画面 | 升级三选一 |
-| --- | --- | --- |
-| （运行后补充） | （运行后补充） | （运行后补充） |
+## 玩法
 
-## 玩法特性
+- **三个职业**：长剑（三段连击，近身突进）/ 气功（远程气功波，K 键耗蓝放气爆新星）/ 火铳（点射，强化后可蓄力狙击）。职业之间只换动画和攻击方式，共用一套角色控制器。
+- **平台手感**：二段跳、冲刺（冲刺瞬间无敌）、土狼时间、跳跃缓冲、可变跳跃高度、跳跃顶点悬停。
+- **五种怪物**，每种都有看得见的出招前摇：
+  地狱犬（蹲伏蓄力后扑咬）、幽灵（尖啸后俯冲）、骷髅巫师（保持距离施放火球）、
+  梦魇马（精英，霸体，震地波 + 冲锋，撞墙会眩晕）、恶魔（BOSS，三阶段，按血量解锁地刺阵、召唤、环形弹幕）。
+- **关卡机关**：地刺、落石（感应触发）、周期喷火口（喷发前栅缝先亮起火光预警）。
+- **成长**：击杀得经验，升级后分配天赋点（生命 / 攻击 / 攻速 / 移速 / 蓝量），再从"本职业强化池 + 通用池"中三选一。
+- **完整流程**：主菜单 → 选职业 → 三关 → 通关结算；死亡结算可重新开始；Esc 暂停；最佳纪录本地存档。
 
-- **WASD / 手柄双通道移动**：新版 Input System 轮询，键盘与左摇杆输入归一化融合，防斜向加速。
-- **全自动武器**：武器自动索敌最近敌人射击，多弹幕扇形展开，支持穿透与暴击（2 倍伤害）。
-- **3 种敌人 + 精英变体**：浮游 drone / 冲锋 darter / 坦克 brute，精英血量 x4、体型 x1.4、经验 x6。
-- **难度曲线成波刷怪**：刷怪速率、怪物组成权重、血量成长、精英概率全部由 AnimationCurve 驱动，一个资产管整局节奏。
-- **经验宝石磁吸拾取**：进入拾取圈自动吸附、越吸越快，玩家会主动"扫图"。
-- **升级三选一**：伤害 / 攻速 / 移速 / 最大HP / 拾取半径 / 弹幕数 / 暴击 / 回血共 8 种强化，不放回抽取 3 张。
-- **完整局外循环**：主菜单 → 游戏 → 结算（存活时间 / 击杀数 / 等级），Json 最高分存档，支持暂停。
+**操作**：A / D 或 ← → 移动 · 空格 跳跃（空中再按一次二段跳）· J 攻击 · K 特殊技 · L 冲刺 · Esc 暂停 · 选职业时可按 1 / 2 / 3
+
+## 技术要点
+
+**Animator 状态机 + Override Controller（`EditorTools/HeroAnimationBuilder.cs`、`EnemyAnimationBuilder.cs`）**
+三个职业共用一张状态机（Idle / Run / Jump / Fall / Attack / AirAttack / Hurt / Death），每个职业一个 `AnimatorOverrideController`，只换剪辑。五种怪物同理，共用一张 Idle / Move / Windup / Attack 状态机。攻击、受击走 Any State + Trigger，按添加顺序定优先级；一次性动作显式打开 Exit Time 回到移动层。代码只写参数，sprite 只由 Animator 写，不会出现两处同时改 sprite 的情况。
+
+**横版平台物理（`Gameplay/HeroController.cs`）**
+`Rigidbody2D` + 胶囊碰撞体。土狼时间 0.1s、跳跃缓冲 0.12s、下落重力 ×2.5、松键提前下落（×1.6）、顶点重力 ×0.6；勇者用零摩擦物理材质，避免推墙时被静摩擦"粘"在半空。地面探测忽略 Trigger，教学牌、传送门的触发盒不会被误判成地面（否则空中可以无限跳）。
+
+**怪物：模板方法 + 显式状态机（`Gameplay/Enemies/`）**
+`EnemyBase` 固定受击流程（伤害去重 → 血条 → 闪光 → 硬直 / 霸体 → 击退 → 死亡结算），子类只实现 `Behaviour()` 和 `ApplyKnockback()`。每个 AI 都是枚举状态机，动画参数只在状态切换处写一行，换素材不用改 AI。
+
+**打击感（`Gameplay/Juice.cs`、`SpriteFlash.cs`、`EnemyHealthBar.cs`）**
+命中停帧（真实时间恢复）、受击纯色剪影闪光、视觉层抖动、小怪硬直、精英 / BOSS 霸体、头顶血条（掉血残影延迟追上）、伤害数字、震屏（trauma² + Perlin）、死亡爆散序列帧。
+
+**状态机收口 timeScale（`Core/GameManager.cs`）**
+MainMenu / WeaponSelect / Playing / LevelUp / Paused / LevelClear / GameOver。所有 `Time.timeScale` 的写入都在 GameManager 里，选职业、升级、暂停、死亡这几个时间冻结来源不会互相抢。UI 动画全部走 unscaled time。
+
+**事件总线 + 对象池（`Core/GameEvents.cs`、`Core/PoolService.cs`）**
+玩法层发布事件，UI 只订阅，玩法代码不引用 UI。场景切换时 `ClearAllSubscribers()` 兜底清订阅。对象池基于官方 `UnityEngine.Pool.ObjectPool`，带预热和实例 → 预制体反查表，`Despawn` 一行调用。
+
+**像素美术管线（`EditorTools/PixelArtPipeline.cs`、`PixelEnvironment.cs`）**
+全项目统一 PPU 32、Point 过滤、不压缩，角色 pivot 在脚底中心；背景层高 = 相机视口高，人物、怪物、背景的像素大小一致。多层视差背景按关卡宽度和视差系数自动算铺满范围；地面用九宫格平铺，同高相邻地面段先合并，避免一段一道竖缝。
+
+**一键搭建（`EditorTools/DemoSceneBuilder.cs`）**
+菜单 `StarVortex/① 一键搭建 Demo`：导入像素帧 → 生成动画剪辑与状态机 → 音效合成 → 中文字体烘焙（自动扫描脚本里的中文文案补字）→ 预制体与职业数据 → 三关 + 主菜单场景 → UI 接线。关卡由 `LevelSpec` 数据描述（地形、平台、怪物、机关、目标），同一份数据既用于编辑器里铺地形，也用于运行时布置怪物。
 
 ## 验证状态
 
-| 验证项 | 结果 |
+| 项目 | 结果 |
 | --- | --- |
-| 脚本编译 | 0 error / 0 warning |
-| PlayMode 冒烟测试 | **7 / 7 通过**（资产完整性 / 场景引导 / 升级曲线 / 对象池复用 / 击杀掉落 / 刷怪上限压测 / 自动索敌开火） |
-| Windows EXE 构建 | 成功（Unity 2022.3.62f3c1，Mono） |
-| 真机运行 | 主菜单 / 中文 UI / 音频正常，无异常日志 |
-
-> 测试运行方式：Unity 编辑器菜单 `Window → General → Test Runner → PlayMode`，
-> 或命令行 `Unity.exe -batchmode -projectPath <path> -runTests -testPlatform PlayMode`。
-
-## 技术亮点
-
-**统一对象池（`Core/PoolService.cs`）**
-基于 Unity 官方内置 `UnityEngine.Pool.ObjectPool` 做统一注册表，子弹、敌人、宝石、飘字全走池。预热水位把 Instantiate 成本挪到加载期；"实例 → 预制体反查表"让 Despawn 一行调用；collectionCheck 仅 Editor 开启。
-
-**静态事件总线解耦（`Core/GameEvents.cs`）**
-系统间通信用 C# event 静态总线，玩法层发布事件、UI 层只订阅——玩法层对 UI 层零依赖。场景卸载时 `ClearAllSubscribers()` 清空全部订阅，杜绝跨场景残留引用这一经典生命周期陷阱。
-
-**timeScale 唯一收口（`Core/GameManager.cs`）**
-单例 + 状态机（MainMenu / Playing / LevelUp / Paused / GameOver），升级暂停、手动暂停、死亡结算三个"时间冻结来源"互斥，所有 timeScale 修改收口在状态机，避免多系统互相抢 timeScale 的经典 bug。
-
-**面向接口的伤害管线（`Core/Damage.cs`）**
-`IDamageable` 接口 + `DamageInfo` struct（`in` 参数零 GC），弹丸只认接口不认具体类——新增可受击对象不需要改弹丸代码。
-
-**ScriptableObject 数据驱动（`Data/*.cs`）**
-WeaponData / EnemyData / UpgradeData / DifficultyCurve 四类资产；三种敌人共用一个 `Enemy` 类靠数据区分（组合优于继承）；平衡性调整只拖曲线滑条，不改代码不重新编译。
-
-**性能节流**
-分离力算法限流采样（最多 6 邻居、0.15s 节流），避开全量 O(n²) 两两分离；自动索敌 `OverlapCircleAll` 0.1s 节流；同屏敌人上限是帧率保护阀——宁可不刷，不能卡顿。
-
-**打击感三件套（`Gameplay/Juice.cs`、`Gameplay/CameraRig.cs`）**
-HitStop 停帧（timeScale 压 0.05、真实时间恢复、与弹窗状态互斥）+ 受击闪白（MaterialPropertyBlock 不实例化材质）+ 死亡粒子迸发（单 ParticleSystem.Emit 复用零实例化）；震屏用 trauma² 衰减 + Perlin 噪声驱动位移与旋转，多次受击叠加有上限不晃吐。
-
-**UGUI 全套（`UI/*.cs`）**
-HUD 血条残影缓动（主条秒跟、残影慢追）、底部经验条、三选一卡片、暂停、结算数字滚动；全部动画跑 unscaled time，timeScale=0 时 UI 照常播放。
-
-**程序化资源管线（`EditorTools/`）**
-霓虹矢量美术由 SDF 光栅器 + smoothstep 羽化抗锯齿逐像素生成（30 张 PNG）；音效手写 RIFF/WAVE 字节流合成（激光/爆炸/拾取/琶音/环境音乐）；TMP SDF 中文字体从系统字体生成并按需烘焙字符集。零外部素材、零版权风险。
-
-**一键搭建（`EditorTools/DemoSceneBuilder.cs`）**
-Editor 脚本一键生成：URP 资产 → 美术 → 音效 → 字体 → 数据资产 → 预制体 → 层碰撞矩阵 → 动画控制器 → 两个场景 → 全套 UGUI → 图集。项目从空仓库到可玩只需一次菜单命令，Git 仓库干净可复现。
-
-## 架构图
-
-```mermaid
-graph TD
-    subgraph Core["Core 框架层"]
-        GM["GameManager<br/>单例 + 状态机<br/>timeScale 唯一收口"]
-        GE["GameEvents<br/>静态事件总线"]
-        PO["PoolService<br/>统一对象池"]
-        DMG["Damage<br/>IDamageable / DamageInfo"]
-        AUD["AudioService / Tween / SaveSystem / Palette"]
-    end
-
-    subgraph GP["Gameplay 玩法层"]
-        BOOT["GameSceneBootstrap<br/>场景引导器（装配期注入）"]
-        PL["PlayerController"]
-        WP["WeaponController / Projectile"]
-        EN["Enemy / EnemyDirector"]
-        XR["XPGem / DamagePop"]
-        CAM["CameraRig / Juice / BackgroundParallax"]
-    end
-
-    subgraph UIL["UI 表现层"]
-        HUD["HUDController / MainMenuController"]
-        PN["LevelUpPanel / PausePanel / GameOverPanel"]
-    end
-
-    subgraph DATA["Data 配置层（ScriptableObject）"]
-        SO["WeaponData / EnemyData<br/>UpgradeData / DifficultyCurve"]
-    end
-
-    GP -- 调用服务 / 发布事件 --> Core
-    UIL -- 仅订阅事件（零反向依赖） --> GE
-    GP -- 只读配置（不改资产） --> SO
-    EN --> PO
-    WP --> PO
-```
-
-依赖方向单向向下：Data 无依赖；Core 不含玩法逻辑；Gameplay 只调用 Core、只读 Data；UI 只订阅事件并在交互时调用 GameManager 的公开方法。
+| 脚本编译 | 0 error |
+| Windows EXE 构建 | 成功（Unity 2022.3.62f3c1，Mono，约 92MB） |
+| 编辑器内自动试玩 | 三职业动作逐帧检查、五种怪物出招与死亡、三关切换、BOSS、死亡结算 / 重开 / 暂停 / 回主菜单流程（上面的截图即自动试玩时截取） |
+| 单元测试 | 暂无（`Assets/Tests` 只有空的测试程序集） |
 
 ## 快速开始
 
-1. 使用 **Unity 2022.3 LTS**（开发版本 2022.3.62，中国版）打开项目根目录。
-2. 首次打开会弹出确认框"检测到项目尚未初始化"，点击**开始搭建**（约 1-2 分钟，生成美术/音效/字体/预制体/场景）；也可以稍后手动执行菜单 `StarVortex / ① 一键搭建 Demo`。
-3. 打开 `Assets/Scenes/MainMenu` 场景，按 **Play** 开始游戏。
-4. 操作：WASD / 方向键 / 手柄左摇杆移动，Esc 或 P 暂停，升级弹窗中按 1/2/3 快速选卡。
+1. 用 **Unity 2022.3 LTS**（开发版本 2022.3.62f3c1）打开项目根目录。
+2. 执行菜单 `StarVortex / ① 一键搭建 Demo`（约 20 秒）。首次打开项目时也会弹窗询问是否搭建。
+3. 打开 `Assets/Scenes/MainMenu.unity`，按 Play。
+4. 打包：菜单 `StarVortex / ② 打包 Windows EXE`，输出到 `Builds/Windows/`。
 
 ## 目录结构
 
 ```
-docs/                     本文档、面试讲解稿、AI 辅助开发工作流
-scripts/                  游戏脚本源码（与 Assets 同步）
-  Core/                   框架层：GameManager / GameEvents / PoolService / Damage / Tween / AudioService / SaveSystem / Palette
-  Gameplay/               玩法层：Player / Weapon / Projectile / Enemy / EnemyDirector / XPGem / CameraRig / Juice / Bootstrap
-  UI/                     表现层：HUD / LevelUp / Pause / GameOver / MainMenu
-  Data/                   ScriptableObject 配置类：WeaponData / EnemyData / UpgradeData / DifficultyCurve
-  EditorTools/            编辑器工具：DemoSceneBuilder 一键搭建 / NeonArtGenerator 程序化美术 / SfxSynth 程序化音效
+Assets/
+  Scripts/
+    Core/          GameManager 状态机、GameEvents 事件总线、PoolService 对象池、伤害接口、存档、补间
+    Gameplay/      HeroController、Juice 打击感、弹丸、受击闪光、血条、序列帧特效
+      Enemies/     EnemyBase + 地狱犬 / 幽灵 / 骷髅巫师 / 梦魇马 / 恶魔
+      World/       LevelDirector 关卡流程、SideCamera、视差、机关、坠落回收、教学牌
+    UI/            HUD、选职业、升级、关卡结算、死亡结算、暂停、主菜单
+    EditorTools/   一键搭建、关卡构建、像素美术管线、动画状态机构建、音效合成
+  Art/Pixel/       像素帧（角色 / 怪物 / 特效 / 环境），出处见 CREDITS.md
+docs/              面试讲解稿、模拟面试问答、AI 辅助开发流程、截图
 ```
 
 ## 技术栈
 
 | 类别 | 选型 |
 | --- | --- |
-| 引擎 | Unity 2022.3.62 LTS（中国版），C# 9 |
-| 渲染 | URP，2D Renderer + 2D 光照 + Bloom 后处理（HDR 颜色喂发光） |
-| 输入 | 新版 Input System（键盘 + 手柄） |
-| UI | UGUI + TextMeshPro（SDF 中文字体，运行时烘焙字符集） |
-| 物理 | Rigidbody2D / Collider2D，Trigger 与实体碰撞分层，Layer Collision Matrix 管理 |
-| 数据 | ScriptableObject 资产驱动 + AnimationCurve 难度曲线 + JsonUtility 存档 |
-| 性能 | UnityEngine.Pool 对象池 / 物理查询与算法节流 / MaterialPropertyBlock / 单次 Emit 粒子复用 |
-| 工具链 | AI（ZCode/GLM）辅助编码 + 人工审查 + 批量编译验证，Git 分功能提交 |
+| 引擎 | Unity 2022.3.62 LTS，C# 9（约 1.3 万行，68 个脚本，含编辑器工具） |
+| 渲染 | URP 2D Renderer，2D 全局光，Bloom |
+| 输入 | 新版 Input System |
+| UI | UGUI + TextMeshPro（静态中文 SDF 字体，字表自动收集） |
+| 动画 | Animator 状态机 + AnimatorOverrideController，序列帧剪辑由脚本生成 |
+| 物理 | Rigidbody2D / Collider2D，实体碰撞与 Trigger 分开，层碰撞矩阵 |
+| 工具链 | AI 辅助编码 + 人工审查 + 编辑器内自动试玩验证，Git 按功能提交 |
+
+## 素材与许可
+
+角色、怪物、环境与特效像素素材来自 ansimuz 的 Gothicvania 系列（OpenGameArt，CC0），详见 [CREDITS.md](CREDITS.md)。地刺为自绘。中文字体在搭建时从本机系统字体复制，不入库。

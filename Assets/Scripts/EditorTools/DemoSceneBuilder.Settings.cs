@@ -141,7 +141,7 @@ namespace StarVortex.EditorTools
         private static void SetupPlayerSettings()
         {
             PlayerSettings.companyName = "StarVortex";
-            PlayerSettings.productName = "StarVortex Survivors";
+            PlayerSettings.productName = "Hero of StarVortex";
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.LandscapeLeft;
             PlayerSettings.fullScreenMode = FullScreenMode.Windowed;
             PlayerSettings.resizableWindow = true;

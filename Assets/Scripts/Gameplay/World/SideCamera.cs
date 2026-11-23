@@ -145,6 +145,15 @@ namespace StarVortex.Gameplay.World
         /// <summary>计算本帧基准位：X 平滑追踪 + 边界钳制，Y 锁定地面。</summary>
         private Vector3 ComputeBasePosition(float deltaTime)
         {
+            // 暂停 / 选武器 / 升级时 timeScale = 0：Mathf.SmoothDamp 在 deltaTime = 0 且已到达目标时
+            // 会算 (output − target) / deltaTime = 0/0，速度记忆变成 NaN，之后整关相机都卡死。
+            // 时间不走就不推进，顺手把被污染的速度清掉
+            if (deltaTime <= 0f || float.IsNaN(_smoothVelocity) || float.IsNaN(_smoothVelocityY))
+            {
+                if (float.IsNaN(_smoothVelocity)) _smoothVelocity = 0f;
+                if (float.IsNaN(_smoothVelocityY)) _smoothVelocityY = 0f;
+                if (deltaTime <= 0f) return new Vector3(transform.position.x, transform.position.y, _z);
+            }
             // SmoothDamp 平滑追踪：followSmooth 是"每秒响应率"，smoothTime 取其倒数
             float smoothTime = Mathf.Max(0.01f, 1f / Mathf.Max(0.01f, followSmooth));
             float x = Mathf.SmoothDamp(transform.position.x, ComputeClampedTargetX(), ref _smoothVelocity, smoothTime, Mathf.Infinity, deltaTime);

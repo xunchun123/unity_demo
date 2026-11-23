@@ -1,163 +1,90 @@
-# 《星涡幸存者 StarVortex》面试讲解稿
+# 《勇者远征》面试讲解稿
 
-> 口语化可背；每个技术点按"对应系统 → 关键代码 → 设计决策 → 可能的追问与回答"组织。文件名均指 `scripts/` 下源码。
+> 口语化，可以直接背。每个技术点按"对应系统 → 关键代码 → 为什么这么做 → 可能的追问"来组织。路径都在 `Assets/Scripts/` 下。
 
 ## 一、30 秒项目介绍
 
-> 我独立做了一个 Unity 2D 幸存者割草游戏《星涡幸存者》，C# 大概五千行，全程 AI 辅助开发加人工审查。玩法是 WASD 移动、武器自动索敌、怪物按难度曲线成波刷出、击杀掉经验宝石磁吸拾取，升级弹三选一强化，十分钟一局，死亡结算存活时间、击杀数、等级，带最高分 Json 存档。技术上我比较能展开讲的有四块：基于官方 ObjectPool 的统一对象池、静态事件总线把玩法层和 UI 层彻底解耦、timeScale 全部收口到状态机避免多系统抢时间缩放，以及一个 Editor 工具链——美术、音效、中文字体、场景、预制体全部程序化生成，从空仓库到可玩只需要点一次菜单命令。
+> 我做了一个 Unity 2D 横版动作闯关 Demo，叫《勇者远征》。开局三选一职业：长剑、气功、火铳，然后打三关：雾林、熔岩洞窟、古堡内殿，最后一关是三阶段的 BOSS。有二段跳、冲刺、三段连击、怪物出招前摇、升级时的天赋加点和强化三选一，还有死亡结算和暂停。
+> 技术上能展开讲的主要有四块：一是用 Animator 状态机加 Override Controller 让三个职业、五种怪物各自共用一张状态机；二是横版平台手感，像土狼时间、跳跃缓冲、可变跳跃高度；三是怪物的模板方法加显式状态机，以及一整套打击感反馈；四是编辑器工具链，动画剪辑、状态机、场景、预制体都由脚本一键生成。
+> 开发过程是 AI 辅助写代码，我负责定架构、审查代码和验证，后面也可以讲几个我审查 AI 代码时抓到的真实 bug。
 
 ## 二、按 JD 技术点展开
 
 ### 1. C# 与面向对象
 
-**对应系统**：伤害管线与运行时属性。
-**关键代码**：`Core/Damage.cs`（`IDamageable` 接口 + `DamageInfo` struct）、`Gameplay/PlayerStats.cs`、`Core/GameEvents.cs`。
+**对应系统**：怪物体系、伤害管线、职业数据。
+**关键代码**：`Gameplay/Enemies/EnemyBase.cs`、`Core/Damage.cs`、`Core/WeaponKit.cs`。
 
-- `DamageInfo` 是 struct 且 `TakeDamage(in DamageInfo)` 用 in 参数：这是每颗子弹每次命中的高频路径，struct 避免堆分配 GC，in 避免传参拷贝。
-- 弹丸 `Projectile.OnTriggerEnter2D` 只做 `GetComponentInParent<IDamageable>()`，不认识 Enemy 还是别的——依赖倒置，新增可受击物不改弹丸。
-- `PlayerStats` 是普通 C# 类持有运行时可变属性，ScriptableObject 只是配置模板：绝不直接改 SO 资产，否则一改污染所有对局。
-- **追问：接口和抽象类怎么选？** 答在这里选接口是因为"能被伤害"是能力不是身份，玩家和敌人没有公共父类需求；项目里没有用继承的地方，都是组合+数据。
+- **模板方法**：`EnemyBase.TakeDamage` 把受击流程固定下来：同帧去重 → 扣血 → 更新血条 → 闪光 → 硬直或霸体 → 击退 → 死亡结算。子类只实现两个抽象方法：`Behaviour()`（每帧 AI）和 `ApplyKnockback()`（飞行怪和地面怪被击退的方式不一样）。新加一种怪，受击表现不会走样。
+- **面向接口**：`IDamageable` + `DamageInfo`。`DamageInfo` 是 struct，`TakeDamage(in DamageInfo)` 用 `in` 传参，命中是高频路径，避免分配和拷贝。弹丸只认接口，不认具体是谁。
+- **数据和逻辑分开**：职业是 `WeaponKit` ScriptableObject（攻击间隔、伤害倍率、专属强化池、动画控制器、出招点），切职业就是 `HeroController.EquipKit(kit)` 一行。运行时可变的属性放在普通 C# 类 `HeroStats` 里，不直接改 SO 资产，否则会污染下一局。
+- **追问：为什么怪物用继承，伤害用接口？** 怪物之间确实共享一大段受击和死亡流程，用抽象基类复用最直接；"能被伤害"是一种能力，勇者和怪物都有，但它们没有共同父类，所以用接口。
 
-### 2. 对象池：为什么基于 UnityEngine.Pool 而不是自己造轮子
+### 2. 物理系统：Rigidbody2D 与 Collider2D
 
-**对应系统**：`Core/PoolService.cs`，子弹/敌人/宝石/飘字全走池；宝石另有泛型专用池 `GemPool`（`Gameplay/XPGem.cs`）。
-**关键代码**：`Register` / `Spawn` / `Despawn` 三个方法。
+**对应系统**：勇者平台移动、怪物碰撞、机关触发。
+**关键代码**：`Gameplay/HeroController.cs` 的 `FixedUpdate()`、`IsGrounded()`。
 
-- 为什么不手写：`UnityEngine.Pool.ObjectPool` 是 2021 起官方内置，把容易写错的边界都处理好了——`collectionCheck`（防双重归还）、`maxSize`（限制闲置对象数量，超出时归还即销毁）、`actionOnGet/OnRelease/OnDestroy` 回调约定。自己造轮子的价值在于理解原理，但生产代码里用官方实现更可靠，而且它是 `IObjectPool<T>` 泛型接口，我既能包 GameObject 也能直接包组件类型（`GemPool` 就是 `ObjectPool<XPGem>`）。
-- 我在官方类之上加的两层价值：① 统一注册表 `Dictionary<GameObject, IObjectPool<GameObject>>`，所有系统共用一个入口；② **实例 → 预制体反查表** `_instanceToPrefab`——Despawn 只拿到实例不知道归属哪个池，反查表让归还变成一行调用；因为键是池内复用的实例、数量稳定，字典不会膨胀。
-- 细节：预热水位（Register 时 Get 一轮再 Release 回去，把 Instantiate 成本挪到加载期）；`collectionCheck: Application.isEditor` 只在编辑器开，发布版省一次判定；实例名字去掉 "(Clone)" 保持 Hierarchy 干净；所有池对象挂统一父节点 `~Pools`。
-- **追问：collectionCheck 开着有什么代价？** Release 时会遍历检查对象是否已在池内，发布版对象池使用纪律靠代码约定保证，所以敢关。
-- **追问：池空了 maxSize 满了会怎样？** Get 时池空会走 createFunc 新建实例（自动扩容），maxSize 约束的是闲置对象数量，归还超量时直接销毁——不会丢引用也不会异常。
+- 移动写在 `FixedUpdate` 里改 `rb.velocity`，跟物理步长走；输入读取（跳跃缓冲、攻击）在 `Update`。
+- **手感参数**：土狼时间 0.1s（走出平台边缘还能起跳）、跳跃缓冲 0.12s（落地前按跳也算）、下落重力 ×2.5、上升中松开跳跃键 ×1.6 提前下落、顶点附近重力 ×0.6 悬停一下、二段跳。少了哪一个手感都会发"硬"。
+- **碰撞分层**：Player=6、Enemy=7、Ground=8、Projectile=9，用层碰撞矩阵控制谁和谁碰。怪物身上两个碰撞体：一个实体碰撞体负责站在地面上，一个 Trigger 负责接触伤害，因为两个实体碰撞体之间不会产生 Trigger 事件。
+- **两个真实的坑**：
+  1. 推墙时勇者会粘在墙上半空不掉：墙的静摩擦力和重力平衡了。解决：勇者用零摩擦物理材质。
+  2. 空中能无限跳：教学牌、传送门的触发盒放在 Ground 层，地面探测把它们当成了地面，二段跳计数在空中被重置。解决：`IsGrounded` 忽略 Trigger。
+- **追问：为什么用 OverlapBox 判地面，不用 OnCollisionStay？** OverlapBox 是主动查询，结果当帧确定，探测盒可以只放在脚底；碰撞回调的顺序和频率不受我控制，侧面贴墙也会进回调。
 
-### 3. 事件总线：为什么静态 C# event 而不是 ScriptableObject 事件通道
+### 3. Animator：状态机与动画
 
-**对应系统**：`Core/GameEvents.cs`，10 个事件覆盖状态切换、敌人死亡、经验、血量、击杀、计时。
+**对应系统**：勇者三职业、五种怪物。
+**关键代码**：`EditorTools/HeroAnimationBuilder.cs`、`EditorTools/EnemyAnimationBuilder.cs`。
 
-- 决策：玩法层只负责 `PublishXxx`，UI 层只订阅——事件把依赖方向反转，Gameplay 对 UI 零依赖。发布方法用 `internal` 修饰，只有 Core 程序集内能发，UI 只能听不能发，权限清晰。
-- 为什么不用 SO 事件通道：SO 通道的优势是 Inspector 可视化接线和天然跨场景；代价是每个事件一个资产文件、订阅生命周期要额外管理。本 demo 规模下静态 event 零分配、零资产、编译期可见，是"够用的最简方案"；规模变大升级到 SO 通道或消息系统的路径是明确的——这不是偷懒，是按规模选型。
-- 泄漏防护是重点：静态事件的订阅者引用会拖住对象不让 GC 回收。两层防护——UI 面板全部 `OnEnable` 订阅 / `OnDisable` 退订对称；`GameManager.OnDestroy` 里 `GameEvents.ClearAllSubscribers()` 全量清空，覆盖"场景卸载但面板没来得及退订"的兜底场景。
-- **追问：静态事件还有什么坑？** 域重载（Enter Play Mode Options）下静态状态不自动清空，要在 `InitializeOnLoad` 里处理；多场景下谁清空要有唯一负责人，我指定了 GameManager。
+- **一张状态机 + Override Controller**：勇者状态 Idle / Run / Jump / Fall / Attack / AirAttack / Hurt / Death，骑士是基础 Controller，猎人、武僧各一个 `AnimatorOverrideController`，只替换剪辑。状态、过渡、参数只维护一份，加第四个职业只需要配一组帧。怪物同理，共用 Idle / Move / Windup / Attack。
+- **过渡设计**：地面层 Idle ⇄ Run 按 Speed；离地按 VelY 分 Jump / Fall；Any State 按优先级 Death > Hurt > Attack / AirAttack，攻击允许打断自己（连击每一下都从第一帧挥）。像素帧动画不做混合，过渡时长全是 0。
+- **代码和动画的边界**：`HeroController` 只写 Speed / VelY / Grounded / Attack / Hurt / Dead 这几个参数，从来不直接换 sprite；怪物 AI 只在原有的状态切换那一行写 Windup / Attack。前摇动画不循环，停在最后一帧，前摇多长由 AI 的计时器决定，调参时动画不会提前收招。
+- **一个真实的坑**：旧版攻击动画播完会卡在最后一帧。原因是脚本里 `AddExitTransition()` 创建的过渡默认 `hasExitTime = false`，又没有任何条件，Unity 会直接忽略这条过渡，状态永远出不去。修法是一次性动作的退出过渡显式打开 Exit Time = 1。
+- **死亡动画**：死亡时 GameManager 会把 timeScale 置 0，Animator 默认按缩放时间更新，倒地动作会冻在第一帧，所以死亡时把 Animator 的 updateMode 切成 UnscaledTime。
 
-### 4. timeScale 多来源冲突怎么收口
+### 4. UGUI
 
-**对应系统**：`Core/GameManager.cs` 状态机（MainMenu/Playing/LevelUp/Paused/GameOver）。
+**对应系统**：HUD、选职业、升级、关卡结算、死亡结算、暂停。
+**关键代码**：`UI/*.cs`、`Gameplay/HeroGameBootstrap.cs`。
 
-- 问题本质：升级弹窗要暂停、手动暂停要暂停、死亡结算要暂停、打击感 HitStop 也要压 timeScale——四个来源直接改 timeScale 必然互相覆盖。
-- 方案：**普通状态切换的 timeScale 只在 GameManager 状态机里写**，每个状态对应确定的 timeScale 值；`EnterLevelUp` 入口有防御 `if (State != GameState.Playing) return`——处理"死亡瞬间同帧触发升级"这类竞态。
-- 唯一例外是 `Juice.HitStop`（见第 6 条），它和状态机之间有一套互斥协议。
-- **追问：为什么用状态机不用标志位叠加？** 标志位叠加（暂停计数）也能做，但状态机额外解决了"升级时能不能暂停""死亡时还能不能升级"这类互斥语义，`SetState` 里顺便广播 `GameStateChanged`，UI 面板显隐有了单一事实来源。
+- **面板显隐由谁驱动**：面板自己不订阅状态事件，由场景引导器 `HeroGameBootstrap` 按 GameState 统一开关。原因是面板初始是隐藏的，隐藏对象的 OnEnable 根本不会执行，自己订阅永远收不到第一次事件。
+- **timeScale = 0 时的 UI 动画**：补间、数字滚动全部用 unscaled time。死亡结算面板延迟 1 秒再淡入，先让玩家看清倒地动作；淡入完成前不接受输入，防止死前连按的攻击键直接把结算跳过。
+- **中文字体**：TMP 默认字体没有中文，用系统黑体烘焙静态 SDF 图集。静态图集只包含烘焙过的字，改一句文案就可能出现方框，所以我加了一个字表收集器 `GameTextCharset`，搭建时扫描脚本里所有显示给玩家的字符串，缺的字原地补进图集，资产 GUID 不变。
+- **追问：HUD 怎么拿数据？** 只订阅 `GameEvents`（血量、蓝量、经验、击杀、关卡阶段、BOSS 血量），玩法层不引用 UI。
 
-### 5. HitStop 与暂停态的互斥处理
+### 5. Prefab 与场景管理
 
-**对应系统**：`Gameplay/Juice.cs` 的 `HitStop` / `HitStopRoutine`。
+**对应系统**：一键搭建、关卡数据、场景流转。
+**关键代码**：`EditorTools/DemoSceneBuilder.cs`、`EditorTools/LevelBuilder.cs`、`Gameplay/World/LevelDirector.cs`、`Core/GameManager.cs`。
 
-- 三条协议：① 前置检查 `State != Playing` 直接不生效——暂停/升级/结算态触发不了停帧；② 计时用 `WaitForSecondsRealtime`（真实时间），timeScale 压到 0.05 时不影响恢复计时；③ 恢复前**再查一次状态**，只有仍是 Playing 才还原备份的 timeScale——停帧进行中玩家开了暂停（状态机把 timeScale 改成 0），HitStop 结束不会把 0 覆盖回 1。
-- 细节：`_pendingHitStop` 取 max 不叠加（停帧中再触发不延长）；玩家受伤停 0.05s，精英死亡停 0.06s。
-- **追问：为什么压 0.05 而不是 0？** 完全冻结会像卡顿，留 5% 的微动是"顿"的感觉，这是打击感调出来的经验值。
+- **关卡是数据**：`LevelSpec` 描述地形段、悬浮平台、怪物、机关、过关目标。同一份数据在编辑器里用来铺地形和碰撞体，运行时 `LevelDirector` 用来布置怪物和机关，地形和怪物坐标永远对得上。
+- **场景流转**：MainMenu → Level1（先进选职业）→ Level2 → Level3。异步加载，状态切换放在加载完成回调里，避免加载过渡帧里旧场景已经恢复成 Playing 开始刷怪。
+- **预制体**：勇者、五种怪物、三种弹丸都由脚本生成。物理放根节点，SpriteRenderer + Animator 放 Visual 子物体，程序化形变只作用在 Visual 上，不影响碰撞体。
+- **对象池**：`PoolService` 基于 `UnityEngine.Pool.ObjectPool`，预热 + 实例到预制体的反查表；怪物复用时在 `Init` 里调用 `Animator.Rebind()` 复位，上一次可能死在前摇中。
 
-### 6. 组合优于继承在敌人系统的体现
+### 6. Git
 
-**对应系统**：`Gameplay/Enemy.cs` 一个类 + `Data/EnemyData.cs` 三份资产。
+- 按功能提交，每次提交说明写清楚改了什么、为什么，例如"怪物换像素动画 + 头顶血条 + 受击反馈，修复每刀双倍伤害"。
+- `.gitignore` 排除 Library / Temp / Builds、batchmode 日志、系统字体文件、本机开发工具。之前误提交过 81 个日志文件，用 `git rm --cached` 移出了仓库。
 
-- drone/darter/brute 三种敌人共用一个 Enemy 类，差异全部是数据：血量、移速、接触伤害与冷却、分离半径、经验值、色调。行为框架（追击 + 分离 + 接触伤害 + 死亡结算）是一致的，所以不需要三个子类。
-- 精英变体也不是子类：`Init(data, isElite, player)` 传 bool，血量 x4、体型 x1.4、经验 x6、色调提亮，全是数值倍率。
-- 新增第四种敌人 = 新建一份 EnemyData 资产 + 在 DifficultyCurve 加一条权重曲线，零代码改动。
-- **追问：什么时候才该用继承？** 行为结构不同的时候——比如 darter 要蓄力冲刺，它的 Update 拆成"蓄力/冲刺/硬直"三段，和通用追击框架不同构，那时才值得子类或策略模式。目前三种敌人的行为同构，继承只会带来空泛的基类钩子。
+### 7. AI 辅助开发与代码审查
 
-### 7. 分离力 / 索敌节流的性能考量
+详见 [AI_WORKFLOW.md](AI_WORKFLOW.md)。要点：AI 写初稿，我定约束、审查、验证；验证不只是"能编译"，而是进游戏逐帧看动作、用调试指令查血量，下面这些 bug 都是这样抓出来的：
 
-**对应系统**：`Gameplay/Enemy.cs` 的 `ComputeSeparation`、`Gameplay/WeaponController.cs` 的 `FindNearestEnemy`。
+- **每一刀打两次**：怪物有实体和 Trigger 两个碰撞体，范围判定扫到同一只怪两次，伤害翻倍。修法是 `EnemyBase` 里同帧、同来源、同数值的伤害去重。
+- **闪白是无效的**：`sr.color = Color.white` 是乘法染色，白色乘原图还是原图。改成叠一层用 GUI/Text Shader 的纯色剪影（只用贴图 alpha）。
+- **击退被吃掉**：怪物 AI 每帧重写速度，击退刚推出去就被覆盖。加了 0.22 秒受击硬直，期间 AI 暂停。
+- **相机卡死**：暂停或选职业时 timeScale = 0，`Mathf.SmoothDamp` 在 deltaTime = 0 且已到达目标时会算出 0/0，速度变量变成 NaN，之后整关相机都动不了。修法是 deltaTime 为 0 时不推进，并清掉被污染的速度。
 
-- 分离力朴素做法是全量两两算，100 只怪就是每帧约 1 万次对计算，O(n²)。我做了三层削减：① 每 0.15s 才重算一次，结果缓存在 `_separationPush` 里继续用；② `OverlapCircleAll` 结果最多采样 6 个邻居（for 循环截断），分离只需要局部防重叠，精确性可以牺牲；③ 每只怪的节流计时器初始相位随机错峰（`Random.value * 0.15f`），避免全体验算挤在同一帧。
-- 索敌：`OverlapCircleAll` + Enemy 层过滤，0.1s 节流并缓存目标；比较距离用 `sqrMagnitude` 不开方；没有目标就停射，省性能也省弹丸。
-- 还有一条兜底：`EnemyDirector` 里同屏上限 `maxAliveEnemies`（90），超限本帧不刷——帧率保护阀，宁可不刷不能卡顿。
-- **追问：节流 0.1~0.15s 会不会看得出来？** 分离力是缓变量，肉眼无感；索敌目标 0.1s 的延迟在自动射击的玩法节奏里也察觉不到。节流对象都是"低频感知"的信息，每帧精确更新是浪费。
+## 三、最可能被问到的三个问题
 
-### 8. 震屏为什么用 trauma + Perlin
+**Q：这个项目里你自己做了什么，AI 做了什么？**
+> 代码初稿大部分是 AI 写的。我做的是：定架构和约束（比如 timeScale 只许 GameManager 改、Animator 是 sprite 唯一写入者）、选素材和定画风、审查每一份代码、进游戏验证并定位问题。上面那几个 bug，AI 写的时候都没发现，是我在验证时抓到、分析出原因再让它改的。
 
-**对应系统**：`Gameplay/CameraRig.cs` 的 `LateUpdate`。
+**Q：如果要加一个新怪物，要改哪些地方？**
+> 三步：准备像素帧放到 `Art/Pixel/新怪物名/`；在 `EnemyAnimationBuilder` 里加一组剪辑配置（复用同一张状态机）；写一个继承 `EnemyBase` 的 AI 类，实现 `Behaviour` 和 `ApplyKnockback`，在状态切换处写 Windup / Attack 参数。受击、血条、死亡特效都是基类自带的。
 
-- 创伤模型：受击/击杀 `AddTrauma` 累积并 Clamp01，实际抖动量 `shake = trauma²`，每秒 1.6 线性衰减。平方的意义：低 trauma 时几乎不抖，叠加多次受击才明显——衰减前段剧烈后段柔和，量控制比效果本身重要，连续受伤不会把玩家晃吐。
-- Perlin 噪声（`Mathf.PerlinNoise`，Time.time × 25 采样）驱动位移和旋转：噪声输出连续平滑，随机数抖动观感尖锐毛躁；位移 ±0.55、旋转 ±8°，三个通道用不同噪声坐标避免同步。
-- 相机跟随用指数衰减 Lerp：`1 - exp(-smooth * dt)`，帧率无关的平滑系数，比裸 `Lerp(t)` 的帧率敏感写法稳。
-- **追问：为什么不用 Cinemachine Impulse？** 可以用，但 trauma 模型 40 行就够，且参数（衰减、幅度、噪声）全部可控可讲；引入包收益不大。
-
-### 9. UI 动画为什么要 unscaled time
-
-**对应系统**：`UI/LevelUpPanel.cs`、`UI/GameOverPanel.cs`、`Core/Tween.cs`、`UI/HUDController.cs`。
-
-- 三选一弹窗打开时 timeScale = 0，如果动画跑 `Time.deltaTime`，卡片弹入、数字滚动全部冻结——"暂停弹窗动画不动"是经典 bug。所以项目里的轻量补间工具 Tween（54 行手写协程）默认 `unscaled: true`，用 `Time.unscaledDeltaTime`。
-- 涉及范围：升级卡片 ScaleIn（EaseOutBack 回弹）、结算数字滚动 CountTo、HUD 血条残影的 `MoveTowards` 也用 unscaledDeltaTime——死亡瞬间 timeScale 归零，但血条要继续流完。
-- **追问：为什么不用 DOTween？** demo 用到的只有缩放弹出、淡入、数值滚动三件事，60 行手写零外部依赖，还能默认 unscaled；面试场景下讲清原理比引库更有说服力。真项目要用大量补间就上 DOTween，不重复造轮子。
-
-### 10. 中文字体 SDF 方案
-
-**对应系统**：`EditorTools/DemoSceneBuilder.cs` 的 `EnsureCjkFont`。
-
-- 问题：TMP 默认字体（Liberation Sans）不含中文字形；中文游戏直接用动态字体运行时扩图集，首次显示新字符会卡顿，且打包后依赖目标机字体有不确定性。
-- 方案：编辑器期从系统字体（微软雅黑）生成 TMP SDF 字体资产，并把游戏内用到的全部汉字**静态烘焙**进图集——打包后不依赖目标机字体，运行时零扩容卡顿。
-- **追问：字符集怎么确定？** 收集全部 UI 字符串字面量烘焙；如果以后做玩家输入昵称，再对动态扩容做白名单兜底——静态为主、动态兜底是常见生产组合。
-
-### 11. 组件系统与物理系统（Rigidbody2D / Collider2D）
-
-**对应系统**：`Gameplay/PlayerController.cs`、`Gameplay/Enemy.cs`、`Gameplay/Projectile.cs`、`Gameplay/XPGem.cs`。
-
-- 移动用 `Rigidbody2D.velocity` 在 FixedUpdate 驱动，不改 Transform：物理系统权威，与敌人碰撞检测一致；玩家 `CollisionDetectionMode2D.Continuous` 防高速穿透。
-- 物理形态分工：弹丸用 Trigger（不阻挡移动，只做命中判定）；敌人碰撞体同样是 Trigger——同屏百怪不做物理互推，间距交给分离力算法，接触伤害由 `OnTriggerStay2D` 按冷却结算；玩家拾取圈是子物体上的 CircleCollider2D 触发器，半径随升级实时改。（面试主动讲这个取舍：敌人实体互撞会让物理求解器成为瓶颈）
-- 一个省物理开销的细节：宝石不带 Rigidbody2D，触发检测由玩家侧（带刚体的一方）承担——同屏几百颗宝石省一大截。
-- **追问：OnTriggerStay2D 每帧调用怎么处理？** 内部有接触冷却计时器 `contactCooldown`，冷却内直接 return；加上玩家 0.6s 受击无敌帧，双保险防同帧多次扣血秒杀。
-
-### 12. UGUI 与 Animator
-
-**对应系统**：HUD 血条残影缓动 / 底部经验条 / 三选一卡片 / 暂停 / 结算数字滚动；`EditorTools/DemoSceneBuilder.Anim.cs`。
-
-- HUD 是事件驱动刷新：订阅 `GameEvents`，数值变化才更新；计时用 0.25s 节流的 `RunClockTick`，不做每帧刷新。血条残影：主条立刻跟随（2.5/s），白色残影慢速追赶（0.35/s），掉血有"先掉血、再流血"的痛感。
-- Animator 也是完整工作流：玩家 Idle（4 帧 6fps）/ Run（4 帧 12fps），布尔参数 `Moving` 切换，过渡 0.1s；三种敌人各一个双帧循环。所有动画帧来自程序化生成的序列帧——没有外部素材也能走完整 Animator 流程，控制器由 Editor 脚本 `CreateAnimators` 生成。
-- **追问：为什么状态切换用代码 `AddTransition` 而不是手摆？** 因为控制器本身是 Editor 脚本生成的，搭建可重复执行、结果可复现，这是"一键搭建"承诺的一部分。
-
-### 13. Prefab / 场景管理与一键搭建
-
-**对应系统**：`EditorTools/DemoSceneBuilder.cs`（partial 分 7 个文件）+ `Gameplay/GameSceneBootstrap.cs`。
-
-- 一键搭建顺序：美术 → 音效 → 中文字体 → 数据资产与预制体 → 工程设置（层碰撞矩阵）→ 两个场景 → 全套 UGUI → 图集。首次打开项目 `InitializeOnLoadMethod` 弹确认框，用 marker 文件防重复执行。
-- 运行期装配走引导器：`GameSceneBootstrap` 在 Start 里做"必须等场景跑起来才能做"的事（相机跟随目标注入、Canvas worldCamera 接线、暂停面板按当前状态显隐），场景内组件保持"哑组件"，依赖装配期注入，运行期零 Find 成本。
-- **追问：为什么场景用脚本搭而不是手工摆？** 可复现是第一位的——换台机器、删掉 Library 重来，一次菜单命令回到完全相同的项目；也倒逼资产引用全部走代码接线，没有"拖丢了引用"这类隐形 bug。
-
-### 14. 性能优化汇总与 Git
-
-**汇总**（每条都在上面展开过）：对象池消灭 Instantiate/Destroy 尖峰；物理查询与分离力节流；同屏上限；struct + in 零 GC 伤害参数；MaterialPropertyBlock 闪白不实例化材质；粒子单系统 Emit 复用零实例化；UI 事件驱动 + 0.25s 节流；HDR 颜色喂 Bloom 用透明度换成本而不是叠层。
-
-**Git**：分功能提交（对象池、事件总线、打击感各自独立提交），GitHub 仓库托管；因为资产全部代码生成，仓库里只有脚本和配置——没有二进制大文件，diff 可读、合并干净。
-
-## 三、数值设计思路
-
-**升级曲线**：`XpForLevel = 5 + level×4 + level²`（`PlayerStats.cs`）。线性项让前期 10~14 经验就升一级、节奏爽快；平方项在 6~8 级后接管，升级间隔明显拉开，形成"前期爽、后期抠"的张力。宝石经验值（drone 3 点、精英 x6）按这条曲线反推，保证前 2 分钟大约升 4~5 级。
-
-**难度曲线**（`Data/DifficultyCurve.cs`，全部 AnimationCurve 可拖）：
-- 刷怪速率 0.7/s → 3.2/s，9 分钟线性爬坡；
-- 怪种入场：drone 全程权重 1；darter 第 2 分钟渐入（中期引入速度威胁，惩罚站桩）；brute 第 4 分钟渐入（后期肉盾，逼玩家堆伤害或弹幕数）；
-- 怪物血量 1 → 1.6（5 分钟）→ 2.5 倍（10 分钟）；精英概率 0 → 2%（3 分钟）→ 8%（10 分钟）。
-- 调法：先定节奏锚点——"每 30 秒玩家应感知到一次变化"（新怪种、精英首现、明显变密），再倒推每个曲线的关键帧；实测再微调。**平衡杠杆意识**：玩家 DPS 随升级接近指数堆叠（伤害 × 攻速 × 弹幕数相乘），敌人侧只有血量倍率和数量两个线性杠杆，所以后期压力主要靠密度和精英配比给。
-
-**打击感数值**：停帧 0.05s、震屏 trauma 玩家受伤 0.35 / 击杀 0.07 / 精英 0.22——按"事件越重反馈越重"排比例，全在代码常量里，方便整体调档。
-
-## 四、团结引擎 / 微信小游戏迁移谈资
-
-> 没实际打包过就坦诚说"做过功课、能讲清风险点"，不装做过。
-
-- **技术栈天然对齐**：团结引擎基于 Unity 2022.3 LTS 分支演进，本项目的 URP 2D Renderer、新版 Input System、UGUI、UnityEngine.Pool 都在它的支持范围内，游戏代码层基本不用动，迁移工作主要在平台适配层。
-- **WebGL/小游戏适配要点**（按风险从大到小）：
-  1. **首包与内存**：WebGL 下 Brotli 压缩 + 小游戏分包/远端资源加载；TMP 字体图集只烘用到的字符（本项目已这么做，天然友好）。
-  2. **后处理降档**：Bloom 在移动 GPU 是主要开销，准备 URP Asset 降档方案（关 Bloom、降分辨率比例），低端机走无后处理配置。
-  3. **音频格式**：Editor 合成的 WAV 是无损 PCM，发布到小游戏要转 Vorbis/ADPCM 压缩，这是资源管线改动而非代码改动。
-  4. **存档路径**：`Application.persistentDataPath` 在小游戏环境映射到平台文件系统，`SaveSystem` 只用了 File.ReadAllText/WriteAllText 的最小 API 面，适配点集中。
-  5. **输入**：小游戏没有键盘，要加虚拟摇杆（Input System 的 On-Screen Controls 可直接挂）。
-  6. **对象池预热**：弱设备上加载期预热成本要实测，必要时把 prewarm 拆到 loading 过程分帧做。
-
-## 五、反问面试官的问题清单
-
-1. 团队目前的 AI 辅助开发流程是怎样的——AI 生成代码的比例、人工审查的标准和工具链是什么？
-2. 小游戏项目里实际最常见的性能瓶颈是哪类：首包体积、运行时内存，还是 DrawCall/Overdraw？团队用什么工具定位？
-3. 这个岗位入职前三个月的预期产出是什么？会先接玩法功能还是性能/工具方向？
-4. 项目里程序和数值策划怎么分工，配置数据用什么管线（Excel 转表、SO 资产还是数据库）？
-5. 团队怎么看待"单人独立开发 + AI 辅助"的工作模式，这类经验在团队协作里怎么转化？
+**Q：性能上做了什么？**
+> 弹丸、伤害数字走对象池；物理查询只在需要时做（攻击那一帧、固定间隔的落脚点采样）；像素图不压缩但尺寸都很小。说实话这个体量还没碰到性能瓶颈，我没有做过 Profiler 层面的深入优化，这点我会如实说。

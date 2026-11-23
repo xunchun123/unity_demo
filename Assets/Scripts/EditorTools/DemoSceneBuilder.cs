@@ -219,8 +219,8 @@ namespace StarVortex.EditorTools
                 if (File.Exists(marker) || File.Exists(level1File)) return;
 
                 bool ok = EditorUtility.DisplayDialog(
-                    "星涡幸存者 StarVortex",
-                    "检测到项目尚未初始化。\n\n是否自动搭建全部资源？（美术/音效/场景/预制体，约 1-2 分钟）",
+                    "勇者远征 Hero of StarVortex",
+                    "检测到项目尚未初始化。\n\n是否自动搭建全部资源？（动画/音效/字体/场景/预制体，约 20 秒）",
                     "开始搭建", "稍后手动执行（菜单 StarVortex/① 一键搭建 Demo）");
                 if (ok) GenerateAll();
             };
