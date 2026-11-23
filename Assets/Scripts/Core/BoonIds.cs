@@ -63,5 +63,11 @@ namespace StarVortex.Core
         }
 
         public IReadOnlyCollection<string> Owned => _owned;
+
+        /// <summary>跨关恢复用：直接写入，不广播"获得爽点"（否则每进一关 HUD 都把旧爽点再提示一遍）。</summary>
+        public void RestoreSilently(IEnumerable<string> ids)
+        {
+            foreach (var id in ids) _owned.Add(id);
+        }
     }
 }

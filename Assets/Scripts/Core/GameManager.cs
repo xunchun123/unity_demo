@@ -91,8 +91,19 @@ namespace StarVortex.Core
 
         // ---------- 状态流转 ----------
 
+        /// <summary>过关时抓的勇者进度快照（等级/经验/天赋/爽点/血蓝/职业），下一关引导器恢复；新开一局清空。</summary>
+        public Gameplay.HeroController.Progress CarriedProgress { get; private set; }
+
+        // 升级弹窗打开时达成了过关目标（典型：最后一击杀死 BOSS 的经验同时触发升级）：
+        // 先记下，升级选完再进结算。否则 HandleLevelClear 在 LevelUp 状态被直接忽略，
+        // 而 LevelDirector 已经进入 Clear 阶段不会再调第二次 → 永远停在打完 BOSS 的空房间里
+        private bool _clearQueued;
+        private string _queuedNextScene;
+
         public void StartNewRun()
         {
+            CarriedProgress = null;
+            _clearQueued = false;
             RunTime = 0f;
             Kills = 0;
             CurrentLevel = 1;
@@ -140,6 +151,12 @@ namespace StarVortex.Core
         /// </summary>
         public void HandleLevelClear(string nextScene = null)
         {
+            if (State == GameState.LevelUp)
+            {
+                _clearQueued = true;
+                _queuedNextScene = nextScene;
+                return;
+            }
             if (State != GameState.Playing) return;
             _pendingNextScene = nextScene;
             SetState(GameState.LevelClear);
@@ -163,6 +180,9 @@ namespace StarVortex.Core
 
             if (!string.IsNullOrEmpty(next))
             {
+                var hero = FindFirstObjectByType<Gameplay.HeroController>();
+                if (hero != null) CarriedProgress = hero.CaptureProgress();
+
                 // 与 StartNewRun 同一收口原则：状态切换放加载完成之后，避免加载过渡帧里的脏输入
                 var op = SceneManager.LoadSceneAsync(next);
                 if (op != null) op.completed += _ => ResumeFromLevelClear();
@@ -224,6 +244,12 @@ namespace StarVortex.Core
             _pendingLevelUps = 0;
             SetState(GameState.Playing);
             Time.timeScale = 1f;
+
+            if (_clearQueued)
+            {
+                _clearQueued = false;
+                HandleLevelClear(_queuedNextScene);
+            }
         }
 
         public void TogglePause()

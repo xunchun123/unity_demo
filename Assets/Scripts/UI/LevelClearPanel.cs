@@ -2,6 +2,7 @@ using StarVortex.Core;
 using StarVortex.Gameplay;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace StarVortex.UI
@@ -28,6 +29,7 @@ namespace StarVortex.UI
         [SerializeField] private Button _menuButton;
 
         private bool _showing; // 防止状态事件与"激活时补触发"双重进入
+        private float _openedAt; // 键盘确认要等面板出现 0.6 秒：防止上一屏的回车连按直接跳过结算
 
         private void Awake()
         {
@@ -56,6 +58,7 @@ namespace StarVortex.UI
         {
             if (_showing) return;
             _showing = true;
+            _openedAt = Time.unscaledTime;
 
             var gm = GameManager.Instance;
             bool final = gm.AllLevelsCleared;
@@ -96,6 +99,16 @@ namespace StarVortex.UI
         {
             if (index < _valueLabels.Length && _valueLabels[index] != null)
                 _valueLabels[index].text = text;
+        }
+
+        private void Update()
+        {
+            // 键盘：回车 = 当前显示的那个按钮（和升级、死亡结算面板一致，全程不碰鼠标也能玩）
+            if (!_showing || Time.unscaledTime - _openedAt < 0.6f) return;
+            var kb = Keyboard.current;
+            if (kb == null || !(kb.enterKey.wasPressedThisFrame || kb.numpadEnterKey.wasPressedThisFrame)) return;
+            if (_continueButton.gameObject.activeSelf) OnContinueClicked();
+            else if (_menuButton.gameObject.activeSelf) OnMenuClicked();
         }
 
         private void OnContinueClicked()

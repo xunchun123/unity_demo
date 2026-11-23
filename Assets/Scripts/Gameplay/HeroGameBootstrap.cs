@@ -73,6 +73,14 @@ namespace StarVortex.Gameplay
                 Debug.LogWarning("[HeroBootstrap] 场景里没有 HeroController，HUD 初始值跳过");
                 return;
             }
+
+            // 第 2 关起：恢复上一关带过来的进度（职业、等级、天赋、爽点、血蓝）
+            var gm = GameManager.Instance;
+            if (gm != null && gm.CurrentLevel > 1 && gm.CarriedProgress != null)
+            {
+                hero.RestoreProgress(gm.CarriedProgress);
+                CurrentKit = gm.CarriedProgress.kit;
+            }
             GameEvents.PublishPlayerHpChanged(hero.CurrentHp, hero.Stats.MaxHp);
             GameEvents.PublishPlayerManaChanged(hero.CurrentMana, hero.Stats.MaxMana);
             GameEvents.PublishXpChanged(hero.Xp, hero.XpToNext);

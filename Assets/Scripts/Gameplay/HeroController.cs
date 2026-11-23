@@ -1,5 +1,6 @@
 using StarVortex.Core;
 using StarVortex.Enemies;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -153,7 +154,56 @@ namespace StarVortex.Gameplay
         {
             GameEvents.PublishPlayerHpChanged(CurrentHp, Stats.MaxHp);
             GameEvents.PublishPlayerManaChanged(CurrentMana, Stats.MaxMana);
-            GameEvents.PublishXpChanged(0, XpToNext);
+            GameEvents.PublishXpChanged(Xp, XpToNext);
+        }
+
+        // ---------- 跨关进度 ----------
+
+        /// <summary>
+        /// 一局内跨关卡要保留的勇者进度。每关场景里的勇者是新实例，过关时由 GameManager 抓快照，
+        /// 下一关的引导器在 Start 里恢复——否则进第 2 关会回到 1 级、天赋爽点清空，职业也会变回预制体默认的长剑。
+        /// </summary>
+        public sealed class Progress
+        {
+            public WeaponKit kit;
+            public int level;
+            public int xp;
+            public string statsJson;   // HeroStats 是纯数据类，JsonUtility 深拷贝最省事
+            public string[] boons;
+            public float hp;
+            public float mana;
+        }
+
+        public Progress CaptureProgress() => new Progress
+        {
+            kit = _weaponKit,
+            level = Level,
+            xp = Xp,
+            statsJson = JsonUtility.ToJson(Stats),
+            boons = new List<string>(Boons.Owned).ToArray(),
+            hp = CurrentHp,
+            mana = CurrentMana,
+        };
+
+        public void RestoreProgress(Progress p)
+        {
+            if (p == null) return;
+            if (p.kit != null) EquipKit(p.kit);
+            Level = Mathf.Max(1, p.level);
+            Xp = Mathf.Max(0, p.xp);
+            JsonUtility.FromJsonOverwrite(p.statsJson, Stats);
+            Boons.RestoreSilently(p.boons);
+            CurrentHp = Mathf.Clamp(p.hp, 1f, Stats.MaxHp);
+            CurrentMana = Mathf.Clamp(p.mana, 0f, Stats.MaxMana);
+            // 爽点"顺风回息"：每关开始回复 30% 生命
+            if (Boons.Has(BoonIds.UniversalSecondWind))
+                CurrentHp = Mathf.Min(Stats.MaxHp, CurrentHp + Stats.MaxHp * 0.3f);
+
+            GameEvents.PublishPlayerHpChanged(CurrentHp, Stats.MaxHp);
+            GameEvents.PublishPlayerManaChanged(CurrentMana, Stats.MaxMana);
+            GameEvents.PublishXpChanged(Xp, XpToNext);
+            GameEvents.PublishLevelUp(Level);
+            GameEvents.PublishTalentPointsChanged(Stats.pendingTalentPoints);
         }
 
         // ---------- 经验/升级（复用 GameManager 升级暂停队列） ----------
